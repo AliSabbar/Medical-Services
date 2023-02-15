@@ -6,6 +6,7 @@ import 'package:medical_services/screens/adminScreens/addDoctorScreen/add_doctor
 import 'package:medical_services/screens/adminScreens/admin_screen.dart';
 import 'package:medical_services/screens/adminScreens/showClinicsScreen/show_clinics_screen.dart';
 import 'package:medical_services/screens/adminScreens/showDoctorsScreen/show_doctors_screen.dart';
+import 'package:medical_services/screens/homeScreen/home_screen.dart';
 import 'package:medical_services/screens/splashScreen/splash_screen.dart';
 
 import '../screens/adminScreens/showUsersScreen/show_users_screen.dart';
@@ -20,8 +21,10 @@ class Routes {
   static const String showClinicScreenRoute = "/showClinicScreen";
   static const String addSpecialtyScreenRoute = "/addSpecialtyScreen";
   static const String showUsersScreenRoute = "/showUsersScreen";
+  // ! ADMIN PANEL ROUTES
 
   static const String splashScreenRoute = "/splashScreen";
+  static const String homeScreenRoute = "/homeScreen";
 }
 
 class RouteGenerator {
@@ -45,6 +48,8 @@ class RouteGenerator {
       //! ADMIN PANEL ROUTES
       case Routes.splashScreenRoute:
         return MaterialPageRoute(builder: (_) => SplashScreen());
+      case Routes.homeScreenRoute:
+        return MaterialPageRoute(builder: (_) => HomeScreen());
 
       default:
         return unDefinedRoute();
