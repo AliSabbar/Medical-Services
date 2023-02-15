@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'colors.dart';
 
 ThemeData lightTheme = ThemeData(
-  primarySwatch: Colors.red,
   fontFamily: 'Cairo',
   scaffoldBackgroundColor: Colors.white,
   progressIndicatorTheme:  ProgressIndicatorThemeData(
@@ -12,7 +11,7 @@ ThemeData lightTheme = ThemeData(
   ),
   appBarTheme: const AppBarTheme(
       titleTextStyle: TextStyle(
-          color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold,fontFamily: 'Cairo'),
+          color: Colors.black, fontSize: 18, fontWeight: FontWeight.bold,fontFamily: 'Cairo'),
       color: Colors.white,
       elevation: 0.0,
       iconTheme: IconThemeData(
