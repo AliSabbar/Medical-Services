@@ -14,7 +14,6 @@ class SignIn extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: Scaffold(
         body: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

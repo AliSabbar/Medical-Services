@@ -22,7 +22,7 @@ Widget defaultTextButton({required String text}) {
 }
 
 // profile container
-Widget defaultProfileContainer({required String SvgURL}) {
+Widget defaultProfileContainer({ String? SvgURL}) {
   return Container(
     decoration: BoxDecoration(
       borderRadius: const BorderRadius.only(
@@ -33,7 +33,7 @@ Widget defaultProfileContainer({required String SvgURL}) {
     height: 305,
     width: 410,
     child: SvgPicture.asset(
-      SvgURL,
+      SvgURL!,
       width: 232,
       height: 262.04,
     ),

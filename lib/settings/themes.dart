@@ -31,11 +31,7 @@ ThemeData lightTheme = ThemeData(
       filled: true,
       fillColor: AppColors.textfieldColor,
       focusedBorder: InputBorder.none,
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(20),
-        borderSide: BorderSide(
-            color: AppColors.textfieldColor, width: 2), //<-- SEE HERE
-      ),
+     
     ));
 
 // ? ========================= DARK COLOR =========================
