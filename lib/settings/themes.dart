@@ -9,16 +9,19 @@ ThemeData lightTheme = ThemeData(
 
 // * APPBAR STYLE
 
-    appBarTheme: const AppBarTheme(
-        titleTextStyle: TextStyle(
+    appBarTheme: AppBarTheme(
+        titleTextStyle: const TextStyle(
             color: Colors.black,
             fontSize: 18,
             fontWeight: FontWeight.bold,
             fontFamily: 'Cairo'),
+        iconTheme: IconThemeData(
+          color: AppColors.blackColor,
+        ),
         color: Colors.white,
         elevation: 0.0,
         backwardsCompatibility: false,
-        systemOverlayStyle: SystemUiOverlayStyle(
+        systemOverlayStyle: const SystemUiOverlayStyle(
             statusBarColor: Colors.white,
             statusBarIconBrightness: Brightness.dark)),
 

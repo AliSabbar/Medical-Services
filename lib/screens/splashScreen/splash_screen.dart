@@ -12,19 +12,22 @@ class SplashScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: OrientationBuilder(builder: (context, orientation) {
-          if (orientation == Orientation.portrait) {
-            return const OnBoardingPortrait();
-          }
-
-//*  landscape
-
-          else {
-            return const OnBoardingLandscape();
-          }
-        }),
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
+        body: SafeArea(
+          child: OrientationBuilder(builder: (context, orientation) {
+            if (orientation == Orientation.portrait) {
+              return const OnBoardingPortrait();
+            }
+    
+    //*  landscape
+    
+            else {
+              return const OnBoardingLandscape();
+            }
+          }),
+        ),
       ),
     );
   }

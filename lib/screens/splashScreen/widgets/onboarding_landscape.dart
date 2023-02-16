@@ -53,7 +53,7 @@ class OnBoardingLandscape extends StatelessWidget {
                         ? const SizedBox(
                             height: 20,
                           )
-                        : const Text(""),
+                        : const SizedBox(height: 0,),
                     Text(
                       'هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها.',
                       textAlign: TextAlign.right,

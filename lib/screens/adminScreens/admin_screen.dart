@@ -13,68 +13,71 @@ class AdminPanelScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text("لوحة التحكم"),
-          actions: [
-            TextButton(
-                onPressed: () {},
-                child: const Text(
-                  "تسجيل الخروج",
-                  style: TextStyle(color: Colors.red),
-                ))
-          ],
-        ),
-        body: GridView.count(
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-          crossAxisCount: 2,
-          children: <Widget>[
-            adminPanelItem(
-                name: "اضافة طبيب",
-                icon: "assets/icons/doctor.svg",
-                onTap: () async {
-                  Navigator.pushNamed(context, Routes.addDoctorScreenRoute);
-                },
-                screen: Routes.addDoctorScreenRoute),
-            adminPanelItem(
-                name: "اضافة عيادة",
-                icon: "assets/icons/clinic2_admin.svg",
-                onTap: () {
-                  Navigator.pushNamed(context, Routes.addClinicScreenRoute);
-                },
-                screen: Routes.addClinicScreenRoute),
-            adminPanelItem(
-                name: "اضافة تخصص",
-                icon: "assets/icons/clinic_admin.svg",
-                onTap: () {
-                  Navigator.pushNamed(context, Routes.addSpecialtyScreenRoute);
-                },
-                screen: Routes.addSpecialtyScreenRoute),
-            adminPanelItem(
-                name: "عرض المستخدمين",
-                icon: "assets/icons/group_admin.svg",
-                onTap: () {
-                  Navigator.pushNamed(context, Routes.showUsersScreenRoute);
-                },
-                screen: Routes.showUsersScreenRoute),
-            adminPanelItem(
-                name: "عرض العيادات",
-                icon: "assets/icons/clinic2_admin.svg",
-                onTap: () {
-                  Navigator.pushNamed(context, Routes.showClinicScreenRoute);
-                },
-                screen: Routes.showClinicScreenRoute),
-            adminPanelItem(
-                name: "عرض الاطباء",
-                icon: "assets/icons/doctor.svg",
-                onTap: () {
-                  Navigator.pushNamed(context, Routes.showDoctorsScreenRoute);
-                },
-                screen: Routes.showDoctorsScreenRoute),
-          ],
-        ));
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: Scaffold(
+          appBar: AppBar(
+            centerTitle: true,
+            title: Text("لوحة التحكم"),
+            actions: [
+              TextButton(
+                  onPressed: () {},
+                  child: const Text(
+                    "تسجيل الخروج",
+                    style: TextStyle(color: Colors.red),
+                  ))
+            ],
+          ),
+          body: GridView.count(
+            crossAxisSpacing: 10,
+            mainAxisSpacing: 10,
+            crossAxisCount: 2,
+            children: <Widget>[
+              adminPanelItem(
+                  name: "اضافة طبيب",
+                  icon: "assets/icons/doctor.svg",
+                  onTap: () async {
+                    Navigator.pushNamed(context, Routes.addDoctorScreenRoute);
+                  },
+                  screen: Routes.addDoctorScreenRoute),
+              adminPanelItem(
+                  name: "اضافة عيادة",
+                  icon: "assets/icons/clinic2_admin.svg",
+                  onTap: () {
+                    Navigator.pushNamed(context, Routes.addClinicScreenRoute);
+                  },
+                  screen: Routes.addClinicScreenRoute),
+              adminPanelItem(
+                  name: "اضافة تخصص",
+                  icon: "assets/icons/clinic_admin.svg",
+                  onTap: () {
+                    Navigator.pushNamed(context, Routes.addSpecialtyScreenRoute);
+                  },
+                  screen: Routes.addSpecialtyScreenRoute),
+              adminPanelItem(
+                  name: "عرض المستخدمين",
+                  icon: "assets/icons/group_admin.svg",
+                  onTap: () {
+                    Navigator.pushNamed(context, Routes.showUsersScreenRoute);
+                  },
+                  screen: Routes.showUsersScreenRoute),
+              adminPanelItem(
+                  name: "عرض العيادات",
+                  icon: "assets/icons/clinic2_admin.svg",
+                  onTap: () {
+                    Navigator.pushNamed(context, Routes.showClinicScreenRoute);
+                  },
+                  screen: Routes.showClinicScreenRoute),
+              adminPanelItem(
+                  name: "عرض الاطباء",
+                  icon: "assets/icons/doctor.svg",
+                  onTap: () {
+                    Navigator.pushNamed(context, Routes.showDoctorsScreenRoute);
+                  },
+                  screen: Routes.showDoctorsScreenRoute),
+            ],
+          )),
+    );
   }
 
 //   Widget adminPanelItem({
