@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:medical_services/screens/adminScreens/admin_screen.dart';
 import 'package:medical_services/screens/homeScreen/home_screen.dart';
+import 'package:medical_services/screens/signinScreens/signin.dart';
 import 'package:medical_services/screens/splashScreen/splash_screen.dart';
 import 'package:medical_services/settings/routes_manger.dart';
 import 'package:medical_services/settings/themes.dart';
@@ -13,7 +14,7 @@ void main() async {
   dynamic onBoarding = SharedHelper.getData(key: "OnBoarding");
   Widget startWidget;
   if (onBoarding != null) {
-    startWidget = HomeScreen(); 
+    startWidget = HomeScreen();
   } else {
     startWidget = const SplashScreen();
   }
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
       title: 'Medical Services',
       debugShowCheckedModeBanner: false,
       theme: lightTheme, //? <-- change theme
-      home: startWidget,//! this is your home widget
+      home: SignIn(), //! this is your home widget
       onGenerateRoute: RouteGenerator.getRoute,
     );
   }
