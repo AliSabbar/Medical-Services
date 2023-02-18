@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:medical_services/screens/adminScreens/widgets/customStepper.dart';
+import 'package:medical_services/screens/adminScreens/widgets/stepOne.dart';
+import 'package:medical_services/screens/adminScreens/widgets/stepThree.dart';
 
 class AddDoctorScreen extends StatefulWidget {
   const AddDoctorScreen({super.key});
@@ -15,10 +17,15 @@ class _AddDoctorScreenState extends State<AddDoctorScreen> {
     return Directionality(
         textDirection: TextDirection.rtl,
         child: Scaffold(
-          key: scaffoldKey,
+            key: scaffoldKey,
             appBar: AppBar(
               title: const Text("اضافة طبيب"),
             ),
-            body: const CustomStepper()));
+            body: CustomStepper(
+              stepOneContent: const StepOne(),
+              stepThreeContent: const StepThree(
+                isClinic: false,
+              ),
+            )));
   }
 }

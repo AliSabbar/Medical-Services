@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:medical_services/providers/add_doctors_provider.dart';
+import 'package:medical_services/providers/doc_clinic_provider.dart';
 import 'package:medical_services/providers/upload_image_provider.dart';
 import 'package:medical_services/screens/adminScreens/admin_screen.dart';
 import 'package:medical_services/screens/homeScreen/home_screen.dart';
@@ -23,9 +23,8 @@ void main() async {
   }
   runApp(MultiProvider(
     providers: [
-      ChangeNotifierProvider(create: (context) => AddDoctorsProvider()),
+      ChangeNotifierProvider(create: (context) => DocAndClinicProvider()),
       ChangeNotifierProvider(create: (context) => UploadImageProvider()),
-
     ],
     child: MyApp(
       startWidget: startWidget,

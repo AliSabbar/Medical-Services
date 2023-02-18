@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:medical_services/screens/adminScreens/widgets/sharedStep.dart';
 import 'package:medical_services/screens/adminScreens/widgets/titleWidget.dart';
 import 'package:provider/provider.dart';
 
 import '../../../components/defaultDropDownButton.dart';
 import '../../../components/defaultTextField.dart';
-import '../../../providers/add_doctors_provider.dart';
+import '../../../providers/doc_clinic_provider.dart';
 
 class StepOne extends StatefulWidget {
   const StepOne({super.key});
-
   @override
   State<StepOne> createState() => _StepOneState();
 }
@@ -19,8 +19,8 @@ class _StepOneState extends State<StepOne> {
   Widget build(BuildContext context) {
     double widthMQ = MediaQuery.of(context).size.width;
     double heightMQ = MediaQuery.of(context).size.height;
-    var provRead = context.read<AddDoctorsProvider>();
-    var provWatch = context.watch<AddDoctorsProvider>();
+    var provRead = context.read<DocAndClinicProvider>();
+    var provWatch = context.watch<DocAndClinicProvider>();
     final TextEditingController ageController = TextEditingController();
     @override
     void dispose() {
@@ -31,19 +31,21 @@ class _StepOneState extends State<StepOne> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SharedStep(),
+       const SharedStep(textName: "اسمك الرباعي"),
         customTitleWidget(text: "تاريخ الميلاد", context: context),
         defaultTextField(
           hintText: 'ادخل تاريخ الميلاد',
           controller: ageController,
-          onTap: () {
+          onTap: ()  {
             showDatePicker(
               context: context,
               initialDate: DateTime.now(),
-              firstDate: DateTime.parse('1990-05-05'),
-              lastDate: DateTime.parse(DateTime.now().toString()),
+              firstDate: DateTime.parse('1800-05-05'),
+              lastDate: DateTime.now(),
             ).then((value) {
-              ageController.text = provWatch.setAge(date: value);
+              if (value != null) {
+                ageController.text = DateFormat.yMMMd().format(value);
+              }
             });
           },
           validator: (s) {

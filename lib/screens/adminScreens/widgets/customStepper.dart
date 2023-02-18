@@ -4,11 +4,15 @@ import 'package:medical_services/screens/adminScreens/widgets/stepOne.dart';
 import 'package:medical_services/screens/adminScreens/widgets/stepThree.dart';
 import 'package:provider/provider.dart';
 
-import '../../../providers/add_doctors_provider.dart';
+import '../../../providers/doc_clinic_provider.dart';
 import '../../../settings/colors.dart';
 
 class CustomStepper extends StatefulWidget {
-  const CustomStepper({super.key});
+  CustomStepper(
+      {super.key, required this.stepOneContent, required this.stepThreeContent});
+
+  Widget stepOneContent;
+  Widget stepThreeContent;
 
   @override
   State<CustomStepper> createState() => _CustomStepperState();
@@ -19,8 +23,8 @@ class _CustomStepperState extends State<CustomStepper> {
   Widget build(BuildContext context) {
     double widthMQ = MediaQuery.of(context).size.width;
     double heightMQ = MediaQuery.of(context).size.height;
-    var provRead = context.read<AddDoctorsProvider>();
-    var provWatch = context.watch<AddDoctorsProvider>();
+    var provRead = context.read<DocAndClinicProvider>();
+    var provWatch = context.watch<DocAndClinicProvider>();
     return Stepper(
       type: StepperType.horizontal,
       currentStep: provWatch.currentStep,
@@ -93,7 +97,7 @@ class _CustomStepperState extends State<CustomStepper> {
                 : StepState.indexed,
             isActive: provWatch.currentStep == 0 ? true : false,
             title: const Text('الحساب'),
-            content: const StepOne()),
+            content: widget.stepOneContent),
         Step(
           state: provWatch.currentStep > 1
               ? StepState.complete
@@ -105,7 +109,7 @@ class _CustomStepperState extends State<CustomStepper> {
         Step(
           isActive: provWatch.currentStep == 2 ? true : false,
           title: const Text('التفاصيل'),
-          content: const StepThree(),
+          content: widget.stepThreeContent,
         ),
       ],
     );

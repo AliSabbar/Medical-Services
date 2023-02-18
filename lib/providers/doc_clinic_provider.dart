@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-class AddDoctorsProvider extends ChangeNotifier {
+class DocAndClinicProvider extends ChangeNotifier {
   int currentStep = 0;
 
   String initialValue = 'ذكر';
@@ -85,30 +85,5 @@ class AddDoctorsProvider extends ChangeNotifier {
   onStepCancel() {
     currentStep -= 1;
     notifyListeners();
-  }
-
-  // * set Age
-
-  setAge({required DateTime? date}) {
-    if (date == null) return null;
-    var datePick = DateFormat.yMMMd().format(date);
-    notifyListeners();
-    return datePick;
-  }
-
-// * set Time
-
-  setTime({
-    required context,
-    required value,
-    required TextEditingController controller,
-  }) {
-    var time;
- 
-      time = controller.text;
-      time = value!.format(context).toString();
-      notifyListeners();
-    print(time);
-    return time;
   }
 }

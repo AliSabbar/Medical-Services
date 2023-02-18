@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:medical_services/providers/add_doctors_provider.dart';
+import 'package:medical_services/providers/doc_clinic_provider.dart';
 import 'package:medical_services/screens/adminScreens/widgets/titleWidget.dart';
 import 'package:provider/provider.dart';
 
@@ -36,11 +36,11 @@ class _StepTwoState extends State<StepTwo> {
       children: [
         customTitleWidget(text: "الموقع", context: context),
         defaultDropDownButton(
-            value: context.watch<AddDoctorsProvider>().initialGovernorate,
-            items: context.watch<AddDoctorsProvider>().governorateList,
+            value: context.watch<DocAndClinicProvider>().initialGovernorate,
+            items: context.watch<DocAndClinicProvider>().governorateList,
             onChanged: (value) {
               context
-                  .read<AddDoctorsProvider>()
+                  .read<DocAndClinicProvider>()
                   .changeDropValue(value: value, changeType: "governorate");
             }),
         customTitleWidget(text: "عنوان العيادة", context: context),

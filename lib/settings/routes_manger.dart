@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medical_services/screens/adminScreens/AddSpecialtyScreen/add_specialty_screen.dart';
-import 'package:medical_services/screens/adminScreens/addClinicScreen/add_clinic_screen.dart';
 import 'package:medical_services/screens/adminScreens/addDoctorScreen/add_doctors_screen.dart';
 import 'package:medical_services/screens/adminScreens/admin_screen.dart';
 import 'package:medical_services/screens/adminScreens/showClinicsScreen/show_clinics_screen.dart';
@@ -10,6 +9,7 @@ import 'package:medical_services/screens/homeScreen/home_screen.dart';
 import 'package:medical_services/screens/signinScreens/signin_screen.dart';
 import 'package:medical_services/screens/splashScreen/splash_screen.dart';
 
+import '../screens/adminScreens/addClinicScreen/add_clinic_screen.dart';
 import '../screens/adminScreens/showUsersScreen/show_users_screen.dart';
 
 class Routes {
