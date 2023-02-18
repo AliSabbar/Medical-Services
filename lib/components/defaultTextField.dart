@@ -15,12 +15,21 @@ Widget defaultTextField(
     VoidCallback? onTap,
     double? width,
     double? height,
-    double borderRaduis = 20,
-    Widget? prefixIcon}) {
-  return SizedBox(
+    double borderRadius = 20,
+    Widget? prefixIcon,
+    int? minLines,
+    int? maxLines,
+    }) {
+  return Container(
     width: width,
     height: height,
+    decoration: BoxDecoration(
+    color: AppColors.textfieldColor,
+    borderRadius: BorderRadius.circular(borderRadius)
+    ),
     child: TextFormField(
+      minLines: minLines,
+      maxLines: maxLines,
       initialValue: initialValue,
       readOnly: readOnly,
       controller: controller,
@@ -39,7 +48,12 @@ Widget defaultTextField(
         hintStyle: TextStyle(color: AppColors.greyColor),
         //! add the fixed border
         enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(borderRaduis),
+          borderRadius: BorderRadius.circular(borderRadius),
+          borderSide: BorderSide(
+              color: AppColors.textfieldColor, width: 2), //<-- SEE HERE
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(borderRadius),
           borderSide: BorderSide(
               color: AppColors.textfieldColor, width: 2), //<-- SEE HERE
         ),

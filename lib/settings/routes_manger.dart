@@ -7,7 +7,7 @@ import 'package:medical_services/screens/adminScreens/admin_screen.dart';
 import 'package:medical_services/screens/adminScreens/showClinicsScreen/show_clinics_screen.dart';
 import 'package:medical_services/screens/adminScreens/showDoctorsScreen/show_doctors_screen.dart';
 import 'package:medical_services/screens/homeScreen/home_screen.dart';
-import 'package:medical_services/screens/signinScreens/signin.dart';
+import 'package:medical_services/screens/signinScreens/signin_screen.dart';
 import 'package:medical_services/screens/splashScreen/splash_screen.dart';
 
 import '../screens/adminScreens/showUsersScreen/show_users_screen.dart';
@@ -52,8 +52,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => SplashScreen());
       case Routes.homeScreenRoute:
         return MaterialPageRoute(builder: (_) => HomeScreen());
-  case Routes.signInScreen:
-        return MaterialPageRoute(builder: (_) => SignIn());
+      case Routes.signInScreen:
+        return MaterialPageRoute(builder: (_) => SignInScreen());
       default:
         return unDefinedRoute();
     }

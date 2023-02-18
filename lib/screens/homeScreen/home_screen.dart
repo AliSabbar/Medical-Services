@@ -55,11 +55,6 @@ class HomeScreen extends StatelessWidget {
                   validator: (s) {},
                   height: 50,
                   //edit
-                  prefixIcon: SvgPicture.asset(
-                    'assets/icons/search.svg',
-                    width: 10,
-                    height: 10,
-                  ),
                 )
               ],
             ),
