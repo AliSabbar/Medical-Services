@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medical_services/screens/adminScreens/AddSpecialtyScreen/add_specialty_screen.dart';
-import 'package:medical_services/screens/adminScreens/addClinicScreen/add_clinic_screen.dart';
 import 'package:medical_services/screens/adminScreens/addDoctorScreen/add_doctors_screen.dart';
 import 'package:medical_services/screens/adminScreens/admin_screen.dart';
 import 'package:medical_services/screens/adminScreens/showClinicsScreen/show_clinics_screen.dart';
 import 'package:medical_services/screens/adminScreens/showDoctorsScreen/show_doctors_screen.dart';
+import 'package:medical_services/screens/homeScreen/home_screen.dart';
+import 'package:medical_services/screens/signinScreens/signin_screen.dart';
 import 'package:medical_services/screens/splashScreen/splash_screen.dart';
 
+import '../screens/adminScreens/addClinicScreen/add_clinic_screen.dart';
 import '../screens/adminScreens/showUsersScreen/show_users_screen.dart';
 
 class Routes {
@@ -20,8 +22,11 @@ class Routes {
   static const String showClinicScreenRoute = "/showClinicScreen";
   static const String addSpecialtyScreenRoute = "/addSpecialtyScreen";
   static const String showUsersScreenRoute = "/showUsersScreen";
+  // ! ADMIN PANEL ROUTES
 
   static const String splashScreenRoute = "/splashScreen";
+  static const String homeScreenRoute = "/homeScreen";
+  static const String signInScreen = "/signInScreen";
 }
 
 class RouteGenerator {
@@ -45,7 +50,10 @@ class RouteGenerator {
       //! ADMIN PANEL ROUTES
       case Routes.splashScreenRoute:
         return MaterialPageRoute(builder: (_) => SplashScreen());
-
+      case Routes.homeScreenRoute:
+        return MaterialPageRoute(builder: (_) => HomeScreen());
+      case Routes.signInScreen:
+        return MaterialPageRoute(builder: (_) => SignInScreen());
       default:
         return unDefinedRoute();
     }

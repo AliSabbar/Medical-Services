@@ -10,4 +10,6 @@ class AppColors {
   static Color yellowColor = const Color(0xffFFD600);
   static Color ofwhiteColor = const Color(0xffF3D4BD);
   static Color greenColor = const Color(0xffBAF3B1);
+  //color for the background cards
+  static Color backgroundCardColor = Color.fromARGB(255, 242, 247, 255);
 }
