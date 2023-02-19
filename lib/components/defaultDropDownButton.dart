@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../settings/colors.dart';
 
@@ -13,12 +14,12 @@ Widget defaultDropDownButton({
     padding: const EdgeInsets.all(10),
     decoration: BoxDecoration(
       color: AppColors.textfieldColor,
-      borderRadius: BorderRadius.circular(15),
+      borderRadius: BorderRadius.circular(15.r),
     ),
     child: DropdownButtonHideUnderline(
       child: DropdownButton(
-          borderRadius: BorderRadius.circular(20),
-          style: TextStyle(fontSize: 20, color: AppColors.blackColor),
+          borderRadius: BorderRadius.circular(20.r),
+          style: TextStyle(fontSize: 20.sp, color: AppColors.blackColor),
           value: value,
           items: items.map((e) {
             return DropdownMenuItem(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medical_services/providers/doc_clinic_provider.dart';
 import 'package:medical_services/providers/upload_image_provider.dart';
 import 'package:medical_services/screens/adminScreens/admin_screen.dart';
@@ -33,18 +34,23 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key, required this.startWidget});
+  const MyApp({super.key, required this.startWidget});
 
-  Widget startWidget;
+  final Widget startWidget;
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Medical Services',
-      debugShowCheckedModeBanner: false,
-      theme: lightTheme, //? <-- change theme
-      home: AdminPanelScreen(), //! this is your home widget
-      onGenerateRoute: RouteGenerator.getRoute,
+    return ScreenUtilInit(
+      designSize: const Size(390, 844), //? maybe change it later
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) => MaterialApp(
+        title: 'Medical Services',
+        debugShowCheckedModeBanner: false,
+        theme: lightTheme, //? <-- change theme
+        home: AdminPanelScreen(), //! this is your home widget
+        onGenerateRoute: RouteGenerator.getRoute,
+      ),
     );
   }
 }

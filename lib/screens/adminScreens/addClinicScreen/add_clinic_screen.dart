@@ -19,9 +19,9 @@ class _AddClinicScreenState extends State<AddClinicScreen> {
             appBar: AppBar(
               title: const Text("اضافة عيادة"),
             ),
-            body: CustomStepper(
-              stepOneContent: const SharedStep(textName: 'اسم العيادة'),
-              stepThreeContent: const StepThree(isClinic: true),
+            body: const CustomStepper(
+              stepOneContent:  SharedStep(textName: 'اسم العيادة'),
+              stepThreeContent:  StepThree(isClinic: true),
             )));
   }
 }

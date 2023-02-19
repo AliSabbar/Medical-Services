@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:medical_services/screens/splashScreen/widgets/RPSCustomPainter.dart';
 
@@ -16,8 +17,8 @@ class OnBoardingPortrait extends StatelessWidget {
     double heightMQ = MediaQuery.of(context).size.height;
     return Column(
       children: [
-        const SizedBox(
-          height: 30,
+         SizedBox(
+          height: 30.h,
         ),
         Expanded(
           child: Padding(
@@ -29,7 +30,7 @@ class OnBoardingPortrait extends StatelessWidget {
                   TextSpan(
                     style: TextStyle(
                         color: Colors.black,
-                        fontSize: widthMQ >= 768 ? 50 : 32,
+                        fontSize: widthMQ >= 768 ? 50 : 32.sp,
                         fontWeight: FontWeight.w700),
                     children: <TextSpan>[
                       const TextSpan(
@@ -55,7 +56,7 @@ class OnBoardingPortrait extends StatelessWidget {
               'هناك حقيقة مثبتة منذ زمن طويل وهي أن المحتوى المقروء لصفحة ما سيلهي القارئ عن التركيز على الشكل الخارجي للنص أو شكل توضع الفقرات في الصفحة التي يقرأها.',
               textAlign: TextAlign.right,
               style: TextStyle(
-                  fontSize: widthMQ >= 768 ? 24 : 15,
+                  fontSize: widthMQ >= 768 ? 24 : 16.sp,
                   fontWeight: FontWeight.w400),
             ),
           ),
@@ -77,7 +78,7 @@ class OnBoardingPortrait extends StatelessWidget {
                 top: 250,
                 left: 20,
                 child: CircleAvatar(
-                    radius: 40,
+                    radius: 40.r,
                     backgroundColor: AppColors.primaryColor,
                     child: IconButton(
                       padding: const EdgeInsets.all(0),

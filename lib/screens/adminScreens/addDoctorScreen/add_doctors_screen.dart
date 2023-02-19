@@ -21,9 +21,9 @@ class _AddDoctorScreenState extends State<AddDoctorScreen> {
             appBar: AppBar(
               title: const Text("اضافة طبيب"),
             ),
-            body: CustomStepper(
-              stepOneContent: const StepOne(),
-              stepThreeContent: const StepThree(
+            body: const CustomStepper(
+              stepOneContent:  StepOne(),
+              stepThreeContent:  StepThree(
                 isClinic: false,
               ),
             )));

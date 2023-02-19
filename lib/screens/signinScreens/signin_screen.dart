@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medical_services/components/defaultProfileContainer.dart';
 import 'package:medical_services/components/defaultTextField.dart';
@@ -40,7 +41,7 @@ class _SignInScreenState extends State<SignInScreen> {
               // the logo and the blue container
               defaultProfileContainer(
                   svgURL: 'assets/images/404Logo.svg',
-                  height: widthMQ >= 768 ? 320 : 250),
+                  height: widthMQ >= 768 ? 320 : 260),
               SizedBox(
                 height: heightMQ * 0.02,
               ),
@@ -53,7 +54,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     Text(
                       'تسجيل الدخول ',
                       style: TextStyle(
-                          fontSize: widthMQ >= 768 ? 40 : 32,
+                          fontSize: widthMQ >= 768 ? 40 : 32.sp,
                           fontWeight: FontWeight.w700,
                           color: AppColors.primaryColor),
                     ),
@@ -64,7 +65,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     Text(
                       'لاتحتار طبيبك وياك بكل مكان',
                       style: TextStyle(
-                          fontSize: widthMQ >= 768 ? 20 : 15,
+                          fontSize: widthMQ >= 768 ? 20 : 15.sp.sp,
                           color: AppColors.blackColor),
                     ),
                     SizedBox(
@@ -74,7 +75,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     Text(
                       'رقم الهاتف',
                       style: TextStyle(
-                          fontSize: widthMQ >= 768 ? 20 : 15,
+                          fontSize: widthMQ >= 768 ? 20 : 15.sp,
                           fontWeight: FontWeight.bold,
                           color: AppColors.blackColor),
                     ),
@@ -96,7 +97,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     Text(
                       'كلمة المرور',
                       style: TextStyle(
-                          fontSize: widthMQ >= 768 ? 20 : 15,
+                          fontSize: widthMQ >= 768 ? 20 : 15.sp,
                           fontWeight: FontWeight.bold,
                           color: AppColors.blackColor),
                     ),
@@ -109,7 +110,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       validator: (s) {
                         return null;
                       },
-                      obscureText: true,
+                      // obscureText: true,
                     ),
                   ],
                 ),
@@ -121,7 +122,7 @@ class _SignInScreenState extends State<SignInScreen> {
               Center(
                 child: Column(
                   children: [
-                    defaultTextButton(text: 'تسجيل الدخول', onPressed: () {}),
+                    defaultButton(text: 'تسجيل الدخول', onPressed: (){}),
                     //other texts
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -130,7 +131,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           'ليس لديك حساب؟',
                           style: TextStyle(
                             color: Colors.black,
-                            fontSize: widthMQ >= 768 ? 20 : 15,
+                            fontSize: widthMQ >= 768 ? 20 : 15.sp,
                           ),
                         ),
                         TextButton(
@@ -139,7 +140,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             'انشاء حساب',
                             style: TextStyle(
                               color: AppColors.primaryColor,
-                              fontSize: widthMQ >= 768 ? 20 : 15,
+                              fontSize: widthMQ >= 768 ? 20 : 15.sp,
                             ),
                           ),
                         ),
@@ -154,7 +155,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         'المتابعة كزائر',
                         style: TextStyle(
                           color: AppColors.greyColor,
-                          fontSize: widthMQ >= 768 ? 20 : 15,
+                          fontSize: widthMQ >= 768 ? 20 : 15.sp,
                         ),
                       ),
                     ),

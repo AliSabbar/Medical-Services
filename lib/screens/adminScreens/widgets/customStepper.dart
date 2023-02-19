@@ -8,11 +8,11 @@ import '../../../providers/doc_clinic_provider.dart';
 import '../../../settings/colors.dart';
 
 class CustomStepper extends StatefulWidget {
-  CustomStepper(
+  const CustomStepper(
       {super.key, required this.stepOneContent, required this.stepThreeContent});
 
-  Widget stepOneContent;
-  Widget stepThreeContent;
+ final Widget stepOneContent;
+ final Widget stepThreeContent;
 
   @override
   State<CustomStepper> createState() => _CustomStepperState();
