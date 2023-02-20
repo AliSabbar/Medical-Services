@@ -17,6 +17,7 @@ Widget defaultTextField(
     double? height,
     double borderRadius = 20,
     Widget? prefixIcon,
+    Widget? suffixIcon,
     int? minLines,
     int? maxLines,
     }) {
@@ -43,6 +44,7 @@ Widget defaultTextField(
       onFieldSubmitted: onFieldSubmitted,
       enableInteractiveSelection: enableInteractiveSelection,
       decoration: InputDecoration(
+        suffixIcon: suffixIcon,
         prefixIcon: prefixIcon,
         hintText: hintText,
         hintStyle: TextStyle(color: AppColors.greyColor),

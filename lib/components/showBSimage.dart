@@ -2,18 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 
-Widget showUploadImage({
-  required context,
-  required showCamera,
-  required showGallery,
-}) {
-  return Column(
+class ShowBSImage extends StatelessWidget {
+  const ShowBSImage({super.key,required this.showCamera,required this.showGallery});
+  final VoidCallback showCamera;
+  final VoidCallback showGallery;
+  @override
+  Widget build(BuildContext context) {
+    return Column(
     mainAxisSize: MainAxisSize.min,
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
       ListTile(
         contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-        onTap:showCamera,
+        onTap: showCamera,
         leading: const Icon(Icons.camera_alt),
         title: const Text(
           'التقط صورة',
@@ -31,4 +32,5 @@ Widget showUploadImage({
       )
     ],
   );
+  }
 }

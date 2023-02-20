@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:medical_services/components/showUploadImage.dart';
+import 'package:medical_services/components/showBSimage.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/upload_image_provider.dart';
-import '../screens/adminScreens/widgets/titleWidget.dart';
+import 'titleWidget.dart';
 
 class UploadImageWidget extends StatelessWidget {
   const UploadImageWidget({super.key});
@@ -12,13 +12,14 @@ class UploadImageWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-          GestureDetector(
+        GestureDetector(
           onTap: () {
             showBottomSheet(
                 context: context,
-                builder: (context) => showUploadImage(
-                    context: context,
+                builder: (context) => ShowBSImage(
                     showCamera: () {
                       context.read<UploadImageProvider>().uploadImage(
                             imageSource: ImageSource.camera,
@@ -49,8 +50,8 @@ class UploadImageWidget extends StatelessWidget {
                   ),
                 ),
         ),
-        customTitleWidget(text: "اختيار صورة", context: context),
-        
+
+       const CustomTitleWidget(title: 'رقم الهاتف')
       ],
     );
   }

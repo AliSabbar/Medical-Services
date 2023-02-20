@@ -6,11 +6,12 @@ import 'package:medical_services/screens/adminScreens/admin_screen.dart';
 import 'package:medical_services/screens/adminScreens/showClinicsScreen/show_clinics_screen.dart';
 import 'package:medical_services/screens/adminScreens/showDoctorsScreen/show_doctors_screen.dart';
 import 'package:medical_services/screens/homeScreen/home_screen.dart';
-import 'package:medical_services/screens/signinScreens/signin_screen.dart';
+import 'package:medical_services/screens/signinScreen/signin_screen.dart';
 import 'package:medical_services/screens/splashScreen/splash_screen.dart';
 
 import '../screens/adminScreens/addClinicScreen/add_clinic_screen.dart';
 import '../screens/adminScreens/showUsersScreen/show_users_screen.dart';
+import '../screens/signupScreen/signup_screen.dart';
 
 class Routes {
   // ! ADMIN PANEL ROUTES
@@ -27,6 +28,7 @@ class Routes {
   static const String splashScreenRoute = "/splashScreen";
   static const String homeScreenRoute = "/homeScreen";
   static const String signInScreen = "/signInScreen";
+  static const String signUpScreen = "/signUpScreen";
 }
 
 class RouteGenerator {
@@ -54,6 +56,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => HomeScreen());
       case Routes.signInScreen:
         return MaterialPageRoute(builder: (_) => SignInScreen());
+      case Routes.signUpScreen:
+        return MaterialPageRoute(builder: (_) => SignUpScreen());
       default:
         return unDefinedRoute();
     }

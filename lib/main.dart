@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medical_services/providers/doc_clinic_provider.dart';
+import 'package:medical_services/providers/auth_provider.dart';
 import 'package:medical_services/providers/upload_image_provider.dart';
 import 'package:medical_services/screens/adminScreens/admin_screen.dart';
 import 'package:medical_services/screens/homeScreen/home_screen.dart';
-import 'package:medical_services/screens/signinScreens/signin_screen.dart';
+import 'package:medical_services/screens/signinScreen/signin_screen.dart';
 import 'package:medical_services/screens/splashScreen/splash_screen.dart';
 import 'package:medical_services/settings/routes_manger.dart';
 import 'package:medical_services/settings/themes.dart';
@@ -26,6 +27,7 @@ void main() async {
     providers: [
       ChangeNotifierProvider(create: (context) => DocAndClinicProvider()),
       ChangeNotifierProvider(create: (context) => UploadImageProvider()),
+      ChangeNotifierProvider(create: (context) => AuthProvider()),
     ],
     child: MyApp(
       startWidget: startWidget,
@@ -48,7 +50,7 @@ class MyApp extends StatelessWidget {
         title: 'Medical Services',
         debugShowCheckedModeBanner: false,
         theme: lightTheme, //? <-- change theme
-        home: AdminPanelScreen(), //! this is your home widget
+        home: SignInScreen(), //! this is your home widget
         onGenerateRoute: RouteGenerator.getRoute,
       ),
     );

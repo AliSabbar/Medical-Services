@@ -14,6 +14,11 @@ Widget defaultButton({
   
 }) {
   return MaterialButton(
+    elevation: 0.0,
+    focusElevation: 0.0,
+    hoverElevation: 0.0,
+    disabledElevation: 0.0,
+    highlightElevation: 0.0,
     minWidth: width.w,
     height: height.h,
     onPressed:onPressed,
