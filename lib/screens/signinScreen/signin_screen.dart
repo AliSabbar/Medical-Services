@@ -31,6 +31,7 @@ class _SignInScreenState extends State<SignInScreen> {
     super.dispose();
   }
 
+  String appBarName = "نسيت كلمة المرور";
   @override
   Widget build(BuildContext context) {
     double widthMQ = MediaQuery.of(context).size.width;
@@ -48,6 +49,9 @@ class _SignInScreenState extends State<SignInScreen> {
                 defaultProfileContainer(
                     svgURL: 'assets/images/404Logo.svg',
                     height: Orientation.landscape == orientation ? 320 : 285),
+                SizedBox(
+                  height: 10.h,
+                ),
                 // first text
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -111,6 +115,29 @@ class _SignInScreenState extends State<SignInScreen> {
                           return null;
                         },
                       ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pushNamed(context, Routes.otpScreen,
+                                  arguments: "نسيت كلمة المرور");
+                            },
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 5.w, top: 8.h),
+                              child: Text(
+                                'نسيت كلمة المرور؟',
+                                style: TextStyle(
+                                  color: AppColors.greyColor,
+                                  fontSize: Orientation.landscape == orientation
+                                      ? 20.sp
+                                      : 13.sp,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
@@ -119,7 +146,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         height: 30.h,
                       )
                     : SizedBox(
-                        height: 20.h,
+                        height: 10.h,
                       ),
                 //button sign in
                 Center(
@@ -135,7 +162,7 @@ class _SignInScreenState extends State<SignInScreen> {
                               Orientation.landscape == orientation ? 75 : 60),
 
                       SizedBox(
-                        height: 10.h,
+                        height: 12.h,
                       ),
                       //other texts
                       Row(
@@ -151,8 +178,11 @@ class _SignInScreenState extends State<SignInScreen> {
                                   : 15.sp,
                             ),
                           ),
-                          TextButton(
-                            onPressed: () {
+                          SizedBox(
+                            width: 5.w,
+                          ),
+                          GestureDetector(
+                            onTap: () {
                               Navigator.pushNamed(context, Routes.signUpScreen);
                             },
                             child: Text(
@@ -167,10 +197,12 @@ class _SignInScreenState extends State<SignInScreen> {
                           ),
                         ],
                       ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.pushNamedAndRemoveUntil(context,
-                              Routes.homeScreenRoute, (route) => false);
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, Routes.homeScreenRoute);
                         },
                         child: Text(
                           'المتابعة كزائر',

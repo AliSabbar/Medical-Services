@@ -107,6 +107,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         const CustomTitleWidget(title: 'تاريخ الميلاد'),
                         defaultTextField(
+                          readOnly: true,
                             hintText: 'ادخل تاريخ ميلادك',
                             controller: ageController,
                             onTap: () {
