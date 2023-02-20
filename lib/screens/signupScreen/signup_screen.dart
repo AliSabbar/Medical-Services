@@ -9,6 +9,7 @@ import 'package:medical_services/components/defaultTextField.dart';
 import 'package:medical_services/components/titleWidget.dart';
 import 'package:medical_services/components/uploadImageWidget.dart';
 import 'package:medical_services/providers/auth_provider.dart';
+import 'package:medical_services/providers/upload_image_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../settings/colors.dart';
@@ -35,6 +36,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
     ageController.dispose();
     cityController.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    context.read<UploadImageProvider>().file = null;
+    super.initState();
   }
 
   @override
@@ -125,7 +132,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Expanded(
-                              flex: Orientation.landscape == orientation ? 5 : 3,
+                              flex:
+                                  Orientation.landscape == orientation ? 5 : 3,
                               child: defaultDropDownButton(
                                   value: provWatch.initialGovernorate,
                                   items: provWatch.governorateList,
@@ -145,7 +153,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       : 70.h,
                                   decoration: BoxDecoration(
                                       color: AppColors.containerColor,
-                                      borderRadius: BorderRadius.circular(20.r)),
+                                      borderRadius:
+                                          BorderRadius.circular(20.r)),
                                   child: Icon(
                                     Icons.gps_fixed_rounded,
                                     color: AppColors.primaryColor,
@@ -176,12 +185,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         SizedBox(
                           height: 10.h,
                         ),
-    
+
                         //! Send Data
-    
+
                         Center(
                             child: defaultButton(
-                                text: 'انشاء حساب', onPressed: () {})),
+                                text: 'انشاء حساب',
+                                onPressed: () {
+                                  // force keyboard go down
+
+                                  FocusScope.of(context).unfocus();
+                                })),
                         SizedBox(
                           height: 10.h,
                         ),

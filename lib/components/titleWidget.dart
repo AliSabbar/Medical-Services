@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../settings/colors.dart';
 
@@ -8,10 +9,9 @@ class CustomTitleWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double heightMQ = MediaQuery.of(context).size.height;
     return Column(children: [
       SizedBox(
-        height: heightMQ * 0.01,
+        height: 8.h,
       ),
       Text(
         title,
@@ -19,9 +19,8 @@ class CustomTitleWidget extends StatelessWidget {
             TextStyle(fontWeight: FontWeight.bold, color: AppColors.blackColor),
       ),
       SizedBox(
-        height: heightMQ * 0.01,
+        height: 10.h,
       )
     ]);
   }
 }
-

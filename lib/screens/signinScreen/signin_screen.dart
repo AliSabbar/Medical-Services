@@ -3,12 +3,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medical_services/components/defaultProfileContainer.dart';
 import 'package:medical_services/components/defaultTextField.dart';
+import 'package:medical_services/components/titleWidget.dart';
 import 'package:medical_services/providers/auth_provider.dart';
 import 'package:medical_services/settings/colors.dart';
 import 'package:provider/provider.dart';
 
 import '../../components/defaultButton.dart';
-import '../../providers/doc_clinic_provider.dart';
 import '../../settings/routes_manger.dart';
 
 // ignore: must_be_immutable
@@ -23,7 +23,6 @@ class _SignInScreenState extends State<SignInScreen> {
   TextEditingController phoneNumberController = TextEditingController();
 
   TextEditingController passwordController = TextEditingController();
-
 
   @override
   void dispose() {
@@ -49,9 +48,6 @@ class _SignInScreenState extends State<SignInScreen> {
                 defaultProfileContainer(
                     svgURL: 'assets/images/404Logo.svg',
                     height: Orientation.landscape == orientation ? 320 : 285),
-                SizedBox(
-                  height: heightMQ * 0.02,
-                ),
                 // first text
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -68,7 +64,8 @@ class _SignInScreenState extends State<SignInScreen> {
                             color: AppColors.primaryColor),
                       ),
                       SizedBox(
-                        height: heightMQ * 0.01,
+                        height:
+                            Orientation.landscape == orientation ? 10.h : 8.h,
                       ),
                       //second text
                       Text(
@@ -80,21 +77,10 @@ class _SignInScreenState extends State<SignInScreen> {
                             color: AppColors.blackColor),
                       ),
                       SizedBox(
-                        height: heightMQ * 0.02,
+                        height:
+                            Orientation.landscape == orientation ? 20.h : 10.h,
                       ),
-                      //textfield for the number
-                      Text(
-                        'رقم الهاتف',
-                        style: TextStyle(
-                            fontSize: Orientation.landscape == orientation
-                                ? 20.sp
-                                : 15.sp,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.blackColor),
-                      ),
-                      SizedBox(
-                        height: heightMQ * 0.01,
-                      ),
+                      const CustomTitleWidget(title: 'رقم الهاتف'),
                       defaultTextField(
                         hintText: 'ادخل رقم الهاتف',
                         controller: phoneNumberController,
@@ -104,21 +90,10 @@ class _SignInScreenState extends State<SignInScreen> {
                         },
                       ),
                       SizedBox(
-                        height: heightMQ * 0.03,
+                        height: 10.h,
                       ),
                       //second textfield for the password
-                      Text(
-                        'كلمة المرور',
-                        style: TextStyle(
-                            fontSize: Orientation.landscape == orientation
-                                ? 20.sp
-                                : 15.sp,
-                            fontWeight: FontWeight.bold,
-                            color: AppColors.blackColor),
-                      ),
-                      SizedBox(
-                        height: heightMQ * 0.01,
-                      ),
+                      const CustomTitleWidget(title: 'كلمة المرور'),
                       defaultTextField(
                         obscureText: provWatch.isVisible,
                         suffixIcon: GestureDetector(
@@ -135,17 +110,16 @@ class _SignInScreenState extends State<SignInScreen> {
                         validator: (s) {
                           return null;
                         },
-                        // obscureText: true,
                       ),
                     ],
                   ),
                 ),
                 Orientation.landscape == orientation
                     ? SizedBox(
-                        height: heightMQ * 0.05,
+                        height: 30.h,
                       )
                     : SizedBox(
-                        height: heightMQ * 0.03,
+                        height: 20.h,
                       ),
                 //button sign in
                 Center(
@@ -153,12 +127,20 @@ class _SignInScreenState extends State<SignInScreen> {
                     children: [
                       defaultButton(
                           text: 'تسجيل الدخول',
-                          onPressed: () {},
+                          onPressed: () {
+                            // force keyboard go down
+                            FocusScope.of(context).unfocus();
+                          },
                           height:
                               Orientation.landscape == orientation ? 75 : 60),
+
+                      SizedBox(
+                        height: 10.h,
+                      ),
                       //other texts
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
                             'ليس لديك حساب؟',
