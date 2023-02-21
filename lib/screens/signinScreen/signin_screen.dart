@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medical_services/components/defaultProfileContainer.dart';
 import 'package:medical_services/components/defaultTextField.dart';
-import 'package:medical_services/components/titleWidget.dart';
+import 'package:medical_services/components/authTitleWidget.dart';
 import 'package:medical_services/providers/auth_provider.dart';
 import 'package:medical_services/settings/colors.dart';
 import 'package:provider/provider.dart';
@@ -31,7 +31,6 @@ class _SignInScreenState extends State<SignInScreen> {
     super.dispose();
   }
 
-  String appBarName = "نسيت كلمة المرور";
   @override
   Widget build(BuildContext context) {
     double widthMQ = MediaQuery.of(context).size.width;
@@ -84,7 +83,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         height:
                             Orientation.landscape == orientation ? 20.h : 10.h,
                       ),
-                      const CustomTitleWidget(title: 'رقم الهاتف'),
+                      const AuthTitleWidget(title: 'رقم الهاتف'),
                       defaultTextField(
                         hintText: 'ادخل رقم الهاتف',
                         controller: phoneNumberController,
@@ -97,7 +96,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         height: 10.h,
                       ),
                       //second textfield for the password
-                      const CustomTitleWidget(title: 'كلمة المرور'),
+                      const AuthTitleWidget(title: 'كلمة المرور'),
                       defaultTextField(
                         obscureText: provWatch.isVisible,
                         suffixIcon: GestureDetector(
@@ -202,7 +201,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(context, Routes.homeScreenRoute);
+                          Navigator.pushNamed(context, Routes.homeLayoutRoute);
                         },
                         child: Text(
                           'المتابعة كزائر',

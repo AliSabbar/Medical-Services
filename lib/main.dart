@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medical_services/providers/auth_provider.dart';
+import 'package:medical_services/providers/home_provider.dart';
 import 'package:medical_services/providers/upload_image_provider.dart';
-import 'package:medical_services/screens/homeScreen/home_screen.dart';
+import 'package:medical_services/screens/homeLayout/home_layout.dart';
 import 'package:medical_services/screens/signinScreen/signin_screen.dart';
 import 'package:medical_services/screens/splashScreen/splash_screen.dart';
 import 'package:medical_services/settings/routes_manger.dart';
@@ -17,7 +18,7 @@ void main() async {
   dynamic onBoarding = SharedHelper.getData(key: "OnBoarding");
   Widget startWidget;
   if (onBoarding != null) {
-    startWidget = HomeScreen();
+    startWidget = const HomeLayOut();
   } else {
     startWidget = const SplashScreen();
   }
@@ -25,6 +26,7 @@ void main() async {
     providers: [
       ChangeNotifierProvider(create: (context) => UploadImageProvider()),
       ChangeNotifierProvider(create: (context) => AuthProvider()),
+      ChangeNotifierProvider(create: (context) => HomeProvider()),
     ],
     child: MyApp(
       startWidget: startWidget,

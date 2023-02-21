@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../settings/colors.dart';
 
-class CustomTitleWidget extends StatelessWidget {
-  const CustomTitleWidget({super.key, required this.title});
+class AuthTitleWidget extends StatelessWidget {
+  const AuthTitleWidget({super.key, required this.title});
   final String title;
 
   @override

@@ -4,7 +4,7 @@ import 'package:medical_services/components/showBSimage.dart';
 import 'package:provider/provider.dart';
 
 import '../providers/upload_image_provider.dart';
-import 'titleWidget.dart';
+import 'authTitleWidget.dart';
 
 class UploadImageWidget extends StatelessWidget {
   const UploadImageWidget({super.key});
@@ -19,14 +19,12 @@ class UploadImageWidget extends StatelessWidget {
           onTap: () {
             showBottomSheet(
                 context: context,
-                builder: (context) => ShowBSImage(
-                    showCamera: () {
+                builder: (context) => ShowBSImage(showCamera: () {
                       context.read<UploadImageProvider>().uploadImage(
                             imageSource: ImageSource.camera,
                           );
                       Navigator.pop(context);
-                    },
-                    showGallery: () {
+                    }, showGallery: () {
                       context.read<UploadImageProvider>().uploadImage(
                             imageSource: ImageSource.gallery,
                           );
@@ -50,8 +48,7 @@ class UploadImageWidget extends StatelessWidget {
                   ),
                 ),
         ),
-
-       const CustomTitleWidget(title: 'رقم الهاتف')
+        const AuthTitleWidget(title: 'رقم الهاتف')
       ],
     );
   }

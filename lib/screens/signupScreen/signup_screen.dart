@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
-import 'package:medical_services/components/constant.dart';
 import 'package:medical_services/components/defaultButton.dart';
 import 'package:medical_services/components/defaultDropDownButton.dart';
 import 'dart:ui' as ui;
 import 'package:medical_services/components/defaultTextField.dart';
-import 'package:medical_services/components/titleWidget.dart';
+import 'package:medical_services/components/authTitleWidget.dart';
 import 'package:medical_services/components/uploadImageWidget.dart';
 import 'package:medical_services/providers/auth_provider.dart';
 import 'package:medical_services/providers/upload_image_provider.dart';
@@ -71,7 +70,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         SizedBox(
                           height: 8.h,
                         ),
-                        const CustomTitleWidget(title: 'اسمك الرباعي'),
+                        const AuthTitleWidget(title: 'اسمك الرباعي'),
                         defaultTextField(
                             hintText: 'ادخل اسمك الرباعي',
                             controller: userNameController,
@@ -79,7 +78,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         SizedBox(
                           height: 8.h,
                         ),
-                        const CustomTitleWidget(title: 'رقم الهاتف'),
+                        const AuthTitleWidget(title: 'رقم الهاتف'),
                         defaultTextField(
                             hintText: 'ادخل رقم الهاتف',
                             controller: phoneNumberController,
@@ -87,7 +86,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         SizedBox(
                           height: 8.h,
                         ),
-                        const CustomTitleWidget(title: 'كلمة المرور'),
+                        const AuthTitleWidget(title: 'كلمة المرور'),
                         defaultTextField(
                             hintText: 'ادخل كلمة المرور',
                             controller: passwordController,
@@ -105,9 +104,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         SizedBox(
                           height: 8.h,
                         ),
-                        const CustomTitleWidget(title: 'تاريخ الميلاد'),
+                        const AuthTitleWidget(title: 'تاريخ الميلاد'),
                         defaultTextField(
-                          readOnly: true,
+                            readOnly: true,
                             hintText: 'ادخل تاريخ ميلادك',
                             controller: ageController,
                             onTap: () {
@@ -128,7 +127,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         SizedBox(
                           height: 8.h,
                         ),
-                        const CustomTitleWidget(title: 'المحافظة'),
+                        const AuthTitleWidget(title: 'المحافظة'),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -168,7 +167,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         SizedBox(
                           height: 8.h,
                         ),
-                        const CustomTitleWidget(title: 'المدينة'),
+                        const AuthTitleWidget(title: 'المدينة'),
                         defaultTextField(
                             hintText: 'ادخل اسم المدينة  مثلا (الكرادة)',
                             controller: cityController,
@@ -176,7 +175,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         SizedBox(
                           height: 8.h,
                         ),
-                        const CustomTitleWidget(title: 'الجنس'),
+                        const AuthTitleWidget(title: 'الجنس'),
                         defaultDropDownButton(
                             value: provWatch.initialGender,
                             items: provWatch.genderList,

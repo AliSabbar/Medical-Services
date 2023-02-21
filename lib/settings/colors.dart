@@ -12,4 +12,10 @@ class AppColors {
   static Color greenColor = const Color(0xffBAF3B1);
   //color for the background cards
   static Color backgroundCardColor = Color.fromARGB(255, 242, 247, 255);
+  //* services color [Home Screen]
+  static Color ambColor = const Color(0xffFD8A8A);
+  static Color clinicColor = const Color(0xffFB5F1CC);
+  static Color hospitalColor = const Color(0xffFFEBE8C);
+  static Color doctorColor = const Color(0xffAAC4FF);
+  
 }

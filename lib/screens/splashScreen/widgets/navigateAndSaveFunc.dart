@@ -8,7 +8,7 @@ navigateAndSave({required context}) async {
   //! change the route to LoginScreen
   Navigator.pushNamedAndRemoveUntil(
     context,
-    Routes.homeScreenRoute,
+    Routes.homeLayoutRoute,
     (route) => false,
   );
 }

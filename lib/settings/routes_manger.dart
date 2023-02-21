@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:medical_services/screens/homeLayout/home_layout.dart';
 import 'package:medical_services/screens/homeScreen/home_screen.dart';
 import 'package:medical_services/screens/signinScreen/signin_screen.dart';
 import 'package:medical_services/screens/splashScreen/splash_screen.dart';
@@ -8,6 +9,7 @@ import '../screens/signupScreen/signup_screen.dart';
 
 class Routes {
   static const String splashScreenRoute = "/splashScreen";
+  static const String homeLayoutRoute = "/homeLayout";
   static const String homeScreenRoute = "/homeScreen";
   static const String signInScreen = "/signInScreen";
   static const String signUpScreen = "/signUpScreen";
@@ -18,16 +20,21 @@ class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
     switch (settings.name) {
       case Routes.splashScreenRoute:
-        return MaterialPageRoute(builder: (_) => const SplashScreen());
+        return MaterialPageRoute(builder: (context) => const SplashScreen());
+      case Routes.homeLayoutRoute:
+        return MaterialPageRoute(builder: (context) =>const HomeLayOut());
       case Routes.homeScreenRoute:
-        return MaterialPageRoute(builder: (_) => HomeScreen());
+        return MaterialPageRoute(builder: (context) =>const HomeScreen());
       case Routes.signInScreen:
-        return MaterialPageRoute(builder: (_) => const SignInScreen());
+        return MaterialPageRoute(builder: (context) => const SignInScreen());
       case Routes.signUpScreen:
-        return MaterialPageRoute(builder: (_) => const SignUpScreen());
+        return MaterialPageRoute(builder: (context) => const SignUpScreen());
       case Routes.otpScreen:
         Object? title = settings.arguments;
-        return MaterialPageRoute(builder: (_) => OtpScreen(title: title,));
+        return MaterialPageRoute(
+            builder: (context) => OtpScreen(
+                  title: title,
+                ));
       default:
         return unDefinedRoute();
     }

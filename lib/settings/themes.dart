@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:medical_services/settings/primarySwatch_color.dart';
 
 import 'colors.dart';
 
 ThemeData lightTheme = ThemeData(
     fontFamily: 'Cairo',
     scaffoldBackgroundColor: Colors.white,
+    primaryColor: AppColors.primaryColor,
+    primarySwatch: createMaterialColor(AppColors.primaryColor),
 
 // * APPBAR STYLE
 
     appBarTheme: AppBarTheme(
-        titleTextStyle: const TextStyle(
+        titleTextStyle:  TextStyle(
             color: Colors.black,
-            fontSize: 18,
+            fontSize: 20.sp,
             fontWeight: FontWeight.bold,
             fontFamily: 'Cairo'),
         iconTheme: IconThemeData(
@@ -31,7 +35,22 @@ ThemeData lightTheme = ThemeData(
       filled: true,
       fillColor: AppColors.textfieldColor,
       focusedBorder: InputBorder.none,
-     
+    ),
+
+//* ADD TEXT STYLE FOR TITLE
+
+    textTheme: TextTheme(
+        headlineMedium: TextStyle(
+            fontSize: 18.sp,
+            fontWeight: FontWeight.bold,
+            color: AppColors.blackColor)),
+
+//* BOTTOM NAV
+
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      elevation: 0.0,
+      enableFeedback: true,
+      type: BottomNavigationBarType.fixed,
     ));
 
 // ? ========================= DARK COLOR =========================
