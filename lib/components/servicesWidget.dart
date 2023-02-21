@@ -4,8 +4,8 @@ import 'package:flutter_svg/svg.dart';
 
 import '../settings/colors.dart';
 
-class ServicesWidget extends StatelessWidget {
-  const ServicesWidget({
+class ServicesItem extends StatelessWidget {
+  const ServicesItem({
     super.key,
     required this.assetName,
     required this.color,
@@ -18,7 +18,7 @@ class ServicesWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Flexible(
       child: GestureDetector(
-        onTap: (){},
+        onTap: onTap,
         child: Container(
           width: 80.w,
           height: 80.h,

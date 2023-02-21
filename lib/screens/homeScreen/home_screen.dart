@@ -7,8 +7,11 @@ import 'package:medical_services/components/searchWidget.dart';
 import 'package:medical_services/components/servicesWidget.dart';
 import 'package:medical_services/providers/home_provider.dart';
 import 'package:medical_services/screens/homeScreen/widgets/miss_doctor.dart';
+import 'package:medical_services/screens/homeScreen/widgets/services_widget.dart';
 import 'package:medical_services/settings/colors.dart';
 import 'package:provider/provider.dart';
+
+import '../../components/appointmentCard.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -55,32 +58,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 20.h,
                   ),
 //* SERVICES
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ServicesWidget(
-                          assetName: 'assets/icons/test.svg',
-                          color: AppColors.ambColor,
-                          onTap: () {}),
-                      ServicesWidget(
-                          assetName: 'assets/icons/hospital.svg',
-                          color: AppColors.hospitalColor,
-                          onTap: () {}),
-                      ServicesWidget(
-                          assetName: 'assets/icons/clinic.svg',
-                          color: AppColors.clinicColor,
-                          onTap: () {}),
-                      ServicesWidget(
-                          assetName: 'assets/icons/doctor.svg',
-                          color: AppColors.doctorColor,
-                          onTap: () {}),
-                    ],
-                  ),
+                  const ServicesWidget(),
+
                   SizedBox(
                     height: 30.h,
                   ),
 
-//* The Doctor  
+//* The Doctor
 
                   const MissDoctor(),
 
@@ -93,14 +77,23 @@ class _HomeScreenState extends State<HomeScreen> {
                     height: 20.h,
                   ),
 
+// * Appointment card
 
-// ! Appointment WORK 
-                  Container(
-                    width: 208.w,
+                  SizedBox(
+                    width: double.infinity,
                     height: 112.h,
-                    decoration: BoxDecoration(
-                      color: Colors.red,
-                      borderRadius: BorderRadius.circular(20.r),
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      physics: const BouncingScrollPhysics(),
+                      itemCount: 5,
+                      separatorBuilder: (BuildContext context, int index) {
+                        return const SizedBox(
+                          width: 20,
+                        );
+                      },
+                      itemBuilder: (BuildContext context, int index) {
+                        return appointmentCard();
+                      },
                     ),
                   )
                 ],

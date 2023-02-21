@@ -17,5 +17,22 @@ class AppColors {
   static Color clinicColor = const Color(0xffFB5F1CC);
   static Color hospitalColor = const Color(0xffFFEBE8C);
   static Color doctorColor = const Color(0xffAAC4FF);
-  
+
+// ? List Of Colors
+
+static  List primColors = [
+    const Color(0xff275AA6),
+    const Color(0xff932626),
+    const Color(0xff1E8134),
+    const Color(0xff804223),
+    const Color(0xff275AA6),
+  ];
+
+static  List backColors = [
+    const Color(0xffA4C0E9),
+    const Color(0xffFD8A8A),
+    const Color(0xffB5F1CC),
+    const Color(0xffFEBE8C),
+    const Color(0xffAAC4FF),
+  ];
 }
