@@ -11,6 +11,8 @@ import 'package:medical_services/settings/themes.dart';
 import 'package:provider/provider.dart';
 
 import 'network/local/shared_helper.dart';
+import 'screens/choiceAcc/choiceAcc.dart';
+import 'screens/providingService/providingService.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,7 +51,7 @@ class MyApp extends StatelessWidget {
         title: 'Medical Services',
         debugShowCheckedModeBanner: false,
         theme: lightTheme, //? <-- change theme
-        home: const SignInScreen(), //! this is your home widget
+        home: ProvidingService(), //! this is your home widget
         onGenerateRoute: RouteGenerator.getRoute,
       ),
     );

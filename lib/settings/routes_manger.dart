@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:medical_services/screens/choiceAcc/choiceAcc.dart';
 import 'package:medical_services/screens/homeLayout/home_layout.dart';
 import 'package:medical_services/screens/homeScreen/home_screen.dart';
+import 'package:medical_services/screens/providingService/providingService.dart';
 import 'package:medical_services/screens/signinScreen/signin_screen.dart';
 import 'package:medical_services/screens/specialtyScreen/specialty_screen.dart';
 import 'package:medical_services/screens/splashScreen/splash_screen.dart';
@@ -18,6 +20,8 @@ class Routes {
   static const String otpScreen = "/otpScreen";
   static const String specialtyScreen = "/specialtyScreen";
   static const String doctorsScreen = "/doctorsScreen";
+  static const String ChoiceAccount = "/ChoiceAccount";
+  static const String ProvidingService = "/ProvidingService";
 }
 
 class RouteGenerator {
@@ -43,6 +47,11 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (context) => const SpecialtyScreen());
       case Routes.doctorsScreen:
         return MaterialPageRoute(builder: (context) => const DoctorsScreen());
+      case Routes.ChoiceAccount:
+        return MaterialPageRoute(builder: (context) => const ChoiceAccount());
+      case Routes.ProvidingService:
+        return MaterialPageRoute(
+            builder: (context) => const ProvidingService());
       default:
         return unDefinedRoute();
     }
