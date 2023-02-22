@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../settings/colors.dart';
 
-
 GestureDetector appointmentCard() {
   return GestureDetector(
     onTap: () {},

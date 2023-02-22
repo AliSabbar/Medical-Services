@@ -11,7 +11,7 @@ class AppColors {
   static Color ofwhiteColor = const Color(0xffF3D4BD);
   static Color greenColor = const Color(0xffBAF3B1);
   //color for the background cards
-  static Color backgroundCardColor = Color.fromARGB(255, 242, 247, 255);
+  static Color backgroundCardColor = const Color(0xffF2F7FF);
   //* services color [Home Screen]
   static Color ambColor = const Color(0xffFD8A8A);
   static Color clinicColor = const Color(0xffFB5F1CC);
@@ -20,7 +20,7 @@ class AppColors {
 
 // ? List Of Colors
 
-static  List primColors = [
+  static List primColors = [
     const Color(0xff275AA6),
     const Color(0xff932626),
     const Color(0xff1E8134),
@@ -28,7 +28,7 @@ static  List primColors = [
     const Color(0xff275AA6),
   ];
 
-static  List backColors = [
+  static List backColors = [
     const Color(0xffA4C0E9),
     const Color(0xffFD8A8A),
     const Color(0xffB5F1CC),

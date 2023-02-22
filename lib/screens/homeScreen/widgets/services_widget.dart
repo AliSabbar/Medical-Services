@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../../../components/servicesWidget.dart';
+import 'package:medical_services/settings/routes_manger.dart';
+import '../../../components/servicesItem.dart';
 import '../../../settings/colors.dart';
 
 class ServicesWidget extends StatelessWidget {
@@ -28,7 +28,9 @@ class ServicesWidget extends StatelessWidget {
         ServicesItem(
             assetName: 'assets/icons/doctor.svg',
             color: AppColors.doctorColor,
-            onTap: () {}),
+            onTap: () {
+              Navigator.pushNamed(context, Routes.specialtyScreen);
+            }),
       ],
     );
   }

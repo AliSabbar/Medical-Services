@@ -17,7 +17,7 @@ class UploadImageWidget extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            showBottomSheet(
+            showModalBottomSheet(
                 context: context,
                 builder: (context) => ShowBSImage(showCamera: () {
                       context.read<UploadImageProvider>().uploadImage(
@@ -48,7 +48,7 @@ class UploadImageWidget extends StatelessWidget {
                   ),
                 ),
         ),
-        const AuthTitleWidget(title: 'رقم الهاتف')
+        const AuthTitleWidget(title: 'اختر صورة')
       ],
     );
   }

@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:medical_services/components/defaultTextField.dart';
-import 'package:medical_services/components/authTitleWidget.dart';
 import 'package:medical_services/components/searchWidget.dart';
-import 'package:medical_services/components/servicesWidget.dart';
 import 'package:medical_services/providers/home_provider.dart';
 import 'package:medical_services/screens/homeScreen/widgets/miss_doctor.dart';
 import 'package:medical_services/screens/homeScreen/widgets/services_widget.dart';
-import 'package:medical_services/settings/colors.dart';
 import 'package:provider/provider.dart';
 
 import '../../components/appointmentCard.dart';

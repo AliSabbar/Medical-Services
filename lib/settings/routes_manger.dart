@@ -3,7 +3,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medical_services/screens/homeLayout/home_layout.dart';
 import 'package:medical_services/screens/homeScreen/home_screen.dart';
 import 'package:medical_services/screens/signinScreen/signin_screen.dart';
+import 'package:medical_services/screens/specialtyScreen/specialty_screen.dart';
 import 'package:medical_services/screens/splashScreen/splash_screen.dart';
+import '../screens/doctorsScreen/doctors_screen.dart';
 import '../screens/otpScreen/otp_screen.dart';
 import '../screens/signupScreen/signup_screen.dart';
 
@@ -14,6 +16,8 @@ class Routes {
   static const String signInScreen = "/signInScreen";
   static const String signUpScreen = "/signUpScreen";
   static const String otpScreen = "/otpScreen";
+  static const String specialtyScreen = "/specialtyScreen";
+  static const String doctorsScreen = "/doctorsScreen";
 }
 
 class RouteGenerator {
@@ -22,9 +26,9 @@ class RouteGenerator {
       case Routes.splashScreenRoute:
         return MaterialPageRoute(builder: (context) => const SplashScreen());
       case Routes.homeLayoutRoute:
-        return MaterialPageRoute(builder: (context) =>const HomeLayOut());
+        return MaterialPageRoute(builder: (context) => const HomeLayOut());
       case Routes.homeScreenRoute:
-        return MaterialPageRoute(builder: (context) =>const HomeScreen());
+        return MaterialPageRoute(builder: (context) => const HomeScreen());
       case Routes.signInScreen:
         return MaterialPageRoute(builder: (context) => const SignInScreen());
       case Routes.signUpScreen:
@@ -35,6 +39,10 @@ class RouteGenerator {
             builder: (context) => OtpScreen(
                   title: title,
                 ));
+      case Routes.specialtyScreen:
+        return MaterialPageRoute(builder: (context) => const SpecialtyScreen());
+      case Routes.doctorsScreen:
+        return MaterialPageRoute(builder: (context) => const DoctorsScreen());
       default:
         return unDefinedRoute();
     }
