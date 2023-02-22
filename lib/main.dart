@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:medical_services/providers/doc_clinic_provider.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:medical_services/providers/auth_provider.dart';
+import 'package:medical_services/providers/home_provider.dart';
 import 'package:medical_services/providers/upload_image_provider.dart';
-import 'package:medical_services/screens/adminScreens/admin_screen.dart';
-import 'package:medical_services/screens/homeScreen/home_screen.dart';
-import 'package:medical_services/screens/signinScreens/signin_screen.dart';
+import 'package:medical_services/screens/homeLayout/home_layout.dart';
+import 'package:medical_services/screens/signinScreen/signin_screen.dart';
 import 'package:medical_services/screens/splashScreen/splash_screen.dart';
 import 'package:medical_services/settings/routes_manger.dart';
 import 'package:medical_services/settings/themes.dart';
 import 'package:provider/provider.dart';
 
 import 'network/local/shared_helper.dart';
+import 'screens/choiceAcc/choiceAcc.dart';
+import 'screens/providingService/providingService.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,14 +20,15 @@ void main() async {
   dynamic onBoarding = SharedHelper.getData(key: "OnBoarding");
   Widget startWidget;
   if (onBoarding != null) {
-    startWidget = HomeScreen();
+    startWidget = const HomeLayOut();
   } else {
     startWidget = const SplashScreen();
   }
   runApp(MultiProvider(
     providers: [
-      ChangeNotifierProvider(create: (context) => DocAndClinicProvider()),
       ChangeNotifierProvider(create: (context) => UploadImageProvider()),
+      ChangeNotifierProvider(create: (context) => AuthProvider()),
+      ChangeNotifierProvider(create: (context) => HomeProvider()),
     ],
     child: MyApp(
       startWidget: startWidget,
@@ -33,18 +37,23 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key, required this.startWidget});
+  const MyApp({super.key, required this.startWidget});
 
-  Widget startWidget;
+  final Widget startWidget;
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Medical Services',
-      debugShowCheckedModeBanner: false,
-      theme: lightTheme, //? <-- change theme
-      home: AdminPanelScreen(), //! this is your home widget
-      onGenerateRoute: RouteGenerator.getRoute,
+    return ScreenUtilInit(
+      designSize: const Size(390, 844), //? maybe change it later
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) => MaterialApp(
+        title: 'Medical Services',
+        debugShowCheckedModeBanner: false,
+        theme: lightTheme, //? <-- change theme
+        home: ProvidingService(), //! this is your home widget
+        onGenerateRoute: RouteGenerator.getRoute,
+      ),
     );
   }
 }

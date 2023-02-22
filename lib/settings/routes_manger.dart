@@ -1,59 +1,57 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:medical_services/screens/adminScreens/AddSpecialtyScreen/add_specialty_screen.dart';
-import 'package:medical_services/screens/adminScreens/addDoctorScreen/add_doctors_screen.dart';
-import 'package:medical_services/screens/adminScreens/admin_screen.dart';
-import 'package:medical_services/screens/adminScreens/showClinicsScreen/show_clinics_screen.dart';
-import 'package:medical_services/screens/adminScreens/showDoctorsScreen/show_doctors_screen.dart';
+import 'package:medical_services/screens/choiceAcc/choiceAcc.dart';
+import 'package:medical_services/screens/homeLayout/home_layout.dart';
 import 'package:medical_services/screens/homeScreen/home_screen.dart';
-import 'package:medical_services/screens/signinScreens/signin_screen.dart';
+import 'package:medical_services/screens/providingService/providingService.dart';
+import 'package:medical_services/screens/signinScreen/signin_screen.dart';
+import 'package:medical_services/screens/specialtyScreen/specialty_screen.dart';
 import 'package:medical_services/screens/splashScreen/splash_screen.dart';
-
-import '../screens/adminScreens/addClinicScreen/add_clinic_screen.dart';
-import '../screens/adminScreens/showUsersScreen/show_users_screen.dart';
+import '../screens/doctorsScreen/doctors_screen.dart';
+import '../screens/otpScreen/otp_screen.dart';
+import '../screens/signupScreen/signup_screen.dart';
 
 class Routes {
-  // ! ADMIN PANEL ROUTES
-
-  static const String adminPanelScreenRoute = "/adminScreen";
-  static const String addDoctorScreenRoute = "/addDoctorScreen";
-  static const String showDoctorsScreenRoute = "/showDoctorsScreen";
-  static const String addClinicScreenRoute = "/addClinicScreen";
-  static const String showClinicScreenRoute = "/showClinicScreen";
-  static const String addSpecialtyScreenRoute = "/addSpecialtyScreen";
-  static const String showUsersScreenRoute = "/showUsersScreen";
-  // ! ADMIN PANEL ROUTES
-
   static const String splashScreenRoute = "/splashScreen";
+  static const String homeLayoutRoute = "/homeLayout";
   static const String homeScreenRoute = "/homeScreen";
   static const String signInScreen = "/signInScreen";
+  static const String signUpScreen = "/signUpScreen";
+  static const String otpScreen = "/otpScreen";
+  static const String specialtyScreen = "/specialtyScreen";
+  static const String doctorsScreen = "/doctorsScreen";
+  static const String ChoiceAccount = "/ChoiceAccount";
+  static const String ProvidingService = "/ProvidingService";
 }
 
 class RouteGenerator {
   static Route<dynamic> getRoute(RouteSettings settings) {
     switch (settings.name) {
-      // ! ADMIN PANEL ROUTES
-      case Routes.adminPanelScreenRoute:
-        return MaterialPageRoute(builder: (_) => AdminPanelScreen());
-      case Routes.addDoctorScreenRoute:
-        return MaterialPageRoute(builder: (_) => AddDoctorScreen());
-      case Routes.showDoctorsScreenRoute:
-        return MaterialPageRoute(builder: (_) => ShowDoctorsScreen());
-      case Routes.addClinicScreenRoute:
-        return MaterialPageRoute(builder: (_) => AddClinicScreen());
-      case Routes.showClinicScreenRoute:
-        return MaterialPageRoute(builder: (_) => ShowClinicsScreen());
-      case Routes.addSpecialtyScreenRoute:
-        return MaterialPageRoute(builder: (_) => AddSpecialtyScreen());
-      case Routes.showUsersScreenRoute:
-        return MaterialPageRoute(builder: (_) => ShowUsersScreen());
-      //! ADMIN PANEL ROUTES
       case Routes.splashScreenRoute:
-        return MaterialPageRoute(builder: (_) => SplashScreen());
+        return MaterialPageRoute(builder: (context) => const SplashScreen());
+      case Routes.homeLayoutRoute:
+        return MaterialPageRoute(builder: (context) => const HomeLayOut());
       case Routes.homeScreenRoute:
-        return MaterialPageRoute(builder: (_) => HomeScreen());
+        return MaterialPageRoute(builder: (context) => const HomeScreen());
       case Routes.signInScreen:
-        return MaterialPageRoute(builder: (_) => SignInScreen());
+        return MaterialPageRoute(builder: (context) => const SignInScreen());
+      case Routes.signUpScreen:
+        return MaterialPageRoute(builder: (context) => const SignUpScreen());
+      case Routes.otpScreen:
+        Object? title = settings.arguments;
+        return MaterialPageRoute(
+            builder: (context) => OtpScreen(
+                  title: title,
+                ));
+      case Routes.specialtyScreen:
+        return MaterialPageRoute(builder: (context) => const SpecialtyScreen());
+      case Routes.doctorsScreen:
+        return MaterialPageRoute(builder: (context) => const DoctorsScreen());
+      case Routes.ChoiceAccount:
+        return MaterialPageRoute(builder: (context) => const ChoiceAccount());
+      case Routes.ProvidingService:
+        return MaterialPageRoute(
+            builder: (context) => const ProvidingService());
       default:
         return unDefinedRoute();
     }

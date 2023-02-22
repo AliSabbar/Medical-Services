@@ -1,66 +1,102 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:medical_services/components/defaultTextField.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:medical_services/components/searchWidget.dart';
+import 'package:medical_services/providers/home_provider.dart';
+import 'package:medical_services/screens/homeScreen/widgets/miss_doctor.dart';
+import 'package:medical_services/screens/homeScreen/widgets/services_widget.dart';
+import 'package:provider/provider.dart';
 
-class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
-  TextEditingController controllerTextField = TextEditingController();
+import '../../components/appointmentCard.dart';
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  TextEditingController searchController = TextEditingController();
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
+    var provRead = context.read<HomeProvider>();
+    var provWatch = context.watch<HomeProvider>();
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        body: SafeArea(
+          body: Directionality(
+        textDirection: TextDirection.rtl,
+        child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.only(right: 15, left: 15),
-            child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
-                        Text(
-                          'مرحبا,',
-                          style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.w400),
-                        ),
-                        Text(
-                          'سمير سمير',
-                          style: TextStyle(
-                              fontSize: 15, fontWeight: FontWeight.w700),
-                        ),
-                      ],
+            padding: EdgeInsets.symmetric(horizontal: 20.w),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(height: 20.h),
+// * SEARCH
+
+                  SearchWidget(controller: searchController),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  Text('الخدمات',
+                      style: Theme.of(context).textTheme.headlineMedium),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+//* SERVICES
+                  const ServicesWidget(),
+
+                  SizedBox(
+                    height: 30.h,
+                  ),
+
+//* The Doctor
+
+                  const MissDoctor(),
+
+                  SizedBox(
+                    height: 30.h,
+                  ),
+                  Text('الحجوازات القائمة',
+                      style: Theme.of(context).textTheme.headlineMedium),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+
+// * Appointment card
+
+                  SizedBox(
+                    width: double.infinity,
+                    height: 112.h,
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      physics: const BouncingScrollPhysics(),
+                      itemCount: 5,
+                      separatorBuilder: (BuildContext context, int index) {
+                        return const SizedBox(
+                          width: 20,
+                        );
+                      },
+                      itemBuilder: (BuildContext context, int index) {
+                        return appointmentCard();
+                      },
                     ),
-                    Material(
-                      shape: CircleBorder(),
-                      clipBehavior: Clip.hardEdge,
-                      child: Ink.image(
-                        image: AssetImage('assets/images/profileman.jpg'),
-                        fit: BoxFit.cover,
-                        width: 50.0,
-                        height: 50.0,
-                        child: InkWell(
-                          onTap: () {},
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 40),
-                defaultTextField(
-                  hintText: 'ابحث عن عيادة , دكتور',
-                  controller: controllerTextField,
-                  validator: (s) {},
-                  height: 50,
-                  //edit
-                )
-              ],
+                  )
+                ],
+              ),
             ),
           ),
         ),
-      ),
+      )),
     );
   }
 }
