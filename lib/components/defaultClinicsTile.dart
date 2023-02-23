@@ -42,6 +42,7 @@ class DefaultClinicsTile extends StatelessWidget {
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     title,
@@ -58,9 +59,7 @@ class DefaultClinicsTile extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(
-                width: 43.w,
-              ),
+             const Spacer(),
               GestureDetector(
                 onTap: () {},
                 child: Row(
@@ -68,11 +67,15 @@ class DefaultClinicsTile extends StatelessWidget {
                     Text(
                       'عرض المزيد',
                       style: TextStyle(
-                          fontSize: 14,
+                          fontSize: 14.sp,
                           fontWeight: FontWeight.bold,
                           color: AppColors.greyColor),
                     ),
-                    SvgPicture.asset('assets/icons/arrowside.svg')
+                    
+                     SvgPicture.asset('assets/icons/arrowside.svg'),
+
+                     SizedBox(width: 10.w,)
+                  
                   ],
                 ),
               )

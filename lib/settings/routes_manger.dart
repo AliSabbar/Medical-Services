@@ -23,11 +23,11 @@ class Routes {
   static const String otpScreen = "/otpScreen";
   static const String specialtyScreen = "/specialtyScreen";
   static const String doctorsScreen = "/doctorsScreen";
-  static const String ChoiceAccount = "/ChoiceAccount";
-  static const String ProvidingService = "/ProvidingService";
-  static const String Clinics = "/Clinics";
-  static const String ClinicsNearBy = "/ClinicsNearBy";
-  static const String ClinicsTopRated = "/ClinicsTopRated";
+  static const String choiceAccount = "/ChoiceAccount";
+  static const String providingService = "/ProvidingService";
+  static const String clinics = "/Clinics";
+  static const String clinicsNearBy = "/ClinicsNearBy";
+  static const String clinicsTopRated = "/ClinicsTopRated";
 }
 
 class RouteGenerator {
@@ -53,16 +53,16 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (context) => const SpecialtyScreen());
       case Routes.doctorsScreen:
         return MaterialPageRoute(builder: (context) => const DoctorsScreen());
-      case Routes.ChoiceAccount:
+      case Routes.choiceAccount:
         return MaterialPageRoute(builder: (context) => const ChoiceAccount());
-      case Routes.ProvidingService:
+      case Routes.providingService:
         return MaterialPageRoute(
             builder: (context) => const ProvidingService());
-      case Routes.Clinics:
-        return MaterialPageRoute(builder: (context) => const Clinics());
-      case Routes.ClinicsNearBy:
+      case Routes.clinics:
+        return MaterialPageRoute(builder: (context) => const ClinicsScreen());
+      case Routes.clinicsNearBy:
         return MaterialPageRoute(builder: (context) => const ClinicsNearBy());
-      case Routes.ClinicsTopRated:
+      case Routes.clinicsTopRated:
         return MaterialPageRoute(builder: (context) => const ClinicsTopRated());
       default:
         return unDefinedRoute();

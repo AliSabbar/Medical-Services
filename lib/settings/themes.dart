@@ -49,6 +49,7 @@ ThemeData lightTheme = ThemeData(
 
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       elevation: 0.0,
+      backgroundColor: Colors.white,
       enableFeedback: true,
       type: BottomNavigationBarType.fixed,
     ));

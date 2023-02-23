@@ -24,7 +24,9 @@ class ServicesWidget extends StatelessWidget {
         ServicesItem(
             assetName: 'assets/icons/clinic.svg',
             color: AppColors.clinicColor,
-            onTap: () {}),
+            onTap: () {
+              Navigator.pushNamed(context, Routes.clinics);
+            }),
         ServicesItem(
             assetName: 'assets/icons/doctor.svg',
             color: AppColors.doctorColor,

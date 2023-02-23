@@ -8,11 +8,11 @@ import '../settings/colors.dart';
 class DefaultClinicsCard extends StatelessWidget {
   const DefaultClinicsCard(
       {Key? key,
-      required this.ImgUrl,
+      required this.imgUrl,
       required this.title,
       required this.onTap})
       : super(key: key);
-  final String ImgUrl;
+  final String imgUrl;
   final String title;
   final VoidCallback onTap;
 
@@ -34,22 +34,25 @@ class DefaultClinicsCard extends StatelessWidget {
               width: 155.w,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20),
-                  topRight: Radius.circular(20),
+                  topLeft: Radius.circular(20.r),
+                  topRight: Radius.circular(20.r),
                 ),
                 image: DecorationImage(
-                    image: NetworkImage(ImgUrl), fit: BoxFit.cover),
+                    image: NetworkImage(imgUrl), fit: BoxFit.cover),
               ),
             ),
             Text(
               title,
+              maxLines: 2,
+              textAlign: TextAlign.center,
               style: TextStyle(
-                  fontSize: 17,
+                  fontSize: 16.sp,
+                  overflow: TextOverflow.ellipsis,
                   color: AppColors.primaryColor,
                   fontWeight: FontWeight.bold),
             ),
             SizedBox(
-              height: 5,
+              height: 10.h,
             ),
             // rating
             Stars(countStar: 5),
