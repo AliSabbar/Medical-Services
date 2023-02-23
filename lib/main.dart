@@ -12,6 +12,7 @@ import 'package:provider/provider.dart';
 
 import 'network/local/shared_helper.dart';
 import 'screens/choiceAcc/choiceAcc.dart';
+import 'screens/clinic/Clinics.dart';
 import 'screens/providingService/providingService.dart';
 
 void main() async {
@@ -51,7 +52,7 @@ class MyApp extends StatelessWidget {
         title: 'Medical Services',
         debugShowCheckedModeBanner: false,
         theme: lightTheme, //? <-- change theme
-        home: ProvidingService(), //! this is your home widget
+        home: Clinics(), //! this is your home widget
         onGenerateRoute: RouteGenerator.getRoute,
       ),
     );
