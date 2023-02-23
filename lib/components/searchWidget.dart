@@ -17,7 +17,7 @@ class SearchWidget extends StatelessWidget {
             color: AppColors.greyColor,
           ),
         ),
-        hintText: 'ابحث عن عيادة طبيب مريض',
+        hintText: 'ابحث عن عيادة, طبيب',
         controller: controller,
         validator: (s) {});
   }

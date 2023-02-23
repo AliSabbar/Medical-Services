@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medical_services/screens/choiceAcc/choiceAcc.dart';
+import 'package:medical_services/screens/clinic/Clinics.dart';
+import 'package:medical_services/screens/clinic/clinicsNearBy.dart';
+import 'package:medical_services/screens/clinic/clinicsTopRated.dart';
 import 'package:medical_services/screens/homeLayout/home_layout.dart';
 import 'package:medical_services/screens/homeScreen/home_screen.dart';
 import 'package:medical_services/screens/providingService/providingService.dart';
@@ -22,6 +25,9 @@ class Routes {
   static const String doctorsScreen = "/doctorsScreen";
   static const String ChoiceAccount = "/ChoiceAccount";
   static const String ProvidingService = "/ProvidingService";
+  static const String Clinics = "/Clinics";
+  static const String ClinicsNearBy = "/ClinicsNearBy";
+  static const String ClinicsTopRated = "/ClinicsTopRated";
 }
 
 class RouteGenerator {
@@ -52,6 +58,12 @@ class RouteGenerator {
       case Routes.ProvidingService:
         return MaterialPageRoute(
             builder: (context) => const ProvidingService());
+      case Routes.Clinics:
+        return MaterialPageRoute(builder: (context) => const Clinics());
+      case Routes.ClinicsNearBy:
+        return MaterialPageRoute(builder: (context) => const ClinicsNearBy());
+      case Routes.ClinicsTopRated:
+        return MaterialPageRoute(builder: (context) => const ClinicsTopRated());
       default:
         return unDefinedRoute();
     }

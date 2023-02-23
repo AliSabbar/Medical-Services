@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:medical_services/components/starsTest/stars.dart';
 
 import '../settings/colors.dart';
 
@@ -50,11 +51,8 @@ class DefaultClinicsCard extends StatelessWidget {
             SizedBox(
               height: 5,
             ),
-            SvgPicture.asset(
-              'assets/icons/stars.svg',
-              width: 60,
-              height: 13,
-            )
+            // rating
+            Stars(countStar: 5),
           ],
         ),
       ),

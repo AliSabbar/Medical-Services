@@ -5,6 +5,7 @@ import 'package:medical_services/components/defaultClinicsCard.dart';
 import 'package:medical_services/screens/clinic/widgets/defaultListView.dart';
 import 'package:medical_services/screens/homeScreen/widgets/miss_doctor.dart';
 import 'package:medical_services/settings/colors.dart';
+import 'package:medical_services/settings/routes_manger.dart';
 
 class Clinics extends StatelessWidget {
   const Clinics({Key? key}) : super(key: key);
@@ -55,7 +56,9 @@ class Clinics extends StatelessWidget {
                             'عرض الكل',
                             style: TextStyle(color: AppColors.greyColor),
                           ),
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.pushNamed(context, Routes.ClinicsNearBy);
+                          },
                         ),
                         const SizedBox(
                           width: 15,
@@ -93,7 +96,10 @@ class Clinics extends StatelessWidget {
                             'عرض الكل',
                             style: TextStyle(color: AppColors.greyColor),
                           ),
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.pushNamed(
+                                context, Routes.ClinicsTopRated);
+                          },
                         ),
                         const SizedBox(
                           width: 15,

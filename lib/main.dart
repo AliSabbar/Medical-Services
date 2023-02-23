@@ -3,16 +3,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medical_services/providers/auth_provider.dart';
 import 'package:medical_services/providers/home_provider.dart';
 import 'package:medical_services/providers/upload_image_provider.dart';
+import 'package:medical_services/screens/clinic/clinicsNearBy.dart';
 import 'package:medical_services/screens/homeLayout/home_layout.dart';
 import 'package:medical_services/screens/signinScreen/signin_screen.dart';
 import 'package:medical_services/screens/splashScreen/splash_screen.dart';
 import 'package:medical_services/settings/routes_manger.dart';
 import 'package:medical_services/settings/themes.dart';
 import 'package:provider/provider.dart';
-
 import 'network/local/shared_helper.dart';
 import 'screens/choiceAcc/choiceAcc.dart';
 import 'screens/clinic/Clinics.dart';
+import 'screens/clinic/clinicsTopRated.dart';
 import 'screens/providingService/providingService.dart';
 
 void main() async {
