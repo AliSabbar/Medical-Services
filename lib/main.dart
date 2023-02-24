@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medical_services/providers/auth_provider.dart';
+import 'package:medical_services/providers/doctors_provider.dart';
 import 'package:medical_services/providers/home_provider.dart';
 import 'package:medical_services/providers/upload_image_provider.dart';
 import 'package:medical_services/screens/clinic/clinicsNearBy.dart';
@@ -31,6 +32,7 @@ void main() async {
       ChangeNotifierProvider(create: (context) => UploadImageProvider()),
       ChangeNotifierProvider(create: (context) => AuthProvider()),
       ChangeNotifierProvider(create: (context) => HomeProvider()),
+      ChangeNotifierProvider(create: (context) => DoctorsProvider()),
     ],
     child: MyApp(
       startWidget: startWidget,

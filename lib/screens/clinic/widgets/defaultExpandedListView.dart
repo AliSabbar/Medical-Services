@@ -10,6 +10,7 @@ class DefaultExpandedListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView.separated(
+        physics: const NeverScrollableScrollPhysics(),
         itemCount: 10,
         shrinkWrap: true,
         separatorBuilder: (context, index) => SizedBox(

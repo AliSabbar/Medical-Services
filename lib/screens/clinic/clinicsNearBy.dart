@@ -21,7 +21,8 @@ class ClinicsNearBy extends StatelessWidget {
           ),
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
+            child: ListView(
+              physics: const BouncingScrollPhysics(),
               children: [
                 SizedBox(
                   height: 10.h,
@@ -30,7 +31,7 @@ class ClinicsNearBy extends StatelessWidget {
                 SizedBox(
                   height: 20.h,
                 ),
-                DefaultExpandedListView(),
+                const SizedBox(child: DefaultExpandedListView()),
               ],
             ),
           ),
