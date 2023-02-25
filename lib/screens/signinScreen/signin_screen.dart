@@ -46,7 +46,7 @@ class _SignInScreenState extends State<SignInScreen> {
               children: [
                 // the logo and the blue container
                 defaultProfileContainer(
-                    svgURL: 'assets/images/404Logo.svg',
+                    child: SvgPicture.asset('assets/images/404Logo.svg'),
                     height: Orientation.landscape == orientation ? 320 : 285),
                 SizedBox(
                   height: 10.h,

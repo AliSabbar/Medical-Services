@@ -4,18 +4,15 @@ import 'package:flutter_svg/svg.dart';
 
 import '../settings/colors.dart';
 
-Widget defaultProfileContainer({String? svgURL, double height = 285}) {
+Widget defaultProfileContainer({Widget? child, double height = 285}) {
   return Container(
-    width: double.infinity,
-    height: height.h,
-    decoration: BoxDecoration(
-      borderRadius: const BorderRadius.only(
-        bottomLeft: Radius.circular(30),
+      width: double.infinity,
+      height: height.h,
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.only(
+          bottomLeft: Radius.circular(30),
+        ),
+        color: AppColors.secondaryColor,
       ),
-      color: AppColors.secondaryColor,
-    ),
-    child: SvgPicture.asset(
-      svgURL!,
-    ),
-  );
+      child: child);
 }

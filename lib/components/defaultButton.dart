@@ -11,7 +11,7 @@ Widget defaultButton({
   required text,
   required onPressed,
 }) {
-  return GestureDetector(
+  return InkWell(
     onTap: onPressed,
     child: Container(
       width: width.w,

@@ -6,7 +6,9 @@ import 'package:medical_services/screens/clinic/clinicsNearBy.dart';
 import 'package:medical_services/screens/clinic/clinicsTopRated.dart';
 import 'package:medical_services/screens/homeLayout/home_layout.dart';
 import 'package:medical_services/screens/homeScreen/home_screen.dart';
+import 'package:medical_services/screens/profileScreen/profile_screen.dart';
 import 'package:medical_services/screens/providingService/providingService.dart';
+import 'package:medical_services/screens/settingsScreen/settings_screen.dart';
 import 'package:medical_services/screens/signinScreen/signin_screen.dart';
 import 'package:medical_services/screens/specialtyScreen/specialty_screen.dart';
 import 'package:medical_services/screens/splashScreen/splash_screen.dart';
@@ -28,6 +30,8 @@ class Routes {
   static const String clinics = "/Clinics";
   static const String clinicsNearBy = "/ClinicsNearBy";
   static const String clinicsTopRated = "/ClinicsTopRated";
+  static const String profileScreen = "/profileScreen";
+  static const String settingsScreen = "/settingsScreen";
 }
 
 class RouteGenerator {
@@ -64,6 +68,10 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (context) => const ClinicsNearBy());
       case Routes.clinicsTopRated:
         return MaterialPageRoute(builder: (context) => const ClinicsTopRated());
+      case Routes.profileScreen:
+        return MaterialPageRoute(builder: (context) => const ProfileScreen());
+      case Routes.settingsScreen:
+        return MaterialPageRoute(builder: (context) => const SettingsScreen());
       default:
         return unDefinedRoute();
     }
