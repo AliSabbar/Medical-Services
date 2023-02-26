@@ -14,6 +14,7 @@ import 'package:provider/provider.dart';
 import 'network/local/shared_helper.dart';
 import 'screens/choiceAcc/choiceAcc.dart';
 import 'screens/clinic/Clinics.dart';
+import 'screens/clinic/clinicProfile.dart';
 import 'screens/clinic/clinicsTopRated.dart';
 import 'screens/providingService/providingService.dart';
 
@@ -55,7 +56,7 @@ class MyApp extends StatelessWidget {
         title: 'Medical Services',
         debugShowCheckedModeBanner: false,
         theme: lightTheme, //? <-- change theme
-        home: SignInScreen(), //! this is your home widget
+        home: ClinicProfile(), //! this is your home widget
         onGenerateRoute: RouteGenerator.getRoute,
       ),
     );

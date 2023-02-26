@@ -59,7 +59,12 @@ class ClinicsScreen extends StatelessWidget {
               SizedBox(
                 height: 10.h,
               ),
-              const DefaultListView(),
+              DefaultListView(
+                imgUrl:
+                    'https://images.unsplash.com/photo-1629909613654-28e377c37b09?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2xpbmljfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=600&q=60',
+                onTap: () {},
+                title: 'عيادة النهرين',
+              ),
               SizedBox(
                 height: 20.h,
               ),
@@ -90,7 +95,12 @@ class ClinicsScreen extends StatelessWidget {
                 height: 10.h,
               ),
               // the first list
-              const DefaultListView(),
+              DefaultListView(
+                imgUrl:
+                    'https://images.unsplash.com/photo-1629909613654-28e377c37b09?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2xpbmljfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=600&q=60',
+                onTap: () {},
+                title: 'عيادة النهرين',
+              ),
               SizedBox(
                 height: 15.h,
               ),

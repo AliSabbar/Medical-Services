@@ -17,6 +17,8 @@ class AppColors {
   static Color clinicColor = const Color(0xffFB5F1CC);
   static Color hospitalColor = const Color(0xffFFEBE8C);
   static Color doctorColor = const Color(0xffAAC4FF);
+  static Color ratingCardProfileColor = Color.fromRGBO(243, 212, 189, 1);
+  static Color numberofDocCardColor = Color.fromARGB(255, 246, 207, 243);
 
 // ? List Of Colors
 

@@ -6,12 +6,13 @@ import 'package:medical_services/components/starsTest/stars.dart';
 import '../settings/colors.dart';
 
 class DefaultClinicsCard extends StatelessWidget {
-  const DefaultClinicsCard(
-      {Key? key,
-      required this.imgUrl,
-      required this.title,
-      required this.onTap})
-      : super(key: key);
+  const DefaultClinicsCard({
+    Key? key,
+    required this.imgUrl,
+    required this.title,
+    required this.onTap,
+  }) : super(key: key);
+
   final String imgUrl;
   final String title;
   final VoidCallback onTap;
@@ -22,7 +23,7 @@ class DefaultClinicsCard extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: 155.w,
-        height: 178.h,
+        height: 178.w,
         decoration: BoxDecoration(
           color: AppColors.backgroundCardColor,
           borderRadius: BorderRadius.circular(20),
@@ -30,7 +31,7 @@ class DefaultClinicsCard extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              height: 117.h,
+              height: 115.h,
               width: 155.w,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.only(
