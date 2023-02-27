@@ -49,7 +49,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
                 child: const Icon(
                   Icons.settings,
-                  size: 35,
+                  size: 30,
                 ),
               ),
             )
@@ -59,6 +59,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: Column(
             children: [
               defaultProfileContainer(
+                height: 260,
                   child: Column(
                 children: [
                   CircleAvatar(

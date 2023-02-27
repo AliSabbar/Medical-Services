@@ -4,18 +4,19 @@ import 'package:flutter_svg/svg.dart';
 
 import '../../../settings/colors.dart';
 
-class InkWellDefault extends StatelessWidget {
-  const InkWellDefault(
-      {required this.svgUrl,
+class AccTypeWidget extends StatelessWidget {
+  const AccTypeWidget(
+      {super.key,
+      required this.svgUrl,
       required this.title,
       required this.onTap,
-      required this.sizedboxHeight,
+      required this.sizedBoxHeight,
       required this.svgHeight,
       required this.svgWidth});
   final String svgUrl;
   final String title;
   final VoidCallback onTap;
-  final double sizedboxHeight;
+  final double sizedBoxHeight;
   final double svgHeight;
   final double svgWidth;
   @override
@@ -33,7 +34,7 @@ class InkWellDefault extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
-              height: sizedboxHeight,
+              height: sizedBoxHeight,
             ),
             SvgPicture.asset(
               svgUrl,

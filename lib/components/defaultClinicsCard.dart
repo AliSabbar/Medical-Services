@@ -23,7 +23,7 @@ class DefaultClinicsCard extends StatelessWidget {
       onTap: onTap,
       child: Container(
         width: 155.w,
-        height: 178.w,
+        height: 200.w,
         decoration: BoxDecoration(
           color: AppColors.backgroundCardColor,
           borderRadius: BorderRadius.circular(20),
@@ -42,21 +42,23 @@ class DefaultClinicsCard extends StatelessWidget {
                     image: NetworkImage(imgUrl), fit: BoxFit.cover),
               ),
             ),
-            Text(
-              title,
-              maxLines: 2,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: 16.sp,
-                  overflow: TextOverflow.ellipsis,
-                  color: AppColors.primaryColor,
-                  fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height: 10.h,
+            Flexible(
+              child: Text(
+                title,
+                maxLines: 2,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 15.sp,
+                    overflow: TextOverflow.ellipsis,
+                    color: AppColors.primaryColor,
+                    fontWeight: FontWeight.bold),
+              ),
             ),
             // rating
             Stars(countStar: 5),
+            SizedBox(
+              height: 10.h,
+            ),
           ],
         ),
       ),

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
-Widget IconProfile(
-    {required String? imgUrl, double size = 20, required VoidCallback onTap}) {
+Widget iconProfile(
+    {required String? imgUrl, double size = 25, required VoidCallback onTap}) {
   return GestureDetector(
     onTap: onTap,
     child: CircleAvatar(
       backgroundColor: Colors.white,
-      radius: 15,
+      radius: 20.r,
       child: SvgPicture.asset(
         imgUrl!,
         width: size,

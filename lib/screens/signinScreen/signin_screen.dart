@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:medical_services/components/defaultProfileContainer.dart';
 import 'package:medical_services/components/defaultTextField.dart';
 import 'package:medical_services/components/authTitleWidget.dart';
@@ -84,13 +85,29 @@ class _SignInScreenState extends State<SignInScreen> {
                             Orientation.landscape == orientation ? 20.h : 10.h,
                       ),
                       const AuthTitleWidget(title: 'رقم الهاتف'),
-                      defaultTextField(
-                        hintText: 'ادخل رقم الهاتف',
-                        controller: phoneNumberController,
-                        keyboardType: const TextInputType.numberWithOptions(),
-                        validator: (s) {
-                          return null;
-                        },
+                      Container(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 10.h, vertical: 5.w),
+                        decoration: BoxDecoration(
+                            color: AppColors.textfieldColor,
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                                color: AppColors.textfieldColor, width: 2)),
+                        child: Directionality(
+                          textDirection: TextDirection.ltr,
+                          child: InternationalPhoneNumberInput(
+                            onSubmit: () {},
+                            onInputChanged: (v) {},
+                            maxLength: 12,
+                            hintText: "770xxxxx",
+                            textAlign: TextAlign.left,
+                            textFieldController: phoneNumberController,
+                            countries: const ['IQ'],
+                            inputDecoration: const InputDecoration(
+                              border: InputBorder.none,
+                            ),
+                          ),
+                        ),
                       ),
                       SizedBox(
                         height: 10.h,
@@ -182,7 +199,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           ),
                           GestureDetector(
                             onTap: () {
-                              Navigator.pushNamed(context, Routes.signUpScreen);
+                              Navigator.pushNamed(context, Routes.choiceAccount);
                             },
                             child: Text(
                               'انشاء حساب',

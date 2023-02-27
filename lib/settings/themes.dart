@@ -29,13 +29,6 @@ ThemeData lightTheme = ThemeData(
             statusBarColor: Colors.white,
             statusBarIconBrightness: Brightness.dark)),
 
-// * TEXTFIELD STYLE
-
-    inputDecorationTheme: InputDecorationTheme(
-      filled: true,
-      fillColor: AppColors.textfieldColor,
-      focusedBorder: InputBorder.none,
-    ),
 
 //* ADD TEXT STYLE FOR TITLE
 

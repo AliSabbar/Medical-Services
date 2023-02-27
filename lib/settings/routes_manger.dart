@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medical_services/screens/choiceAcc/choiceAcc.dart';
 import 'package:medical_services/screens/clinic/Clinics.dart';
+import 'package:medical_services/screens/clinic/clinicProfile.dart';
 import 'package:medical_services/screens/clinic/clinicsNearBy.dart';
 import 'package:medical_services/screens/clinic/clinicsTopRated.dart';
+import 'package:medical_services/screens/doctorsScreen/doctor_profile.dart';
 import 'package:medical_services/screens/homeLayout/home_layout.dart';
 import 'package:medical_services/screens/homeScreen/home_screen.dart';
 import 'package:medical_services/screens/profileScreen/profile_screen.dart';
@@ -31,6 +33,8 @@ class Routes {
   static const String clinicsNearBy = "/ClinicsNearBy";
   static const String clinicsTopRated = "/ClinicsTopRated";
   static const String profileScreen = "/profileScreen";
+  static const String clinicProfileScreen = "/clinicProfileScreen";
+  static const String doctorProfileScreen = "/doctorProfileScreen";
   static const String settingsScreen = "/settingsScreen";
 }
 
@@ -70,6 +74,12 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (context) => const ClinicsTopRated());
       case Routes.profileScreen:
         return MaterialPageRoute(builder: (context) => const ProfileScreen());
+      case Routes.clinicProfileScreen:
+        return MaterialPageRoute(
+            builder: (context) => const ClinicProfileScreen());
+      case Routes.doctorProfileScreen:
+        return MaterialPageRoute(
+            builder: (context) => const DoctorProfile());
       case Routes.settingsScreen:
         return MaterialPageRoute(builder: (context) => const SettingsScreen());
       default:
