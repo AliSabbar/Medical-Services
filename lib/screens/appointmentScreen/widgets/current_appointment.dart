@@ -30,7 +30,7 @@ class CurrentAppointment extends StatelessWidget {
               ),
             ),
           ),
-          const AppointmentMessage(),
+          const AppointmentMessage(text: "اضغط على الحجز لعرض ال QR CODE الخاص بالحجز ",),
         ],
       ),
     );

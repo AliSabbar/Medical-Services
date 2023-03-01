@@ -5,6 +5,7 @@ import 'package:medical_services/providers/doctors_provider.dart';
 import 'package:medical_services/providers/home_provider.dart';
 import 'package:medical_services/providers/upload_image_provider.dart';
 import 'package:medical_services/screens/clinic/clinicsNearBy.dart';
+import 'package:medical_services/screens/confirmAppointmentScreen/confirmappointment_screen.dart';
 import 'package:medical_services/screens/homeLayout/home_layout.dart';
 import 'package:medical_services/screens/signinScreen/signin_screen.dart';
 import 'package:medical_services/screens/splashScreen/splash_screen.dart';

@@ -328,7 +328,11 @@ class DoctorProfileState extends State<DoctorProfile> {
                         ),
                         Center(
                             child: defaultButton(
-                                text: 'احجز الان', onPressed: () {})),
+                                text: 'احجز الان',
+                                onPressed: () {
+                                  Navigator.pushNamed(
+                                      context, Routes.confirmAppointmentScreen);
+                                })),
                         SizedBox(
                           height: 5.h,
                         ),

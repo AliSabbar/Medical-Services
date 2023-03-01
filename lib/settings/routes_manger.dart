@@ -5,11 +5,13 @@ import 'package:medical_services/screens/clinic/Clinics.dart';
 import 'package:medical_services/screens/clinic/clinicProfile.dart';
 import 'package:medical_services/screens/clinic/clinicsNearBy.dart';
 import 'package:medical_services/screens/clinic/clinicsTopRated.dart';
+import 'package:medical_services/screens/confirmAppointmentScreen/confirmappointment_screen.dart';
 import 'package:medical_services/screens/doctorsScreen/doctor_profile.dart';
 import 'package:medical_services/screens/homeLayout/home_layout.dart';
 import 'package:medical_services/screens/homeScreen/home_screen.dart';
 import 'package:medical_services/screens/profileScreen/profile_screen.dart';
 import 'package:medical_services/screens/providingService/providingService.dart';
+import 'package:medical_services/screens/qrCodeScreen/qrCoder_screen.dart';
 import 'package:medical_services/screens/settingsScreen/settings_screen.dart';
 import 'package:medical_services/screens/signinScreen/signin_screen.dart';
 import 'package:medical_services/screens/specialtyScreen/specialty_screen.dart';
@@ -35,6 +37,8 @@ class Routes {
   static const String profileScreen = "/profileScreen";
   static const String clinicProfileScreen = "/clinicProfileScreen";
   static const String doctorProfileScreen = "/doctorProfileScreen";
+  static const String confirmAppointmentScreen = "/confirmAppointmentScreen";
+  static const String qrCoderScreen = "/qrCodeScreen";
   static const String settingsScreen = "/settingsScreen";
 }
 
@@ -80,6 +84,12 @@ class RouteGenerator {
       case Routes.doctorProfileScreen:
         return MaterialPageRoute(
             builder: (context) => const DoctorProfile());
+      case Routes.confirmAppointmentScreen:
+        return MaterialPageRoute(
+            builder: (context) => const ConfirmAppointment());
+      case Routes.qrCoderScreen:
+        return MaterialPageRoute(
+            builder: (context) => const QrCodeScreen());
       case Routes.settingsScreen:
         return MaterialPageRoute(builder: (context) => const SettingsScreen());
       default:
