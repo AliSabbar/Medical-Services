@@ -11,20 +11,21 @@ class ProvidingService extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: OrientationBuilder(
-        builder: (context, orientation) => Scaffold(
-          body: SafeArea(
-              child: Center(
-            child: Column(
-              children: [
+    return SafeArea(
+      child: Directionality(
+        textDirection: TextDirection.rtl,
+        child: OrientationBuilder(
+          builder: (context, orientation) => Scaffold(
+            body: Center(
+              child: SingleChildScrollView(
+                child: Column(
+                          children: [
                 SizedBox(
-                  height: 50,
+                  height: 50.h,
                 ),
                 SvgPicture.asset('assets/images/groupServices.svg'),
                 SizedBox(
-                  height: 10,
+                  height: 10.h,
                 ),
                 Text(
                   'انضم الان لعائلة',
@@ -43,7 +44,7 @@ class ProvidingService extends StatelessWidget {
                       color: AppColors.primaryColor),
                 ),
                 SizedBox(
-                  height: 5,
+                  height: 5.h,
                 ),
                 Text(
                   'لا تفوت الفرصة لجعل عملك اكثر سهولة ودقة!',
@@ -54,11 +55,11 @@ class ProvidingService extends StatelessWidget {
                       fontWeight: FontWeight.w400),
                 ),
                 SizedBox(
-                  height: 70,
+                  height: 70.h,
                 ),
                 defaultButton(text: 'تواصل معنا', onPressed: () {}),
                 SizedBox(
-                  height: 15,
+                  height: 15.h,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -92,9 +93,11 @@ class ProvidingService extends StatelessWidget {
                     ),
                   ],
                 ),
-              ],
+                          ],
+                ),
+              ),
             ),
-          )),
+          ),
         ),
       ),
     );

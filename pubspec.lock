@@ -65,6 +65,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
+  equatable:
+    dependency: transitive
+    description:
+      name: equatable
+      sha256: c2b87cb7756efdf69892005af546c56c0b5037f54d2a88269b4f347a505e3ca2
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.5"
   fake_async:
     dependency: transitive
     description:
@@ -216,6 +224,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.18.0"
+  intl_phone_number_input:
+    dependency: "direct main"
+    description:
+      name: intl_phone_number_input
+      sha256: da894a842bb240ad9ed8ba9dcc2c78e2a5553a4e1d3444baa06482486541eac2
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.7.2"
   js:
     dependency: transitive
     description:
@@ -224,6 +240,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.6.5"
+  libphonenumber_platform_interface:
+    dependency: transitive
+    description:
+      name: libphonenumber_platform_interface
+      sha256: "977834b022bcc25e6e68bd86f977f10bbf20eec6bfab1ae7a151e51868ab91cf"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.1"
+  libphonenumber_plugin:
+    dependency: transitive
+    description:
+      name: libphonenumber_plugin
+      sha256: "3e27d29cb6adbe5ca2571f327afa8893036249c22ce5a700eb9f56e32c68c09a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.5"
+  libphonenumber_web:
+    dependency: transitive
+    description:
+      name: libphonenumber_web
+      sha256: f938f3d21d2d208897a361b8ca9052dfd29f956a30ced76fda8b45744dad20cb
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.0+1"
   lints:
     dependency: transitive
     description:
@@ -344,6 +384,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.5"
+  qr:
+    dependency: transitive
+    description:
+      name: qr
+      sha256: "5c4208b4dc0d55c3184d10d83ee0ded6212dc2b5e2ba17c5a0c0aab279128d21"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0"
+  qr_flutter:
+    dependency: "direct main"
+    description:
+      name: qr_flutter
+      sha256: c5c121c54cb6dd837b9b9d57eb7bc7ec6df4aee741032060c8833a678c80b87e
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.0"
   shared_preferences:
     dependency: "direct main"
     description:

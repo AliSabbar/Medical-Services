@@ -29,13 +29,6 @@ ThemeData lightTheme = ThemeData(
             statusBarColor: Colors.white,
             statusBarIconBrightness: Brightness.dark)),
 
-// * TEXTFIELD STYLE
-
-    inputDecorationTheme: InputDecorationTheme(
-      filled: true,
-      fillColor: AppColors.textfieldColor,
-      focusedBorder: InputBorder.none,
-    ),
 
 //* ADD TEXT STYLE FOR TITLE
 
@@ -49,6 +42,7 @@ ThemeData lightTheme = ThemeData(
 
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
       elevation: 0.0,
+      backgroundColor: Colors.white,
       enableFeedback: true,
       type: BottomNavigationBarType.fixed,
     ));

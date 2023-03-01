@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:medical_services/providers/home_provider.dart';
 import 'package:medical_services/settings/colors.dart';
+import 'package:medical_services/settings/routes_manger.dart';
 import 'package:provider/provider.dart';
 
 class HomeLayOut extends StatelessWidget {
@@ -29,13 +30,18 @@ class HomeLayOut extends StatelessWidget {
                     ]))
                   : Text(provWatch.appbarTitle[provWatch.currentIndex]),
               actions: [
-                Container(
-                  margin: EdgeInsets.only(left: 15.w, top: 12.h),
-                  child: CircleAvatar(
-                    radius: 25.r,
-                    //! Image from API
-                    backgroundImage: NetworkImage(
-                        'https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80'),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, Routes.profileScreen);
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(left: 15.w, top: 12.h),
+                    child: CircleAvatar(
+                      radius: 25.r,
+                      //! Image from API
+                      backgroundImage: NetworkImage(
+                          'https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80'),
+                    ),
                   ),
                 )
               ],

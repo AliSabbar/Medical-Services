@@ -19,7 +19,7 @@ Widget defaultDropDownButton({
     child: DropdownButtonHideUnderline(
       child: DropdownButton(
           borderRadius: BorderRadius.circular(20.r),
-          style: TextStyle(fontSize: 20.sp, color: AppColors.blackColor),
+          style: TextStyle(fontSize: 16.sp, color: AppColors.blackColor,fontFamily: 'Cairo'),
           value: value,
           items: items.map((e) {
             return DropdownMenuItem(

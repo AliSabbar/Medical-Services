@@ -8,7 +8,6 @@ class AppColors {
   static Color textfieldColor = const Color(0x29D3D3D3);
   static Color blackColor = const Color(0xff393737);
   static Color yellowColor = const Color(0xffFFD600);
-  static Color ofwhiteColor = const Color(0xffF3D4BD);
   static Color greenColor = const Color(0xffBAF3B1);
   //color for the background cards
   static Color backgroundCardColor = const Color(0xffF2F7FF);
@@ -17,6 +16,8 @@ class AppColors {
   static Color clinicColor = const Color(0xffFB5F1CC);
   static Color hospitalColor = const Color(0xffFFEBE8C);
   static Color doctorColor = const Color(0xffAAC4FF);
+  static Color ratingCardProfileColor = Color.fromRGBO(243, 212, 189, 1);
+  static Color numberofDocCardColor = Color.fromARGB(255, 246, 207, 243);
 
 // ? List Of Colors
 

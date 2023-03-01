@@ -5,8 +5,8 @@ import 'package:flutter_svg/svg.dart';
 import '../../../settings/colors.dart';
 
 class MissDoctor extends StatelessWidget {
-  const MissDoctor({super.key});
-
+  const MissDoctor({super.key, required this.title});
+  final String title;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -42,7 +42,7 @@ class MissDoctor extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    "الخدمات الطبية",
+                    title,
                     style: TextStyle(
                       fontSize: 13.sp,
                     ),

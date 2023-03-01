@@ -7,7 +7,9 @@ import '../settings/colors.dart';
 class AppointmentMessage extends StatelessWidget {
   const AppointmentMessage({
     super.key,
+    required this.text,
   });
+  final String text;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +17,7 @@ class AppointmentMessage extends StatelessWidget {
       children: [
         Container(
           width: 342.w,
-          height: 130.h,
+          // height: 130.h,
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
               color: AppColors.primaryColor,
@@ -31,12 +33,11 @@ class AppointmentMessage extends StatelessWidget {
               ),
               Expanded(
                 child: Text(
-                  "اضغط على الحجز لعرض ال QR CODE الخاص بالحجز ",
+                  text,
                   style: TextStyle(
                       fontSize: 15.sp,
                       fontWeight: FontWeight.bold,
                       color: Colors.white),
-                  maxLines: 2,
                 ),
               )
             ],

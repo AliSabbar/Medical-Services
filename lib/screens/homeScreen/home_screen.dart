@@ -61,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
 //* The Doctor
 
-                  const MissDoctor(),
+                  const MissDoctor(title: 'الخدمات الطبية',),
 
                   SizedBox(
                     height: 30.h,
