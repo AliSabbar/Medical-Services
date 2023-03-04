@@ -118,7 +118,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               ).then((value) {
                                 if (value != null) {
                                   ageController.text =
-                                      DateFormat.yMMMd().format(value);
+                                      DateFormat.yMd().format(value);
                                   print(ageController.text);
                                 }
                               });

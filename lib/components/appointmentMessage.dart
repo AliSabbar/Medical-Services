@@ -8,8 +8,16 @@ class AppointmentMessage extends StatelessWidget {
   const AppointmentMessage({
     super.key,
     required this.text,
+   required this.svgPicture,
+   required this.right,
+   required this.top ,
+   required this.width,
   });
   final String text;
+  final String svgPicture;
+  final double right;
+  final double top;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
@@ -45,9 +53,12 @@ class AppointmentMessage extends StatelessWidget {
           // right: 10,
         ),
         Positioned(
-            right: 30.w,
-            top: 10.h,
-            child: SvgPicture.asset('assets/images/phone_cal.svg')),
+            right: right.w,
+            top: top.h,
+            child: SvgPicture.asset(
+              svgPicture,
+              width: width,
+            )),
       ],
     );
   }

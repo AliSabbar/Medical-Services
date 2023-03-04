@@ -30,7 +30,13 @@ class AppointmentHistory extends StatelessWidget {
               ),
             ),
           ),
-        const AppointmentMessage(text: "اضغط على الحجز لعرض ال QR CODE الخاص بالحجز ",),
+          const AppointmentMessage(
+            text: "اضغط على الحجز لعرض ال QR CODE الخاص بالحجز ",
+            right: 38,
+            svgPicture: 'assets/images/phone_cal.svg',
+            top: 10,
+            width: 45,
+          ),
         ],
       ),
     );

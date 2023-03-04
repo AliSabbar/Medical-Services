@@ -82,7 +82,7 @@ class _ConfirmAppointmentState extends State<ConfirmAppointment> {
                         lastDate: DateTime.now(),
                       ).then((value) {
                         if (value != null) {
-                          ageController.text = DateFormat.yMMMd().format(value);
+                          ageController.text = DateFormat.yMd().format(value);
                           print(ageController.text);
                         }
                       });
