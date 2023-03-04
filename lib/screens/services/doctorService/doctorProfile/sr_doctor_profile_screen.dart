@@ -9,17 +9,16 @@ import 'package:medical_services/components/iconProfile.dart';
 import 'package:medical_services/components/specialtyContainer.dart';
 import 'package:medical_services/settings/colors.dart';
 
-import '../../settings/routes_manger.dart';
+import '../../../../settings/routes_manger.dart';
 
-class DoctorProfile extends StatefulWidget {
-  const DoctorProfile({Key? key}) : super(key: key);
+class SrDoctorProfileScreen extends StatefulWidget {
+  const SrDoctorProfileScreen({Key? key}) : super(key: key);
 
   @override
-  State<DoctorProfile> createState() => DoctorProfileState();
+  State<SrDoctorProfileScreen> createState() => SrDoctorProfileScreenState();
 }
 
-class DoctorProfileState extends State<DoctorProfile> {
-  bool isExpand = false;
+class SrDoctorProfileScreenState extends State<SrDoctorProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -34,7 +33,7 @@ class DoctorProfileState extends State<DoctorProfile> {
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20.w),
                     child: const Icon(
-                      Icons.favorite_outline_rounded,
+                      Icons.mode_edit_outline_rounded,
                       size: 30,
                     ),
                   ),
@@ -110,104 +109,45 @@ class DoctorProfileState extends State<DoctorProfile> {
                         SizedBox(
                           height: 7.h,
                         ),
-                        //! CHANGE THIS CUZ I CAN DO BETTER
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            RichText(
-                              text: TextSpan(
-                                style: TextStyle(
-                                    color: AppColors.greyColor,
-                                    fontSize: 14.sp,
-                                    fontFamily: 'Cairo'),
-                                children: [
-                                  TextSpan(
-                                    text:
-                                        'دكتورة سميرة علي محمد , من افضل الجراحين في بغداد ,حائزة على شهادات عالمية في بريطانيا و امريكا',
-                                  ),
-                                  !isExpand
-                                      ? TextSpan(
-                                          text: 'عرض تفاصيل اكثر',
-                                          style: TextStyle(
-                                              fontSize: 12.sp,
-                                              color: AppColors.primaryColor),
-                                          recognizer: TapGestureRecognizer()
-                                            ..onTap = () {
-                                              setState(() {
-                                                isExpand = !isExpand;
-                                              });
-                                            })
-                                      : const TextSpan(),
-                                ],
-                              ),
-                            ),
-                            isExpand
-                                ? Column(
-                                    children: [
-                                      SizedBox(
-                                        height: 20.h,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            "التخصصات الفرعية",
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .headlineMedium,
-                                          ),
-                                          const Spacer(),
-                                          GestureDetector(
-                                            onTap: () {
-                                              setState(() {
-                                                isExpand = false;
-                                              });
-                                            },
-                                            child: Text(
-                                              "اخفاء",
-                                              style: TextStyle(
-                                                fontSize: 13.sp,
-                                                color: AppColors.primaryColor,
-                                              ),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 7.h,
-                                      ),
-                                      SizedBox(
-                                        height: 59.h,
-                                        child: ListView.separated(
-                                          scrollDirection: Axis.horizontal,
-                                          physics:
-                                              const BouncingScrollPhysics(),
-                                          shrinkWrap: true,
-                                          itemCount: 5,
-                                          separatorBuilder:
-                                              (BuildContext context,
-                                                  int index) {
-                                            return SizedBox(
-                                              width: 20.w,
-                                            );
-                                          },
-                                          itemBuilder: (BuildContext context,
-                                              int index) {
-                                            return specialtyContainer(
-                                                width: 180,
-                                                height: 59,
-                                                circleRadius: 15,
-                                                fontSize: 14,
-                                                title: "اذن وانف وحنجرة",
-                                                image:
-                                                    'https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX32581005.jpg',
-                                                onTap: () {});
-                                          },
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                : const SizedBox(),
-                          ],
+                        Text(
+                          'دكتورة علي محمد سمير حائزة على شهادات عالمية في بريطانيا و امريكا....',
+                        ),
+
+                        SizedBox(
+                          height: 20.h,
+                        ),
+                        Text(
+                          "التخصصات الفرعية",
+                          style: Theme.of(context).textTheme.headlineMedium,
+                        ),
+                        SizedBox(
+                          height: 7.h,
+                        ),
+                        SizedBox(
+                          height: 59.h,
+                          child: ListView.separated(
+                            scrollDirection: Axis.horizontal,
+                            physics: const BouncingScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: 5,
+                            separatorBuilder:
+                                (BuildContext context, int index) {
+                              return SizedBox(
+                                width: 20.w,
+                              );
+                            },
+                            itemBuilder: (BuildContext context, int index) {
+                              return specialtyContainer(
+                                  width: 180,
+                                  height: 59,
+                                  circleRadius: 15,
+                                  fontSize: 14,
+                                  title: "اذن وانف وحنجرة",
+                                  image:
+                                      'https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX32581005.jpg',
+                                  onTap: () {});
+                            },
+                          ),
                         ),
                         SizedBox(
                           height: 30.h,
@@ -238,9 +178,24 @@ class DoctorProfileState extends State<DoctorProfile> {
                         SizedBox(
                           height: 20.h,
                         ),
-                        Text(
-                          "الاوقات المتاحة",
-                          style: Theme.of(context).textTheme.headlineMedium,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "الاوقات المتاحة",
+                              style: Theme.of(context).textTheme.headlineMedium,
+                            ),
+                            GestureDetector(
+                              onTap: () {},
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                                child: const Icon(
+                                  Icons.mode_edit_outline_rounded,
+                                  size: 20,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                         SizedBox(
                           height: 7.h,
@@ -325,16 +280,6 @@ class DoctorProfileState extends State<DoctorProfile> {
                         ),
                         SizedBox(
                           height: 20.h,
-                        ),
-                        Center(
-                            child: defaultButton(
-                                text: 'احجز الان',
-                                onPressed: () {
-                                  Navigator.pushNamed(
-                                      context, Routes.confirmAppointmentScreen);
-                                })),
-                        SizedBox(
-                          height: 5.h,
                         ),
                       ],
                     ),

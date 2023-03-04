@@ -18,6 +18,7 @@ import 'package:medical_services/screens/specialtyScreen/specialty_screen.dart';
 import 'package:medical_services/screens/splashScreen/splash_screen.dart';
 import '../screens/doctorsScreen/doctors_screen.dart';
 import '../screens/otpScreen/otp_screen.dart';
+import '../screens/services/doctorService/doctorProfile/sr_doctor_profile_screen.dart';
 import '../screens/signupScreen/signup_screen.dart';
 
 class Routes {
@@ -39,6 +40,7 @@ class Routes {
   static const String doctorProfileScreen = "/doctorProfileScreen";
   static const String confirmAppointmentScreen = "/confirmAppointmentScreen";
   static const String qrCoderScreen = "/qrCodeScreen";
+  static const String doctorProfileServiceScreen = "/doctorProfileSrviceScreen";
   static const String settingsScreen = "/settingsScreen";
 }
 
@@ -90,6 +92,9 @@ class RouteGenerator {
       case Routes.qrCoderScreen:
         return MaterialPageRoute(
             builder: (context) => const QrCodeScreen());
+      case Routes.doctorProfileServiceScreen:
+        return MaterialPageRoute(
+            builder: (context) => const SrDoctorProfileScreen());
       case Routes.settingsScreen:
         return MaterialPageRoute(builder: (context) => const SettingsScreen());
       default:
