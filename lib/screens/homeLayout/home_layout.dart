@@ -32,7 +32,8 @@ class HomeLayOut extends StatelessWidget {
               actions: [
                 GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(context, Routes.profileScreen);
+                    //! doctor service profile
+                  Navigator.pushNamed(context,true?Routes.doctorProfileServiceScreen :Routes.profileScreen);
                   },
                   child: Container(
                     margin: EdgeInsets.only(left: 15.w, top: 12.h),
@@ -67,12 +68,14 @@ class HomeLayOut extends StatelessWidget {
                   label: 'حجوزاتي'),
               BottomNavigationBarItem(
                   icon: SvgPicture.asset(
-                 true?  'assets/icons/add_nav.svg' :'assets/icons/heart_nav.svg',
+                    true
+                        ? 'assets/icons/add_nav.svg'
+                        : 'assets/icons/heart_nav.svg',
                     color: provWatch.currentIndex == 2
                         ? AppColors.primaryColor
                         : AppColors.greyColor,
                   ),
-                  label:true?'اضافة حجز' :'المفضلة'),
+                  label: true ? 'اضافة حجز' : 'المفضلة'),
               BottomNavigationBarItem(
                   icon: SvgPicture.asset(
                     'assets/icons/notification_nav.svg',

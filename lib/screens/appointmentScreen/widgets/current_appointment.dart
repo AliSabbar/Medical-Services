@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../components/appointmentCard.dart';
 import '../../../components/appointmentMessage.dart';
+import '../../../components/patientCard.dart';
 
 class CurrentAppointment extends StatelessWidget {
   const CurrentAppointment({super.key});
@@ -25,7 +26,8 @@ class CurrentAppointment extends StatelessWidget {
                   );
                 },
                 itemBuilder: (BuildContext context, int index) {
-                  return appointmentCard();
+                  // ! Doctor Services
+                  return true ? patientCard() : appointmentCard();
                 },
               ),
             ),

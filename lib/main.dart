@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medical_services/providers/auth_provider.dart';
 import 'package:medical_services/providers/doctors_provider.dart';
 import 'package:medical_services/providers/home_provider.dart';
+import 'package:medical_services/providers/sr_edit_profileDoctor_provider.dart';
 import 'package:medical_services/providers/upload_image_provider.dart';
 import 'package:medical_services/screens/clinic/clinicsNearBy.dart';
 import 'package:medical_services/screens/confirmAppointmentScreen/confirmappointment_screen.dart';
@@ -36,6 +37,8 @@ void main() async {
       ChangeNotifierProvider(create: (context) => AuthProvider()),
       ChangeNotifierProvider(create: (context) => HomeProvider()),
       ChangeNotifierProvider(create: (context) => DoctorsProvider()),
+      ChangeNotifierProvider(
+          create: (context) => SrEditDoctorProfileProvider()),
     ],
     child: MyApp(
       startWidget: startWidget,
@@ -58,7 +61,7 @@ class MyApp extends StatelessWidget {
         title: 'Medical Services',
         debugShowCheckedModeBanner: false,
         theme: lightTheme, //? <-- change theme
-        home: SrDoctorProfileScreen(), //! this is your home widget
+        home: SignInScreen(), //! this is your home widget
         onGenerateRoute: RouteGenerator.getRoute,
       ),
     );

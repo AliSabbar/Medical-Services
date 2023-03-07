@@ -7,6 +7,7 @@ import 'package:medical_services/screens/homeScreen/widgets/services_widget.dart
 import 'package:provider/provider.dart';
 
 import '../../components/appointmentCard.dart';
+import '../../components/patientCard.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -87,7 +88,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         );
                       },
                       itemBuilder: (BuildContext context, int index) {
-                        return appointmentCard();
+                        //! doctor service  
+                        return true? patientCard()  :appointmentCard();
                       },
                     ),
                   )

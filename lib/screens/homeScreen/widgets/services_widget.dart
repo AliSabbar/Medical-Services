@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:medical_services/components/defaultToast.dart';
 import 'package:medical_services/settings/routes_manger.dart';
 import '../../../components/servicesItem.dart';
 import '../../../settings/colors.dart';
@@ -20,7 +21,10 @@ class ServicesWidget extends StatelessWidget {
         ServicesItem(
             assetName: 'assets/icons/hospital.svg',
             color: AppColors.hospitalColor,
-            onTap: () {}),
+            onTap: () {
+              defaultToast(
+                  message: "قريبا.....", color: AppColors.secondaryColor);
+            }),
         ServicesItem(
             assetName: 'assets/icons/clinic.svg',
             color: AppColors.clinicColor,

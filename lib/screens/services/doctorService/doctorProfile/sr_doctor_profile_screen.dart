@@ -29,7 +29,10 @@ class SrDoctorProfileScreenState extends State<SrDoctorProfileScreen> {
               backgroundColor: AppColors.secondaryColor,
               actions: [
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushNamed(
+                        context, Routes.editDoctorProfileServiceScreen);
+                  },
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20.w),
                     child: const Icon(
