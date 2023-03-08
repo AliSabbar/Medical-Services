@@ -11,11 +11,12 @@ class ApiHelper {
 
   static Future getData({required String url}) async {
     try {
-      http.Response response = await http
-          .get(Uri.parse(EndPoints.baseUrl + url), headers: {
+      http.Response response =
+          await http.get(Uri.parse(EndPoints.baseUrl + url), headers: {
         'Content-Type': 'application/json',
-      }).timeout(const Duration(seconds: 20),
-              onTimeout: () => throw 'Check Your Internet connection');
+      });
+      // .timeout(const Duration(seconds: 20),
+      //         onTimeout: () => throw 'Check Your Internet connection');
 
       return jsonResponse(response);
     } on SocketException {

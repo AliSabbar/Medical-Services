@@ -6,4 +6,6 @@ class EndPoints {
   // ? AUTH END POINTS
   static String signUp = "auth/signup/";
   static String signIn = "auth/signin/";
+  // ? SPECIALTY
+  static String getAllSpecialty = "Specialties/?size=10";
 }

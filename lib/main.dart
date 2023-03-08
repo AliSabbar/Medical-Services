@@ -22,11 +22,9 @@ void main() async {
   await SharedHelper.init();
   dynamic onBoarding = SharedHelper.getData(key: "OnBoarding");
   dynamic token = SharedHelper.getData(key: 'token');
-  print(token);
   Widget startWidget;
   if (onBoarding != null) {
     if (token != null) {
-      print("object");
       startWidget = const HomeLayOut();
     } else {
       startWidget = const SignInScreen();
@@ -64,7 +62,7 @@ class MyApp extends StatelessWidget {
         title: 'Medical Services',
         debugShowCheckedModeBanner: false,
         theme: lightTheme, //? <-- change theme
-        home: SignInScreen(), //! this is your home widget
+        home: startWidget, //! this is your home widget
         onGenerateRoute: RouteGenerator.getRoute,
       ),
     );

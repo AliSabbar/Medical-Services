@@ -33,7 +33,11 @@ class HomeLayOut extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     //! doctor service profile
-                  Navigator.pushNamed(context,true?Routes.doctorProfileServiceScreen :Routes.profileScreen);
+                    Navigator.pushNamed(
+                        context,
+                        false
+                            ? Routes.doctorProfileServiceScreen
+                            : Routes.profileScreen);
                   },
                   child: Container(
                     margin: EdgeInsets.only(left: 15.w, top: 12.h),
