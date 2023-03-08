@@ -37,6 +37,7 @@ class AppointmentHistory extends StatelessWidget {
             svgPicture: 'assets/images/phone_cal.svg',
             top: 10,
             width: 45,
+            right: 33,
           ),
         ],
       ),

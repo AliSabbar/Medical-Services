@@ -7,7 +7,6 @@ import '../../components/constant.dart';
 import '../end_points.dart';
 
 class ApiHelper {
-
 // GET DATA
 
   static Future getData({required String url}) async {
@@ -33,11 +32,14 @@ class ApiHelper {
     required Map<String, dynamic> body,
   }) async {
     try {
-      http.Response response = await http
-          .post(Uri.parse(EndPoints.baseUrl + url), body: jsonEncode(body), headers: {
-        'Content-Type': 'application/json',
-      }).timeout(const Duration(seconds: 10),
-              onTimeout: () => throw 'Check Your Internet connection');
+      http.Response response = await http.post(
+          Uri.parse(EndPoints.baseUrl + url),
+          body: jsonEncode(body),
+          headers: {
+            'Content-Type': 'application/json',
+          });
+      // .timeout(const Duration(seconds: 10),
+      //         onTimeout: () => throw 'Check Your Internet connection');
 
       return jsonResponse(response);
     } on SocketException {
@@ -53,6 +55,9 @@ class ApiHelper {
         var responseJson = json.decode(response.body.toString());
         return responseJson;
       case 400:
+        var responseJson = json.decode(response.body.toString());
+        return responseJson;
+      case 404:
         var responseJson = json.decode(response.body.toString());
         return responseJson;
       case 401:

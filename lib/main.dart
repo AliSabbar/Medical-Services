@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:medical_services/network/end_points.dart';
 import 'package:medical_services/providers/auth_provider.dart';
 import 'package:medical_services/providers/doctors_provider.dart';
 import 'package:medical_services/providers/home_provider.dart';
@@ -15,19 +16,21 @@ import 'package:medical_services/settings/routes_manger.dart';
 import 'package:medical_services/settings/themes.dart';
 import 'package:provider/provider.dart';
 import 'network/local/shared_helper.dart';
-import 'screens/choiceAcc/choiceAcc.dart';
-import 'screens/clinic/Clinics.dart';
-import 'screens/clinic/clinicProfile.dart';
-import 'screens/clinic/clinicsTopRated.dart';
-import 'screens/providingService/providingService.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SharedHelper.init();
   dynamic onBoarding = SharedHelper.getData(key: "OnBoarding");
+  dynamic token = SharedHelper.getData(key: 'token');
+  print(token);
   Widget startWidget;
   if (onBoarding != null) {
-    startWidget = const HomeLayOut();
+    if (token != null) {
+      print("object");
+      startWidget = const HomeLayOut();
+    } else {
+      startWidget = const SignInScreen();
+    }
   } else {
     startWidget = const SplashScreen();
   }
