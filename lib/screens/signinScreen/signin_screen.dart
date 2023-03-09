@@ -245,8 +245,8 @@ class _SignInScreenState extends State<SignInScreen> {
                         ),
                         GestureDetector(
                           onTap: () {
-                            Navigator.pushNamed(
-                                context, Routes.homeLayoutRoute);
+                            Navigator.pushNamedAndRemoveUntil(context,
+                                Routes.homeLayoutRoute, (route) => false);
                           },
                           child: Text(
                             'المتابعة كزائر',

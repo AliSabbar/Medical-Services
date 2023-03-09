@@ -8,6 +8,7 @@ import 'package:medical_services/providers/sr_edit_profileDoctor_provider.dart';
 import 'package:medical_services/providers/upload_image_provider.dart';
 import 'package:medical_services/screens/clinic/clinicsNearBy.dart';
 import 'package:medical_services/screens/confirmAppointmentScreen/confirmappointment_screen.dart';
+import 'package:medical_services/screens/guestScreen/guest_screen.dart';
 import 'package:medical_services/screens/homeLayout/home_layout.dart';
 import 'package:medical_services/screens/services/doctorService/doctorProfile/sr_doctor_profile_screen.dart';
 import 'package:medical_services/screens/signinScreen/signin_screen.dart';
@@ -21,10 +22,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SharedHelper.init();
   dynamic onBoarding = SharedHelper.getData(key: "OnBoarding");
-  dynamic token = SharedHelper.getData(key: 'token');
+  EndPoints.token = SharedHelper.getData(key: 'token')??'';
   Widget startWidget;
   if (onBoarding != null) {
-    if (token != null) {
+    if (EndPoints.token.isNotEmpty) {
       startWidget = const HomeLayOut();
     } else {
       startWidget = const SignInScreen();
@@ -62,7 +63,7 @@ class MyApp extends StatelessWidget {
         title: 'Medical Services',
         debugShowCheckedModeBanner: false,
         theme: lightTheme, //? <-- change theme
-        home: startWidget, //! this is your home widget
+        home: SignInScreen(), //! this is your home widget
         onGenerateRoute: RouteGenerator.getRoute,
       ),
     );

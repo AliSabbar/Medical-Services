@@ -72,14 +72,14 @@ class HomeLayOut extends StatelessWidget {
                   label: 'حجوزاتي'),
               BottomNavigationBarItem(
                   icon: SvgPicture.asset(
-                    true
+                    false
                         ? 'assets/icons/add_nav.svg'
                         : 'assets/icons/heart_nav.svg',
                     color: provWatch.currentIndex == 2
                         ? AppColors.primaryColor
                         : AppColors.greyColor,
                   ),
-                  label: true ? 'اضافة حجز' : 'المفضلة'),
+                  label: false ? 'اضافة حجز' : 'المفضلة'),
               BottomNavigationBarItem(
                   icon: SvgPicture.asset(
                     'assets/icons/notification_nav.svg',

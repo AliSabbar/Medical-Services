@@ -114,6 +114,7 @@ class AuthProvider extends ChangeNotifier {
     }).catchError((e) {
       isButtonShowing = true;
       notifyListeners();
+      defaultToast(message: "تحقق من الاتصال بالانترنت", color: Colors.red);
       print("Error In SIGN IN = $e");
     });
   }
