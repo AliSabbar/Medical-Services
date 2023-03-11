@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:medical_services/components/defaultButton.dart';
 import 'package:medical_services/components/defaultDropDownButton.dart';
+import 'package:medical_services/components/defaultPhoneNumber.dart';
 import 'dart:ui' as ui;
 import 'package:medical_services/components/defaultTextField.dart';
 import 'package:medical_services/components/authTitleWidget.dart';
 import 'package:medical_services/components/uploadImageWidget.dart';
+import 'package:medical_services/models/signUp_user_model.dart';
 import 'package:medical_services/providers/auth_provider.dart';
 import 'package:medical_services/providers/upload_image_provider.dart';
 import 'package:provider/provider.dart';
@@ -26,6 +29,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController ageController = TextEditingController();
   TextEditingController cityController = TextEditingController();
+
+  var formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
@@ -56,152 +61,207 @@ class _SignUpScreenState extends State<SignUpScreen> {
               title: const Text("انشاء حساب"),
             ),
             body: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.w),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    const UploadImageWidget(),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 8.h,
-                        ),
-                        const AuthTitleWidget(title: 'اسمك الرباعي'),
-                        defaultTextField(
-                            hintText: 'ادخل اسمك الرباعي',
-                            controller: userNameController,
-                            validator: (s) {}),
-                        SizedBox(
-                          height: 8.h,
-                        ),
-                        const AuthTitleWidget(title: 'رقم الهاتف'),
-                        defaultTextField(
-                            hintText: 'ادخل رقم الهاتف',
-                            controller: phoneNumberController,
-                            validator: (s) {}),
-                        SizedBox(
-                          height: 8.h,
-                        ),
-                        const AuthTitleWidget(title: 'كلمة المرور'),
-                        defaultTextField(
-                            hintText: 'ادخل كلمة المرور',
-                            controller: passwordController,
-                            suffixIcon: GestureDetector(
-                              onTap: () {
-                                provRead.changeEyeValue();
-                              },
-                              child: provWatch.isVisible
-                                  ? const Icon(Icons.remove_red_eye_outlined)
-                                  : const Icon(Icons.remove_red_eye_rounded),
-                            ),
-                            maxLines: 1,
-                            obscureText: provWatch.isVisible,
-                            validator: (s) {}),
-                        SizedBox(
-                          height: 8.h,
-                        ),
-                        const AuthTitleWidget(title: 'تاريخ الميلاد'),
-                        defaultTextField(
-                            readOnly: true,
-                            hintText: 'ادخل تاريخ ميلادك',
-                            controller: ageController,
-                            onTap: () {
-                              showDatePicker(
-                                context: context,
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime.parse('1800-05-05'),
-                                lastDate: DateTime.now(),
-                              ).then((value) {
-                                if (value != null) {
-                                  ageController.text =
-                                      DateFormat.yMMMd().format(value);
-                                  print(ageController.text);
+                child: Form(
+                  key: formKey,
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      const UploadImageWidget(),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: 8.h,
+                          ),
+                          const AuthTitleWidget(title: 'اسمك الثلاثي'),
+                          defaultTextField(
+                              hintText: 'ادخل اسمك الثلاثي',
+                              controller: userNameController,
+                              validator: (s) {
+                                if (s!.isEmpty) {
+                                  return "لايمكن ان يكون هذا الحقل فارغا";
+                                } else if (s.length <= 7 || s.length >= 20) {
+                                  return "ادخل اسمك الثلاثي";
                                 }
-                              });
-                            },
-                            validator: (s) {}),
-                        SizedBox(
-                          height: 8.h,
-                        ),
-                        const AuthTitleWidget(title: 'المحافظة'),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              flex:
-                                  Orientation.landscape == orientation ? 5 : 3,
-                              child: defaultDropDownButton(
-                                  value: provWatch.initialGovernorate,
-                                  items: provWatch.governorateList,
-                                  onChanged: (v) {
-                                    provRead.changeGovernorateValue(value: v);
-                                  }),
-                            ),
-                            Flexible(
-                              child: GestureDetector(
-                                onTap: () {},
-                                child: Container(
-                                  width: Orientation.landscape == orientation
-                                      ? 50.w
-                                      : 70.w,
-                                  height: Orientation.landscape == orientation
-                                      ? 80.h
-                                      : 70.h,
-                                  decoration: BoxDecoration(
-                                      color: AppColors.containerColor,
-                                      borderRadius:
-                                          BorderRadius.circular(20.r)),
-                                  child: Icon(
-                                    Icons.gps_fixed_rounded,
-                                    color: AppColors.primaryColor,
+                              }),
+                          SizedBox(
+                            height: 8.h,
+                          ),
+                          const AuthTitleWidget(title: 'رقم الهاتف'),
+                          DefaultPhoneNumber(
+                              phoneNumberController: phoneNumberController),
+                          SizedBox(
+                            height: 8.h,
+                          ),
+                          const AuthTitleWidget(title: 'كلمة المرور'),
+                          defaultTextField(
+                              hintText: 'ادخل كلمة المرور',
+                              controller: passwordController,
+                              suffixIcon: GestureDetector(
+                                onTap: () {
+                                  provRead.changeEyeValue();
+                                },
+                                child: provWatch.isVisible
+                                    ? const Icon(Icons.remove_red_eye_outlined)
+                                    : const Icon(Icons.remove_red_eye_rounded),
+                              ),
+                              maxLines: 1,
+                              obscureText: provWatch.isVisible,
+                              validator: (s) {
+                                if (s!.isEmpty) {
+                                  return "لايمكن ان يكون هذا الحقل فارغا";
+                                } else if (s.length <= 6 || s.length >= 20) {
+                                  return "يجب ان يكون طول كلمة المرور اكبر او يساوي 6";
+                                }
+                              }),
+                          SizedBox(
+                            height: 8.h,
+                          ),
+                          const AuthTitleWidget(title: 'تاريخ الميلاد'),
+                          defaultTextField(
+                              readOnly: true,
+                              hintText: 'ادخل تاريخ ميلادك',
+                              controller: ageController,
+                              onTap: () {
+                                showDatePicker(
+                                  context: context,
+                                  initialDate: DateTime.now(),
+                                  firstDate: DateTime.parse('1800-05-05'),
+                                  lastDate: DateTime.now(),
+                                ).then((value) {
+                                  if (value != null) {
+                                    ageController.text =
+                                        DateFormat('yyy-MM-dd').format(value);
+                                    print(ageController.text);
+                                  }
+                                });
+                              },
+                              validator: (s) {
+                                if (s!.isEmpty) {
+                                  return "لايمكن ان يكون هذا الحقل فارغا";
+                                }
+                              }),
+                          SizedBox(
+                            height: 8.h,
+                          ),
+                          const AuthTitleWidget(title: 'المحافظة'),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                flex: Orientation.landscape == orientation
+                                    ? 5
+                                    : 3,
+                                child: defaultDropDownButton(
+                                    value: provWatch.initialGovernorate,
+                                    items: provWatch.governorateList,
+                                    onChanged: (v) {
+                                      provRead.changeGovernorateValue(value: v);
+                                    }),
+                              ),
+                              Flexible(
+                                child: GestureDetector(
+                                  onTap: () {},
+                                  child: Container(
+                                    width: Orientation.landscape == orientation
+                                        ? 50.w
+                                        : 70.w,
+                                    height: Orientation.landscape == orientation
+                                        ? 80.h
+                                        : 70.h,
+                                    decoration: BoxDecoration(
+                                        color: AppColors.containerColor,
+                                        borderRadius:
+                                            BorderRadius.circular(20.r)),
+                                    child: Icon(
+                                      Icons.gps_fixed_rounded,
+                                      color: AppColors.primaryColor,
+                                    ),
                                   ),
                                 ),
                               ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 8.h,
+                          ),
+                          const AuthTitleWidget(title: 'المدينة'),
+                          defaultTextField(
+                              hintText: 'ادخل اسم المدينة  مثلا (الكرادة)',
+                              controller: cityController,
+                              validator: (s) {
+                                if (s!.isEmpty) {
+                                  return "لايمكن ان يكون هذا الحقل فارغا";
+                                } else if (s.length <= 5 || s.length >= 20) {
+                                  return "لا يمكن ان يكون اسم المدينة اصغر من 5 احرف او اكبر من 20";
+                                }
+                              }),
+                          SizedBox(
+                            height: 8.h,
+                          ),
+                          const AuthTitleWidget(title: 'الجنس'),
+                          defaultDropDownButton(
+                              value: provWatch.initialGender,
+                              items: provWatch.genderList,
+                              onChanged: (v) {
+                                provRead.changeGenderValue(value: v);
+                              }),
+                          SizedBox(
+                            height: 20.h,
+                          ),
+
+                          //! Send Data
+
+                          Visibility(
+                            visible: provWatch.isButtonShowing,
+                            replacement: const Center(
+                              child: CircularProgressIndicator(),
                             ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 8.h,
-                        ),
-                        const AuthTitleWidget(title: 'المدينة'),
-                        defaultTextField(
-                            hintText: 'ادخل اسم المدينة  مثلا (الكرادة)',
-                            controller: cityController,
-                            validator: (s) {}),
-                        SizedBox(
-                          height: 8.h,
-                        ),
-                        const AuthTitleWidget(title: 'الجنس'),
-                        defaultDropDownButton(
-                            value: provWatch.initialGender,
-                            items: provWatch.genderList,
-                            onChanged: (v) {
-                              provRead.changeGenderValue(value: v);
-                            }),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-
-                        //! Send Data
-
-                        Center(
-                            child: defaultButton(
-                                text: 'انشاء حساب',
-                                onPressed: () {
-                                  // force keyboard go down
-
-                                  FocusScope.of(context).unfocus();
-                                })),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                      ],
-                    ),
-                  ],
+                            child: Center(
+                                child: defaultButton(
+                                    text: 'انشاء حساب',
+                                    onPressed: () {
+                                      if (formKey.currentState!.validate()) {
+                                        provRead.signUp(
+                                            context: context,
+                                            body: SignUpUserModel(
+                                                    avatar: context
+                                                        .read<
+                                                            UploadImageProvider>()
+                                                        .file
+                                                        ?.path,
+                                                    name:
+                                                        userNameController.text,
+                                                    password:
+                                                        passwordController.text,
+                                                    phoneNumber:
+                                                        "+964 ${phoneNumberController.text}",
+                                                    city: provRead
+                                                        .initialGovernorate,
+                                                    town: cityController.text,
+                                                    dob: DateTime.parse(
+                                                        ageController.text),
+                                                    gender:
+                                                        provRead.initialGender,
+                                                    roleName: "user")
+                                                .toJson());
+                                      }
+                                      // force keyboard go down
+                                      FocusScope.of(context).unfocus();
+                                    })),
+                          ),
+                          SizedBox(
+                            height: 10.h,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

@@ -47,6 +47,8 @@ Widget defaultTextField({
         prefixIcon: prefixIcon,
         hintText: hintText,
         hintStyle: TextStyle(color: AppColors.greyColor),
+        errorBorder: InputBorder.none,
+        focusedErrorBorder: InputBorder.none,
         //! add the fixed border
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(borderRadius),

@@ -5,8 +5,9 @@ import '../settings/colors.dart';
 import 'defaultTextField.dart';
 
 class SearchWidget extends StatelessWidget {
-  const SearchWidget({super.key, required this.controller});
+  const SearchWidget({super.key, required this.controller, this.onChange});
   final TextEditingController controller;
+  final Function(String)? onChange;
   @override
   Widget build(BuildContext context) {
     return defaultTextField(
@@ -19,6 +20,7 @@ class SearchWidget extends StatelessWidget {
         ),
         hintText: 'ابحث عن عيادة, طبيب',
         controller: controller,
+        onChanged: onChange,
         validator: (s) {});
   }
 }

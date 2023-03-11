@@ -7,7 +7,6 @@ import '../../components/constant.dart';
 import '../end_points.dart';
 
 class ApiHelper {
-
 // GET DATA
 
   static Future getData({required String url}) async {
@@ -15,8 +14,10 @@ class ApiHelper {
       http.Response response = await http
           .get(Uri.parse(EndPoints.baseUrl + url), headers: {
         'Content-Type': 'application/json',
-      }).timeout(const Duration(seconds: 20),
-              onTimeout: () => throw 'Check Your Internet connection');
+        'Authorization': 'bearer ${EndPoints.token}'
+      });
+      // .timeout(const Duration(seconds: 20),
+      //         onTimeout: () => throw 'Check Your Internet connection');
 
       return jsonResponse(response);
     } on SocketException {
@@ -33,11 +34,15 @@ class ApiHelper {
     required Map<String, dynamic> body,
   }) async {
     try {
-      http.Response response = await http
-          .post(Uri.parse(EndPoints.baseUrl + url), body: jsonEncode(body), headers: {
-        'Content-Type': 'application/json',
-      }).timeout(const Duration(seconds: 10),
-              onTimeout: () => throw 'Check Your Internet connection');
+      http.Response response = await http.post(
+          Uri.parse(EndPoints.baseUrl + url),
+          body: jsonEncode(body),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'bearer ${EndPoints.token}'
+          });
+      // .timeout(const Duration(seconds: 10),
+      //         onTimeout: () => throw 'Check Your Internet connection');
 
       return jsonResponse(response);
     } on SocketException {
@@ -52,10 +57,19 @@ class ApiHelper {
       case 200:
         var responseJson = json.decode(response.body.toString());
         return responseJson;
+      case 201:
+        var responseJson = json.decode(response.body.toString());
+        return responseJson;
       case 400:
         var responseJson = json.decode(response.body.toString());
         return responseJson;
+      case 404:
+        var responseJson = json.decode(response.body.toString());
+        return responseJson;
       case 401:
+        var responseJson = json.decode(response.body.toString());
+        return responseJson;
+      case 500:
         var responseJson = json.decode(response.body.toString());
         return responseJson;
     }

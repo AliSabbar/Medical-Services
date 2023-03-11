@@ -32,7 +32,8 @@ Widget specialtyContainer({
           Expanded(
             child: Text(
               title,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: fontSize.sp),
+              style:
+                  TextStyle(fontWeight: FontWeight.bold, fontSize: fontSize.sp),
               overflow: TextOverflow.ellipsis,
               maxLines: 1,
             ),
