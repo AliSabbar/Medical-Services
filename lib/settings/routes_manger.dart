@@ -6,7 +6,9 @@ import 'package:medical_services/screens/clinic/clinicProfile.dart';
 import 'package:medical_services/screens/clinic/clinicsNearBy.dart';
 import 'package:medical_services/screens/clinic/clinicsTopRated.dart';
 import 'package:medical_services/screens/confirmAppointmentScreen/confirmappointment_screen.dart';
+import 'package:medical_services/screens/confirmForgetPasswordScreen/confirm_forgetPassword_screen.dart';
 import 'package:medical_services/screens/doctorsScreen/doctor_profile.dart';
+import 'package:medical_services/screens/guestScreen/guest_screen.dart';
 import 'package:medical_services/screens/homeLayout/home_layout.dart';
 import 'package:medical_services/screens/homeScreen/home_screen.dart';
 import 'package:medical_services/screens/profileScreen/profile_screen.dart';
@@ -29,6 +31,7 @@ class Routes {
   static const String signInScreen = "/signInScreen";
   static const String signUpScreen = "/signUpScreen";
   static const String otpScreen = "/otpScreen";
+  static const String confirmForgetPasswordScreen = "/confirmForgetPasswordScreen";
   static const String specialtyScreen = "/specialtyScreen";
   static const String doctorsScreen = "/doctorsScreen";
   static const String choiceAccount = "/ChoiceAccount";
@@ -42,6 +45,7 @@ class Routes {
   static const String confirmAppointmentScreen = "/confirmAppointmentScreen";
   static const String qrCoderScreen = "/qrCodeScreen";
   static const String settingsScreen = "/settingsScreen"; 
+  static const String guestScreen = "/guestScreen"; 
   //! SERVICES ROUTES 
   static const String doctorProfileServiceScreen = "/doctorProfileServiceScreen";
   static const String editDoctorProfileServiceScreen = "/editDoctorProfileServiceScreen";
@@ -61,11 +65,15 @@ class RouteGenerator {
       case Routes.signUpScreen:
         return MaterialPageRoute(builder: (context) => const SignUpScreen());
       case Routes.otpScreen:
-        Object? title = settings.arguments;
+        Object? obj = settings.arguments;
         return MaterialPageRoute(
             builder: (context) => OtpScreen(
-                  title: title,
+                  obj: obj,
                 ));
+      case Routes.confirmForgetPasswordScreen:
+        Object? obj = settings.arguments;
+
+        return MaterialPageRoute(builder: (context) =>  ConfirmForgetPasswordScreen(phoneNumber: obj,));
       case Routes.specialtyScreen:
         return MaterialPageRoute(builder: (context) => const SpecialtyScreen());
       case Routes.doctorsScreen:
@@ -97,6 +105,8 @@ class RouteGenerator {
             builder: (context) => const QrCodeScreen());
       case Routes.settingsScreen:
         return MaterialPageRoute(builder: (context) => const SettingsScreen());
+      case Routes.guestScreen:
+        return MaterialPageRoute(builder: (context) => const GuestScreen());
       case Routes.doctorProfileServiceScreen:
         return MaterialPageRoute(
             builder: (context) => const SrDoctorProfileScreen());

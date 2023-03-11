@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:medical_services/components/defaultButton.dart';
+import 'package:medical_services/network/local/shared_helper.dart';
+import 'package:medical_services/providers/auth_provider.dart';
 import 'package:medical_services/screens/settingsScreen/widgets/settingWidget.dart';
 import 'package:medical_services/settings/colors.dart';
+import 'package:medical_services/settings/routes_manger.dart';
+import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -54,7 +58,11 @@ class SettingsScreen extends StatelessWidget {
                   onTap: () {},
                 ),
                 const SizedBox(height: 20),
-                defaultButton(text: 'تسجيل خروج', onPressed: () {}),
+                defaultButton(
+                    text: 'تسجيل خروج',
+                    onPressed: () {
+                      context.read<AuthProvider>().signOut(context: context);
+                    }),
                 const SizedBox(height: 20),
                 Row(
                   mainAxisSize: MainAxisSize.min,

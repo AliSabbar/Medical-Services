@@ -10,6 +10,7 @@ import 'package:medical_services/providers/auth_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../components/defaultDropDownButton.dart';
+import '../../components/defaultPhoneNumber.dart';
 import '../../settings/colors.dart';
 import '../../settings/routes_manger.dart';
 
@@ -61,11 +62,7 @@ class _ConfirmAppointmentState extends State<ConfirmAppointment> {
                   height: 5.h,
                 ),
                 const AuthTitleWidget(title: 'رقم الهاتف'),
-                defaultTextField(
-                    hintText: '07746140233',
-                    controller: phoneNumberController,
-                    keyboardType: TextInputType.number,
-                    validator: (v) {}),
+                DefaultPhoneNumber(phoneNumberController:phoneNumberController),
                 SizedBox(
                   height: 5.h,
                 ),

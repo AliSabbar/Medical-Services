@@ -11,9 +11,10 @@ class ApiHelper {
 
   static Future getData({required String url}) async {
     try {
-      http.Response response =
-          await http.get(Uri.parse(EndPoints.baseUrl + url), headers: {
+      http.Response response = await http
+          .get(Uri.parse(EndPoints.baseUrl + url), headers: {
         'Content-Type': 'application/json',
+        'Authorization': 'bearer ${EndPoints.token}'
       });
       // .timeout(const Duration(seconds: 20),
       //         onTimeout: () => throw 'Check Your Internet connection');
@@ -38,6 +39,7 @@ class ApiHelper {
           body: jsonEncode(body),
           headers: {
             'Content-Type': 'application/json',
+            'Authorization': 'bearer ${EndPoints.token}'
           });
       // .timeout(const Duration(seconds: 10),
       //         onTimeout: () => throw 'Check Your Internet connection');
@@ -55,6 +57,9 @@ class ApiHelper {
       case 200:
         var responseJson = json.decode(response.body.toString());
         return responseJson;
+      case 201:
+        var responseJson = json.decode(response.body.toString());
+        return responseJson;
       case 400:
         var responseJson = json.decode(response.body.toString());
         return responseJson;
@@ -62,6 +67,9 @@ class ApiHelper {
         var responseJson = json.decode(response.body.toString());
         return responseJson;
       case 401:
+        var responseJson = json.decode(response.body.toString());
+        return responseJson;
+      case 500:
         var responseJson = json.decode(response.body.toString());
         return responseJson;
     }

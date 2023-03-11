@@ -90,14 +90,6 @@ class OtpLandscape extends StatelessWidget {
                           Text("1:17"),
                         ],
                       ),
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      defaultButton(
-                          text: 'تحقق',
-                          onPressed: () {
-                            FocusScope.of(context).unfocus();
-                          })
                     ],
                   ),
                 ),

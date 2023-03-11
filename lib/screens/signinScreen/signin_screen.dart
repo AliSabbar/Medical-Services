@@ -5,6 +5,7 @@ import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:medical_services/components/defaultProfileContainer.dart';
 import 'package:medical_services/components/defaultTextField.dart';
 import 'package:medical_services/components/authTitleWidget.dart';
+import 'package:medical_services/components/defaultToast.dart';
 import 'package:medical_services/models/signIn_user_model.dart';
 import 'package:medical_services/models/signUp_user_model.dart';
 import 'package:medical_services/providers/auth_provider.dart';
@@ -12,6 +13,7 @@ import 'package:medical_services/settings/colors.dart';
 import 'package:provider/provider.dart';
 
 import '../../components/defaultButton.dart';
+import '../../components/defaultPhoneNumber.dart';
 import '../../settings/routes_manger.dart';
 
 // ignore: must_be_immutable
@@ -27,12 +29,15 @@ class _SignInScreenState extends State<SignInScreen> {
 
   TextEditingController passwordController = TextEditingController();
 
+  TextEditingController forgotPasswordController = TextEditingController();
+
   var formKey = GlobalKey<FormState>();
 
   @override
   void dispose() {
     phoneNumberController.dispose();
     passwordController.dispose();
+    forgotPasswordController.dispose();
     super.dispose();
   }
 
@@ -92,30 +97,8 @@ class _SignInScreenState extends State<SignInScreen> {
                               : 10.h,
                         ),
                         const AuthTitleWidget(title: 'رقم الهاتف'),
-                        Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 10.h, vertical: 5.w),
-                          decoration: BoxDecoration(
-                              color: AppColors.textfieldColor,
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(
-                                  color: AppColors.textfieldColor, width: 2)),
-                          child: Directionality(
-                            textDirection: TextDirection.ltr,
-                            child: InternationalPhoneNumberInput(
-                              onSubmit: () {},
-                              onInputChanged: (v) {},
-                              maxLength: 12,
-                              errorMessage: "ادخل رقم هاتف صحيح",
-                              textAlign: TextAlign.left,
-                              textFieldController: phoneNumberController,
-                              countries: const ['IQ'],
-                              inputDecoration: const InputDecoration(
-                                border: InputBorder.none,
-                              ),
-                            ),
-                          ),
-                        ),
+                        DefaultPhoneNumber(
+                            phoneNumberController: phoneNumberController),
                         SizedBox(
                           height: 10.h,
                         ),
@@ -145,8 +128,52 @@ class _SignInScreenState extends State<SignInScreen> {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                Navigator.pushNamed(context, Routes.otpScreen,
-                                    arguments: "نسيت كلمة المرور");
+                                showDialog(
+                                  context: context,
+                                  builder: (ctx) => Directionality(
+                                    textDirection: TextDirection.rtl,
+                                    child: SizedBox(
+                                      width: double.infinity,
+                                      child: AlertDialog(
+                                        title: const Text("تغير كلمة المرور"),
+                                        content: DefaultPhoneNumber(
+                                            phoneNumberController:
+                                                forgotPasswordController),
+                                        actions: <Widget>[
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              TextButton(
+                                                onPressed: () {
+                                                  Navigator.of(ctx).pop();
+                                                  forgotPasswordController
+                                                      .clear();
+                                                },
+                                                child: const Text("رجوع"),
+                                              ),
+                                              TextButton(
+                                                onPressed: () {
+                                                  context 
+                                                      .read<AuthProvider>()
+                                                      .forgotPassword(
+                                                          forgotPasswordController:
+                                                              forgotPasswordController,
+                                                          context: context);
+                                                
+
+                                                  FocusScope.of(context)
+                                                      .unfocus();
+                                                },
+                                                child: const Text("ارسال"),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                );
                               },
                               child: Padding(
                                 padding: EdgeInsets.only(left: 5.w, top: 8.h),
@@ -191,7 +218,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                       context: context,
                                       body: SignInUserModel(
                                               phoneNumber:
-                                                  phoneNumberController.text,
+                                                  "+964 ${phoneNumberController.text}",
                                               password: passwordController.text)
                                           .toJson());
                                 }

@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:medical_services/components/defaultButton.dart';
 import 'package:medical_services/components/defaultDropDownButton.dart';
+import 'package:medical_services/components/defaultPhoneNumber.dart';
 import 'dart:ui' as ui;
 import 'package:medical_services/components/defaultTextField.dart';
 import 'package:medical_services/components/authTitleWidget.dart';
@@ -92,30 +93,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             height: 8.h,
                           ),
                           const AuthTitleWidget(title: 'رقم الهاتف'),
-                          Container(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 10.h, vertical: 5.w),
-                            decoration: BoxDecoration(
-                                color: AppColors.textfieldColor,
-                                borderRadius: BorderRadius.circular(20),
-                                border: Border.all(
-                                    color: AppColors.textfieldColor, width: 2)),
-                            child: Directionality(
-                              textDirection: ui.TextDirection.ltr,
-                              child: InternationalPhoneNumberInput(
-                                onSubmit: () {},
-                                onInputChanged: (v) {},
-                                maxLength: 12,
-                                errorMessage: "ادخل رقم هاتف صحيح",
-                                textAlign: TextAlign.left,
-                                textFieldController: phoneNumberController,
-                                countries: const ['IQ'],
-                                inputDecoration: const InputDecoration(
-                                  border: InputBorder.none,
-                                ),
-                              ),
-                            ),
-                          ),
+                          DefaultPhoneNumber(
+                              phoneNumberController: phoneNumberController),
                           SizedBox(
                             height: 8.h,
                           ),
@@ -261,8 +240,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                                     password:
                                                         passwordController.text,
                                                     phoneNumber:
-                                                        phoneNumberController
-                                                            .text,
+                                                        "+964 ${phoneNumberController.text}",
                                                     city: provRead
                                                         .initialGovernorate,
                                                     town: cityController.text,
