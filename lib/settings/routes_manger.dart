@@ -90,7 +90,8 @@ class RouteGenerator {
       case Routes.clinicsTopRated:
         return MaterialPageRoute(builder: (context) => const ClinicsTopRated());
       case Routes.profileScreen:
-        return MaterialPageRoute(builder: (context) => const ProfileScreen());
+        Object? obj = settings.arguments;
+        return MaterialPageRoute(builder: (context) =>  ProfileScreen(userProfile: obj,));
       case Routes.clinicProfileScreen:
         return MaterialPageRoute(
             builder: (context) => const ClinicProfileScreen());

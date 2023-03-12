@@ -41,8 +41,7 @@ class _HomeLayOutState extends State<HomeLayOut> {
     super.initState();
   }
 
-
-    int currentIndex = 0;
+  int currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +76,9 @@ class _HomeLayOutState extends State<HomeLayOut> {
         child: provAuthWatch.isLoading
             ? const Scaffold(body: Center(child: CircularProgressIndicator()))
             : Scaffold(
+                floatingActionButton: FloatingActionButton(onPressed: () {
+                  context.read<AuthProvider>().signOut(context: context);
+                }),
                 appBar: PreferredSize(
                   preferredSize: Size.fromHeight(72.h),
                   child: AppBar(
@@ -105,7 +107,8 @@ class _HomeLayOutState extends State<HomeLayOut> {
                                   ? Routes.guestScreen
                                   : false
                                       ? Routes.doctorProfileServiceScreen
-                                      : Routes.profileScreen);
+                                      : Routes.profileScreen,
+                              arguments: provAuthWatch.userModel?.data);
                         },
                         child: Container(
                           margin: EdgeInsets.only(left: 15.w, top: 12.h),

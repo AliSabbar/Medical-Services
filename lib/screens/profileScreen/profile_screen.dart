@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
 import 'package:medical_services/components/authTitleWidget.dart';
 import 'package:medical_services/components/defaultButton.dart';
 import 'package:medical_services/components/defaultDropDownButton.dart';
+import 'package:medical_services/components/defaultPhoneNumber.dart';
 import 'package:medical_services/components/defaultProfileContainer.dart';
 import 'package:medical_services/components/defaultTextField.dart';
 import 'package:medical_services/providers/auth_provider.dart';
 import 'package:medical_services/settings/colors.dart';
 import 'package:medical_services/settings/routes_manger.dart';
 import 'package:provider/provider.dart';
+import 'dart:ui' as ui;
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
-
+  const ProfileScreen({super.key, required this.userProfile});
+  final userProfile;
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
@@ -35,8 +38,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     var provRead = context.read<AuthProvider>();
     var provWatch = context.watch<AuthProvider>();
+    phoneNumberController.text = widget.userProfile.phoneNumber.substring(5);
+    usernameController.text = widget.userProfile.name;
+    ageController.text =
+        widget.userProfile.setting.dob.toString().substring(0, 9);
+    cityController.text = widget.userProfile.address.town;
     return Directionality(
-      textDirection: TextDirection.rtl,
+      textDirection: ui.TextDirection.rtl,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: AppColors.secondaryColor,
@@ -59,30 +67,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: Column(
             children: [
               defaultProfileContainer(
-                height: 260,
+                  height: 260,
                   child: Column(
-                children: [
-                  CircleAvatar(
-                    radius: 70.r,
-                    backgroundImage: NetworkImage(
-                        'https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80'),
-                  ),
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  Text("سمير احمد سمير",
-                      style: Theme.of(context).textTheme.headlineMedium),
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  defaultButton(
-                      text: 'تعديل الملف الشخصي',
-                      onPressed: () {},
-                      width: 140.w,
-                      height: 50.h,
-                      fontSize: 12),
-                ],
-              )),
+                    children: [
+                      CircleAvatar(
+                        radius: 70.r,
+                        backgroundImage: NetworkImage(
+                            'https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cGVyc29ufGVufDB8fDB8fA%3D%3D&w=1000&q=80'),
+                      ),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      Text(widget.userProfile.name,
+                          style: Theme.of(context).textTheme.headlineMedium),
+                      SizedBox(
+                        height: 10.h,
+                      ),
+                      defaultButton(
+                          text: 'تعديل الملف الشخصي',
+                          onPressed: () {},
+                          width: 140.w,
+                          height: 50.h,
+                          fontSize: 12),
+                    ],
+                  )),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 20.w),
                 child: Column(
@@ -91,18 +99,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     const AuthTitleWidget(title: 'اسمك الرباعي'),
                     defaultTextField(
                         readOnly: true,
-                        hintText: 'سمير محمد سمير',
+                        hintText: widget.userProfile.name,
                         controller: usernameController,
                         validator: (s) {}),
                     SizedBox(
                       height: 10.h,
                     ),
                     const AuthTitleWidget(title: 'رقم الهاتف'),
-                    defaultTextField(
-                        readOnly: true,
-                        hintText: '07746140233',
-                        controller: phoneNumberController,
-                        validator: (s) {}),
+                    DefaultPhoneNumber(
+                        phoneNumberController: phoneNumberController,
+                        isEnabled: false),
                     SizedBox(
                       height: 10.h,
                     ),
@@ -111,10 +117,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Expanded(
                           child: Column(
                             children: [
-                              AuthTitleWidget(title: 'العمر'),
+                              const AuthTitleWidget(title: 'العمر'),
                               defaultTextField(
-                                  readOnly: true,
-                                  hintText: '2000 Aug 18',
+                                  enabled: false,
+                                  onTap: () {
+                                    showDatePicker(
+                                      context: context,
+                                      initialDate: DateTime.now(),
+                                      firstDate: DateTime.parse('1800-05-05'),
+                                      lastDate: DateTime.now(),
+                                    ).then((value) {
+                                      if (value != null) {
+                                        ageController.text =
+                                            DateFormat('yyy-MM-dd')
+                                                .format(value);
+                                        print(ageController.text);
+                                      }
+                                    });
+                                  },
+                                  hintText: widget.userProfile.setting.dob
+                                      .toString()
+                                      .substring(0, 9),
                                   controller: ageController,
                                   validator: (s) {}),
                             ],
@@ -126,7 +149,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         Expanded(
                           child: Column(
                             children: [
-                              AuthTitleWidget(title: 'الجنس'),
+                              const AuthTitleWidget(title: 'الجنس'),
                               defaultDropDownButton(
                                   value: provWatch.initialGender,
                                   items: provWatch.genderList,
@@ -178,7 +201,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     const AuthTitleWidget(title: 'المدينة'),
                     defaultTextField(
                         readOnly: true,
-                        hintText: 'الكرادة',
+                        hintText: widget.userProfile.address.town,
                         controller: cityController,
                         validator: (s) {}),
                     SizedBox(
