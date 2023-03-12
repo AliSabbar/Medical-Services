@@ -20,7 +20,8 @@ class DoctorFavorites extends StatelessWidget {
         );
       },
       itemBuilder: (BuildContext context, int index) {
-        return const DoctorCard();
+        // return  DoctorCard();
+        //! pass doctor model
       },
     );
   }

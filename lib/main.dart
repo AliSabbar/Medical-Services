@@ -3,17 +3,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medical_services/network/end_points.dart';
 import 'package:medical_services/providers/auth_provider.dart';
 import 'package:medical_services/providers/doctors_provider.dart';
+import 'package:medical_services/providers/alldoctorsSP.dart';
 import 'package:medical_services/providers/home_provider.dart';
 import 'package:medical_services/providers/sr_edit_profileDoctor_provider.dart';
 import 'package:medical_services/providers/upload_image_provider.dart';
-import 'package:medical_services/screens/clinic/clinicsNearBy.dart';
-import 'package:medical_services/screens/confirmAppointmentScreen/confirmappointment_screen.dart';
-import 'package:medical_services/screens/guestScreen/guest_screen.dart';
 import 'package:medical_services/screens/homeLayout/home_layout.dart';
-import 'package:medical_services/screens/services/doctorService/doctorProfile/sr_doctor_profile_screen.dart';
 import 'package:medical_services/screens/signinScreen/signin_screen.dart';
-import 'package:medical_services/screens/signupScreen/signup_screen.dart';
 import 'package:medical_services/screens/splashScreen/splash_screen.dart';
+import 'package:medical_services/settings/providers.dart';
 import 'package:medical_services/settings/routes_manger.dart';
 import 'package:medical_services/settings/themes.dart';
 import 'package:provider/provider.dart';
@@ -26,7 +23,7 @@ void main() async {
   EndPoints.token = SharedHelper.getData(key: 'token');
   Widget startWidget;
   if (onBoarding != null) {
-    if (EndPoints.token!=null) {
+    if (EndPoints.token != null) {
       startWidget = const HomeLayOut();
     } else {
       startWidget = const SignInScreen();
@@ -35,14 +32,7 @@ void main() async {
     startWidget = const SplashScreen();
   }
   runApp(MultiProvider(
-    providers: [
-      ChangeNotifierProvider(create: (context) => UploadImageProvider()),
-      ChangeNotifierProvider(create: (context) => AuthProvider()),
-      ChangeNotifierProvider(create: (context) => HomeProvider()),
-      ChangeNotifierProvider(create: (context) => DoctorsProvider()),
-      ChangeNotifierProvider(
-          create: (context) => SrEditDoctorProfileProvider()),
-    ],
+    providers: Providers.providersList,
     child: MyApp(
       startWidget: startWidget,
     ),

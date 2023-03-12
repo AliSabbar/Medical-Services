@@ -13,5 +13,5 @@ class EndPoints {
   static String getAllSpecialty = "admin/Specialties/?size=10";
   //? USER
   static String getUserById = "admin/user/";
-   
+  static String getallDoctorsSP = "admin/dr/getAllDrSameSpec?size=10";
 }

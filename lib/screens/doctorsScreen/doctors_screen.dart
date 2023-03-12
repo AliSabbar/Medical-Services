@@ -3,10 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:medical_services/components/defaultButton.dart';
 import 'package:medical_services/components/searchWidget.dart';
+import 'package:medical_services/providers/alldoctorsSP.dart';
 import 'package:medical_services/providers/doctors_provider.dart';
 import 'package:medical_services/settings/colors.dart';
 import 'package:provider/provider.dart';
-
 import '../../components/doctorCard.dart';
 import '../../components/sortWidget.dart';
 
@@ -19,7 +19,15 @@ class DoctorsScreen extends StatefulWidget {
 class _DoctorsScreenState extends State<DoctorsScreen> {
   TextEditingController searchController = TextEditingController();
   @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var provWatch = context.watch<GetallDoctorsSPProvider>();
+    var provRead = context.read<GetallDoctorsSPProvider>();
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -51,39 +59,39 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
                                     mainAxisSize: MainAxisSize.min,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                    RadioListTile(
-                                            title: const Text("بالقرب منك"),
-                                            value: 1,
-                                            groupValue: context
-                                                .watch<DoctorsProvider>()
-                                                .filleter,
-                                            onChanged: (v) {
-                                              context
-                                                  .read<DoctorsProvider>()
-                                                  .changeFilleterValue(value: v);
-                                            }),
-                                        RadioListTile(
-                                            title: const Text("دكتور"),
-                                            value: 2,
-                                            groupValue: context
-                                                .watch<DoctorsProvider>()
-                                                .filleter,
-                                            onChanged: (v) {
-                                              context
-                                                  .read<DoctorsProvider>()
-                                                  .changeFilleterValue(value: v);
-                                            }),
-                                        RadioListTile(
-                                            title: const Text("دكتورة"),
-                                            value: 3,
-                                            groupValue: context
-                                                .watch<DoctorsProvider>()
-                                                .filleter,
-                                            onChanged: (v) {
-                                              context
-                                                  .read<DoctorsProvider>()
-                                                  .changeFilleterValue(value: v);
-                                            }),
+                                      RadioListTile(
+                                          title: const Text("بالقرب منك"),
+                                          value: 1,
+                                          groupValue: context
+                                              .watch<DoctorsProvider>()
+                                              .filleter,
+                                          onChanged: (v) {
+                                            context
+                                                .read<DoctorsProvider>()
+                                                .changeFilleterValue(value: v);
+                                          }),
+                                      RadioListTile(
+                                          title: const Text("دكتور"),
+                                          value: 2,
+                                          groupValue: context
+                                              .watch<DoctorsProvider>()
+                                              .filleter,
+                                          onChanged: (v) {
+                                            context
+                                                .read<DoctorsProvider>()
+                                                .changeFilleterValue(value: v);
+                                          }),
+                                      RadioListTile(
+                                          title: const Text("دكتورة"),
+                                          value: 3,
+                                          groupValue: context
+                                              .watch<DoctorsProvider>()
+                                              .filleter,
+                                          onChanged: (v) {
+                                            context
+                                                .read<DoctorsProvider>()
+                                                .changeFilleterValue(value: v);
+                                          }),
                                     ],
                                   ),
                                 ));
@@ -153,14 +161,16 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
                   child: ListView.separated(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: 5,
+                    itemCount: provWatch.doctorsList.length,
                     separatorBuilder: (BuildContext context, int index) {
                       return const SizedBox(
                         height: 20,
                       );
                     },
                     itemBuilder: (BuildContext context, int index) {
-                      return const DoctorCard();
+                      return DoctorCard(
+                        doctorModel: provWatch.doctorsList[index],
+                      );
                     },
                   ),
                 ),

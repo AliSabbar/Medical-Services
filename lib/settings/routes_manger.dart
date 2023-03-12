@@ -95,8 +95,9 @@ class RouteGenerator {
         return MaterialPageRoute(
             builder: (context) => const ClinicProfileScreen());
       case Routes.doctorProfileScreen:
+          Object? obj = settings.arguments;
         return MaterialPageRoute(
-            builder: (context) => const DoctorProfile());
+            builder: (context) => DoctorProfile(doctorModel: obj,));
       case Routes.confirmAppointmentScreen:
         return MaterialPageRoute(
             builder: (context) => const ConfirmAppointment());
