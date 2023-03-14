@@ -6,15 +6,16 @@ import 'package:medical_services/settings/routes_manger.dart';
 import '../settings/colors.dart';
 
 class DoctorCard extends StatelessWidget {
-  const DoctorCard({
+  DoctorCard({
     super.key,
+    required this.doctorModel,
   });
-
+  var doctorModel;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, Routes.doctorProfileScreen);
+        Navigator.pushNamed(context, Routes.doctorProfileScreen, arguments: doctorModel);
       },
       child: Container(
         width: 333.w,
@@ -32,7 +33,7 @@ class DoctorCard extends StatelessWidget {
                     topRight: Radius.circular(20.r),
                     bottomRight: Radius.circular(20.r),
                   ),
-                  image: DecorationImage(
+                  image: const DecorationImage(
                     image: NetworkImage(
                         'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8ZG9jdG9yfGVufDB8fDB8fA%3D%3D&w=1000&q=80'),
                     fit: BoxFit.cover,
@@ -46,7 +47,7 @@ class DoctorCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "دكتورة سميرة سمور علي",
+                      doctorModel.user.name,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
@@ -54,7 +55,7 @@ class DoctorCard extends StatelessWidget {
                           color: AppColors.primaryColor,
                           fontWeight: FontWeight.bold),
                     ),
-                    Text("اخصائية تغذية",
+                    Text(doctorModel.magerSpecialties,
                         style: TextStyle(
                             fontSize: 14.sp, fontWeight: FontWeight.w600)),
                     SizedBox(
@@ -91,7 +92,8 @@ class DoctorCard extends StatelessWidget {
                           Icons.location_on_rounded,
                           color: AppColors.primaryColor,
                         ),
-                        Text('بغداد - المنصور',
+                        Text(
+                            '${doctorModel.user.address.city} - ${doctorModel.user.address.town}',
                             style: TextStyle(
                                 fontSize: 12.sp, fontWeight: FontWeight.w600))
                       ],
@@ -108,7 +110,7 @@ class DoctorCard extends StatelessWidget {
                           Icons.attach_money_rounded,
                           color: AppColors.primaryColor,
                         ),
-                        Text('الفحص 20 الف',
+                        Text('الفحص ${doctorModel.cost} الف',
                             style: TextStyle(
                                 fontSize: 12.sp, fontWeight: FontWeight.w600))
                       ],
@@ -130,10 +132,13 @@ class DoctorCard extends StatelessWidget {
                       height: 35.h,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
-                        color: AppColors.greenColor,
+                        color: doctorModel.user.role.isActive
+                            ? AppColors.greenColor
+                            : Colors.red,
                         borderRadius: BorderRadius.circular(20.r),
                       ),
-                      child: Text("متاح",
+                      child: Text(
+                          doctorModel.user.role.isActive ? "متاح" : "غير متاح",
                           style: TextStyle(
                               fontSize: 12.sp,
                               fontWeight: FontWeight.bold,

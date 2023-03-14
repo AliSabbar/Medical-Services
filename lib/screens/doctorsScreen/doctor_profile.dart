@@ -7,13 +7,17 @@ import 'package:medical_services/components/defaultProfileContainer.dart';
 import 'package:medical_services/components/defaultProfileInfoCard.dart';
 import 'package:medical_services/components/iconProfile.dart';
 import 'package:medical_services/components/specialtyContainer.dart';
+import 'package:medical_services/network/local/shared_helper.dart';
+import 'package:medical_services/providers/doctor_provider.dart';
+import 'package:medical_services/providers/auth_provider.dart';
 import 'package:medical_services/settings/colors.dart';
+import 'package:provider/provider.dart';
 
 import '../../settings/routes_manger.dart';
 
 class DoctorProfile extends StatefulWidget {
-  const DoctorProfile({Key? key}) : super(key: key);
-
+  DoctorProfile({Key? key, required this.doctorModel}) : super(key: key);
+  var doctorModel;
   @override
   State<DoctorProfile> createState() => DoctorProfileState();
 }
@@ -30,7 +34,12 @@ class DoctorProfileState extends State<DoctorProfile> {
               backgroundColor: AppColors.secondaryColor,
               actions: [
                 GestureDetector(
-                  onTap: () {},
+                  onTap: () {
+                    context.read<DoctorProvider>().addDoctorToFav(
+                        doctorID: widget.doctorModel.id,
+                        userID:
+                            context.read<AuthProvider>().userModel!.data.id);
+                  },
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20.w),
                     child: const Icon(
@@ -57,14 +66,14 @@ class DoctorProfileState extends State<DoctorProfile> {
                             height: 11.h,
                           ),
                           Text(
-                            "دكتورة سميرة علي حسين",
+                            widget.doctorModel.user.name,
                             style: Theme.of(context).textTheme.headlineMedium,
                             maxLines: 1,
                             textAlign: TextAlign.center,
                             overflow: TextOverflow.ellipsis,
                           ),
                           Text(
-                            "جراحة اطفال",
+                            widget.doctorModel.magerSpecialties,
                             style: TextStyle(fontSize: 13.sp),
                             maxLines: 1,
                             textAlign: TextAlign.center,
@@ -122,8 +131,7 @@ class DoctorProfileState extends State<DoctorProfile> {
                                     fontFamily: 'Cairo'),
                                 children: [
                                   TextSpan(
-                                    text:
-                                        'دكتورة سميرة علي محمد , من افضل الجراحين في بغداد ,حائزة على شهادات عالمية في بريطانيا و امريكا',
+                                    text: widget.doctorModel.user.setting.bio,
                                   ),
                                   !isExpand
                                       ? TextSpan(
@@ -224,13 +232,13 @@ class DoctorProfileState extends State<DoctorProfile> {
                             DefaultProfileInfoCard(
                               ContainerColor: AppColors.secondaryColor,
                               title: 'الخبرات',
-                              rating: '+10 سنة',
+                              rating: "سنة ${widget.doctorModel.xp}",
                               iconUrl: 'assets/icons/exp.svg',
                             ),
                             DefaultProfileInfoCard(
                               ContainerColor: AppColors.greenColor,
                               title: 'الكشفية',
-                              rating: '25 الف',
+                              rating: '${widget.doctorModel.cost} الف',
                               iconUrl: 'assets/icons/money_prof.svg',
                             )
                           ],

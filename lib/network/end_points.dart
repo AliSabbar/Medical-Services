@@ -14,5 +14,6 @@ class EndPoints {
   //? USER
   static String getUserById = "admin/user/";
   static String updateUserProfile = "admin/user/";
-   
+  static String getAllDoctorsSP = "admin/dr/getAllDrSameSpec?size=10";
+  static String addDoctorToFav = "admin/user/addFavorite/";
 }

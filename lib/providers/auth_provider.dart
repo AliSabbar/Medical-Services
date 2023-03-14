@@ -179,6 +179,9 @@ class AuthProvider extends ChangeNotifier {
 
         //* SAVE USER ID LOCAL
         await SharedHelper.saveData(key: 'userId', value: value['data']['id']);
+        
+        print("================ USER ROLE = ${value['data']['roleName']}");
+
 
         await getUserDataById(id: value['data']['id']);
 
@@ -202,6 +205,7 @@ class AuthProvider extends ChangeNotifier {
   //! GET USER DATA [SIGN IN]
 
   getUserDataById({required String id}) {
+    userModel = null;
     isLoading = true;
     notifyListeners();
     ApiHelper.getData(url: EndPoints.getUserById + id).then((value) async {
@@ -218,6 +222,7 @@ class AuthProvider extends ChangeNotifier {
     });
     notifyListeners();
   }
+
 
 // ! FORGOT PASSWORD
 
@@ -256,7 +261,8 @@ class AuthProvider extends ChangeNotifier {
       isLoading = false;
       notifyListeners();
       defaultToast(message: 'تم تغير كلمة المرور بنجاح', color: Colors.green);
-      Navigator.pushNamedAndRemoveUntil(context, Routes.signInScreen, (route) => false);
+      Navigator.pushNamedAndRemoveUntil(
+          context, Routes.signInScreen, (route) => false);
       print(value);
     }).catchError((e) {
       isLoading = false;

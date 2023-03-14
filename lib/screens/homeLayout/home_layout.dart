@@ -53,9 +53,9 @@ class _HomeLayOutState extends State<HomeLayOut> {
       'مرحبا ,',
       'حجوزاتي',
       EndPoints.token == null ||
-              provAuthWatch.userModel?.data.role.name == "user"
-          ? 'المفضلة'
-          : 'اضافة حجز',
+              provAuthWatch.userModel?.data.role.name == "dr"
+          ? 'اضافة حجز'
+          : 'المفضلة',
       'الاشعارات'
     ];
 
@@ -64,7 +64,7 @@ class _HomeLayOutState extends State<HomeLayOut> {
       EndPoints.token == null ? const GuestScreen() : const AppointmentScreen(),
       EndPoints.token == null
           ? const GuestScreen()
-          : false
+          : provAuthWatch.userModel?.data.role.name == "dr"
               ? AddAppointmentScreen()
               : const FavoriteScreen(),
       EndPoints.token == null
@@ -76,9 +76,9 @@ class _HomeLayOutState extends State<HomeLayOut> {
         child: provAuthWatch.isLoading
             ? const Scaffold(body: Center(child: CircularProgressIndicator()))
             : Scaffold(
-                floatingActionButton: FloatingActionButton(onPressed: () {
-                  context.read<AuthProvider>().signOut(context: context);
-                }),
+                // floatingActionButton: FloatingActionButton(onPressed: () {
+                //   context.read<AuthProvider>().signOut(context: context);
+                // }),
                 appBar: PreferredSize(
                   preferredSize: Size.fromHeight(72.h),
                   child: AppBar(
@@ -105,7 +105,7 @@ class _HomeLayOutState extends State<HomeLayOut> {
                               context,
                               EndPoints.token == null
                                   ? Routes.guestScreen
-                                  : false
+                                  : provAuthWatch.userModel?.data.role.name == "dr"
                                       ? Routes.doctorProfileServiceScreen
                                       : Routes.profileScreen,
                               arguments: provAuthWatch.userModel?.data);
@@ -148,14 +148,16 @@ class _HomeLayOutState extends State<HomeLayOut> {
                         label: 'حجوزاتي'),
                     BottomNavigationBarItem(
                         icon: SvgPicture.asset(
-                          false
+                          provAuthWatch.userModel?.data.role.name == "dr"
                               ? 'assets/icons/add_nav.svg'
                               : 'assets/icons/heart_nav.svg',
-                          color: currentIndex == 2
+                          color: currentIndex == 2 
                               ? AppColors.primaryColor
                               : AppColors.greyColor,
                         ),
-                        label: false ? 'اضافة حجز' : 'المفضلة'),
+                        label: provAuthWatch.userModel?.data.role.name == "dr"
+                            ? "اضافة حجز"
+                            : "المفضلة"),
                     BottomNavigationBarItem(
                         icon: SvgPicture.asset(
                           'assets/icons/notification_nav.svg',

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medical_services/components/searchWidget.dart';
 import 'package:medical_services/components/specialtyContainer.dart';
+import 'package:medical_services/providers/doctor_provider.dart';
 import 'package:medical_services/providers/home_provider.dart';
 import 'package:medical_services/settings/routes_manger.dart';
 import 'package:provider/provider.dart';
@@ -96,8 +97,9 @@ class _SpecialtyScreenState extends State<SpecialtyScreen> {
                               image:
                                   'https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX32581005.jpg',
                               onTap: () {
-                                Navigator.pushNamed(
-                                    context, Routes.doctorsScreen);
+                                context.read<DoctorProvider>().getAllDoctorsSP(
+                                    nameSP: provWatch.specialtyList[index].name,
+                                    context: context);
                               });
                         } else {
                           return const Center(

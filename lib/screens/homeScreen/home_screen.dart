@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medical_services/components/searchWidget.dart';
 import 'package:medical_services/network/end_points.dart';
+import 'package:medical_services/providers/auth_provider.dart';
 import 'package:medical_services/providers/home_provider.dart';
 import 'package:medical_services/screens/homeScreen/widgets/miss_doctor.dart';
 import 'package:medical_services/screens/homeScreen/widgets/services_widget.dart';
@@ -111,7 +112,15 @@ class _HomeScreenState extends State<HomeScreen> {
                             },
                             itemBuilder: (BuildContext context, int index) {
                               //! doctor service
-                              return true ? patientCard() : appointmentCard();
+                              return context
+                                          .watch<AuthProvider>()
+                                          .userModel
+                                          ?.data
+                                          .role
+                                          .name ==
+                                      "user"
+                                  ? appointmentCard()
+                                  : patientCard();
                             },
                           ),
                         )

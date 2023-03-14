@@ -5,9 +5,9 @@ import 'package:medical_services/settings/colors.dart';
 Widget patientCard() {
   return Container(
     width: 333.w,
-    // height: 112.h,
+    height: 112.h,
     decoration: BoxDecoration(
-      color: AppColors.containerColor,
+      color: AppColors.backgroundCardColor,
       borderRadius: BorderRadius.circular(20.r),
     ),
     child: Row(
@@ -50,7 +50,7 @@ Widget patientCard() {
                 height: 10.h,
               ),
               Container(
-                width: 159.w,
+                width: 170.w,
                 height: 38.h,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(20.r),

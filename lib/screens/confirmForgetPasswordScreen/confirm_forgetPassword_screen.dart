@@ -71,7 +71,7 @@ class _ConfirmForgetPasswordScreenState
                 context.watch<AuthProvider>().isLoading
                     ? const Center(child: CircularProgressIndicator())
                     : defaultButton(
-                        text: 'ناكيد',
+                        text: 'تأكيد',
                         onPressed: () {
                           context.read<AuthProvider>().changePassword(
                               phoneNumber: widget.phoneNumber['phoneNumber'],
