@@ -4,14 +4,15 @@
 
 import 'dart:convert';
 
-List<DoctorModel> doctorModelFromJson(String str) => List<DoctorModel>.from(
-    json.decode(str).map((x) => DoctorModel.fromJson(x)));
+List<ListDoctorModel> doctorModelFromJson(String str) =>
+    List<ListDoctorModel>.from(
+        json.decode(str).map((x) => ListDoctorModel.fromJson(x)));
 
-String doctorModelToJson(List<DoctorModel> data) =>
+String doctorModelToJson(List<ListDoctorModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class DoctorModel {
-  DoctorModel({
+class ListDoctorModel {
+  ListDoctorModel({
     required this.id,
     required this.userId,
     required this.cost,
@@ -20,9 +21,20 @@ class DoctorModel {
     required this.xp,
     required this.description,
     required this.magerSpecialties,
+    required this.isAvailable,
     this.hfId,
     required this.user,
   });
+
+// ! ADD IT BY ME
+  @override
+  bool operator ==(other) {
+    return (other is ListDoctorModel) && other.id == id;
+  }
+
+  @override
+  int get hashCode => id.hashCode;
+// ! ADD BY ME
 
   String id;
   String userId;
@@ -32,10 +44,12 @@ class DoctorModel {
   int xp;
   String description;
   String magerSpecialties;
+  bool isAvailable;
   dynamic hfId;
   User user;
 
-  factory DoctorModel.fromJson(Map<String, dynamic> json) => DoctorModel(
+  factory ListDoctorModel.fromJson(Map<String, dynamic> json) =>
+      ListDoctorModel(
         id: json["id"],
         userId: json["userId"],
         cost: json["cost"],
@@ -44,6 +58,7 @@ class DoctorModel {
         xp: json["xp"],
         description: json["description"],
         magerSpecialties: json["magerSpecialties"],
+        isAvailable: json["isAvailable"],
         hfId: json["hfId"],
         user: User.fromJson(json["user"]),
       );
@@ -57,6 +72,7 @@ class DoctorModel {
         "xp": xp,
         "description": description,
         "magerSpecialties": magerSpecialties,
+        "isAvailable": isAvailable,
         "hfId": hfId,
         "user": user.toJson(),
       };

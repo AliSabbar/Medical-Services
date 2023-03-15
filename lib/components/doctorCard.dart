@@ -132,13 +132,13 @@ class DoctorCard extends StatelessWidget {
                       height: 35.h,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
-                        color: doctorModel.user.role.isActive
+                        color: doctorModel.isAvailable
                             ? AppColors.greenColor
                             : Colors.red,
                         borderRadius: BorderRadius.circular(20.r),
                       ),
                       child: Text(
-                          doctorModel.user.role.isActive ? "متاح" : "غير متاح",
+                          doctorModel.isAvailable ? "متاح" : "غير متاح",
                           style: TextStyle(
                               fontSize: 12.sp,
                               fontWeight: FontWeight.bold,

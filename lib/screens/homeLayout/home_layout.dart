@@ -5,6 +5,7 @@ import 'package:medical_services/models/user_model.dart';
 import 'package:medical_services/network/end_points.dart';
 import 'package:medical_services/network/local/shared_helper.dart';
 import 'package:medical_services/providers/auth_provider.dart';
+import 'package:medical_services/providers/doctor_provider.dart';
 import 'package:medical_services/providers/home_provider.dart';
 import 'package:medical_services/settings/colors.dart';
 import 'package:medical_services/settings/routes_manger.dart';
@@ -52,8 +53,7 @@ class _HomeLayOutState extends State<HomeLayOut> {
     List appbarTitle = [
       'مرحبا ,',
       'حجوزاتي',
-      EndPoints.token == null ||
-              provAuthWatch.userModel?.data.role.name == "dr"
+      EndPoints.token == null || provAuthWatch.userModel?.data.role.name == "dr"
           ? 'اضافة حجز'
           : 'المفضلة',
       'الاشعارات'
@@ -77,7 +77,7 @@ class _HomeLayOutState extends State<HomeLayOut> {
             ? const Scaffold(body: Center(child: CircularProgressIndicator()))
             : Scaffold(
                 // floatingActionButton: FloatingActionButton(onPressed: () {
-                //   context.read<AuthProvider>().signOut(context: context);
+                //   context.read<DoctorProvider>().getFav(context);
                 // }),
                 appBar: PreferredSize(
                   preferredSize: Size.fromHeight(72.h),
@@ -105,7 +105,8 @@ class _HomeLayOutState extends State<HomeLayOut> {
                               context,
                               EndPoints.token == null
                                   ? Routes.guestScreen
-                                  : provAuthWatch.userModel?.data.role.name == "dr"
+                                  : provAuthWatch.userModel?.data.role.name ==
+                                          "dr"
                                       ? Routes.doctorProfileServiceScreen
                                       : Routes.profileScreen,
                               arguments: provAuthWatch.userModel?.data);
@@ -151,7 +152,7 @@ class _HomeLayOutState extends State<HomeLayOut> {
                           provAuthWatch.userModel?.data.role.name == "dr"
                               ? 'assets/icons/add_nav.svg'
                               : 'assets/icons/heart_nav.svg',
-                          color: currentIndex == 2 
+                          color: currentIndex == 2
                               ? AppColors.primaryColor
                               : AppColors.greyColor,
                         ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:medical_services/components/defaultTextField.dart';
 import 'package:medical_services/components/defaultToast.dart';
+import 'package:medical_services/models/doctor_model.dart';
 import 'package:medical_services/network/end_points.dart';
 import 'package:medical_services/network/local/shared_helper.dart';
 import 'package:medical_services/network/remote/api_helper.dart';
@@ -66,6 +67,8 @@ class AuthProvider extends ChangeNotifier {
   bool isLoading = false;
 
   UserModel? userModel;
+
+  DoctorModel? doctorModel;
 
 // ! SIGN UP
 
@@ -179,9 +182,16 @@ class AuthProvider extends ChangeNotifier {
 
         //* SAVE USER ID LOCAL
         await SharedHelper.saveData(key: 'userId', value: value['data']['id']);
-        
+
         print("================ USER ROLE = ${value['data']['roleName']}");
 
+// !  =================================
+
+        if (value['data']['roleName'] == "dr") {
+          print("================= DOCTOR MODEL =================");
+          await getDoctorData(doctorId: value['data']['drIdOrHfId']);
+          print("================= DOCTOR MODEL =================");
+        }
 
         await getUserDataById(id: value['data']['id']);
 
@@ -193,7 +203,7 @@ class AuthProvider extends ChangeNotifier {
       }
       isButtonShowing = true;
       notifyListeners();
-      print(value);
+      // print(value);
     }).catchError((e) {
       isButtonShowing = true;
       notifyListeners();
@@ -210,9 +220,9 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
     ApiHelper.getData(url: EndPoints.getUserById + id).then((value) async {
       userModel = UserModel.fromJson(value);
-      print("SHARED ID = ${SharedHelper.getData(key: 'userId')}");
-      print(userModel!.data.name);
-      print(value);
+      // print("SHARED ID = ${SharedHelper.getData(key: 'userId')}");
+      // print(userModel!.data.name);
+      // print(value);
       isLoading = false;
       notifyListeners();
     }).catchError((e) {
@@ -223,6 +233,15 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  // ! GET DOCTOR DATA [SIGN IN]
+
+  getDoctorData({required String doctorId}) {
+    ApiHelper.getData(url: EndPoints.getDoctorById + doctorId).then((value) {
+      doctorModel = DoctorModel.fromJson(value);
+    }).catchError((e) {
+      print("ERROR IN GET DOCTOR DATA = $e");
+    });
+  }
 
 // ! FORGOT PASSWORD
 

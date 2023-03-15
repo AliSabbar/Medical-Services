@@ -7,7 +7,10 @@ import 'package:medical_services/components/defaultProfileContainer.dart';
 import 'package:medical_services/components/defaultProfileInfoCard.dart';
 import 'package:medical_services/components/iconProfile.dart';
 import 'package:medical_services/components/specialtyContainer.dart';
+import 'package:medical_services/providers/auth_provider.dart';
+import 'package:medical_services/providers/doctor_provider.dart';
 import 'package:medical_services/settings/colors.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../settings/routes_manger.dart';
 
@@ -20,7 +23,17 @@ class SrDoctorProfileScreen extends StatefulWidget {
 
 class SrDoctorProfileScreenState extends State<SrDoctorProfileScreen> {
   @override
+  void initState() {
+    context.read<AuthProvider>().getDoctorData(
+        doctorId: context.read<AuthProvider>().doctorModel!.data.id);
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var provRead = context.read<AuthProvider>();
+    var provWatch = context.watch<AuthProvider>();
     return Directionality(
       textDirection: TextDirection.rtl,
       child: OrientationBuilder(
@@ -30,13 +43,12 @@ class SrDoctorProfileScreenState extends State<SrDoctorProfileScreen> {
               actions: [
                 GestureDetector(
                   onTap: () {
-                    Navigator.pushNamed(
-                        context, Routes.editDoctorProfileServiceScreen);
+                    Navigator.pushNamed(context, Routes.settingsScreen);
                   },
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20.w),
                     child: const Icon(
-                      Icons.mode_edit_outline_rounded,
+                      Icons.settings,
                       size: 30,
                     ),
                   ),
@@ -59,14 +71,14 @@ class SrDoctorProfileScreenState extends State<SrDoctorProfileScreen> {
                             height: 11.h,
                           ),
                           Text(
-                            "دكتورة سميرة علي حسين",
+                            provWatch.doctorModel?.data.user.name ?? '',
                             style: Theme.of(context).textTheme.headlineMedium,
                             maxLines: 1,
                             textAlign: TextAlign.center,
                             overflow: TextOverflow.ellipsis,
                           ),
                           Text(
-                            "جراحة اطفال",
+                            provWatch.doctorModel?.data.magerSpecialties ?? '',
                             style: TextStyle(fontSize: 13.sp),
                             maxLines: 1,
                             textAlign: TextAlign.center,
@@ -105,15 +117,33 @@ class SrDoctorProfileScreenState extends State<SrDoctorProfileScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "عن الطبيب",
-                          style: Theme.of(context).textTheme.headlineMedium,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "عن الطبيب",
+                              style: Theme.of(context).textTheme.headlineMedium,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pushNamed(context,
+                                    Routes.editDoctorProfileServiceScreen);
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                                child: const Icon(
+                                  Icons.mode_edit_outline_rounded,
+                                  size: 20,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                         SizedBox(
                           height: 7.h,
                         ),
                         Text(
-                          'دكتورة علي محمد سمير حائزة على شهادات عالمية في بريطانيا و امريكا....',
+                          provWatch.doctorModel?.data.user.setting.bio ?? "",
                         ),
 
                         SizedBox(
@@ -167,13 +197,13 @@ class SrDoctorProfileScreenState extends State<SrDoctorProfileScreen> {
                             DefaultProfileInfoCard(
                               ContainerColor: AppColors.secondaryColor,
                               title: 'الخبرات',
-                              rating: '+10 سنة',
+                              rating: '+ ${provWatch.doctorModel?.data.xp}',
                               iconUrl: 'assets/icons/exp.svg',
                             ),
                             DefaultProfileInfoCard(
                               ContainerColor: AppColors.greenColor,
                               title: 'الكشفية',
-                              rating: '25 الف',
+                              rating: '${provWatch.doctorModel?.data.cost} الف',
                               iconUrl: 'assets/icons/money_prof.svg',
                             )
                           ],

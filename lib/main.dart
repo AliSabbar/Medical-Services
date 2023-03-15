@@ -19,7 +19,7 @@ void main() async {
   dynamic onBoarding = SharedHelper.getData(key: "OnBoarding");
   EndPoints.token = SharedHelper.getData(key: 'token');
   Widget startWidget;
-  if (onBoarding != null) {
+  if (onBoarding != null) { 
     if (EndPoints.token != null) {
       startWidget = const HomeLayOut();
     } else {

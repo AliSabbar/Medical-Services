@@ -160,7 +160,7 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
                   child: ListView.separated(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: provWatch.doctorsList.length,
+                    itemCount: provWatch.doctorsListSP.length,
                     separatorBuilder: (BuildContext context, int index) {
                       return const SizedBox(
                         height: 20,
@@ -168,7 +168,7 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
                     },
                     itemBuilder: (BuildContext context, int index) {
                       return DoctorCard(
-                        doctorModel: provWatch.doctorsList[index],
+                        doctorModel: provWatch.doctorsListSP[index],
                       );
                     },
                   ),

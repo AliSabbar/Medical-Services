@@ -51,7 +51,8 @@ class _AddAppointmentScreenState extends State<AddAppointmentScreen> {
                         lastDate: DateTime.now(),
                       ).then((value) {
                         if (value != null) {
-                          dateController.text = DateFormat.yMd().format(value);
+                          dateController.text = DateFormat('yyy-MM-dd')
+                                                        .format(value);
                           print(dateController.text);
                         }
                       });

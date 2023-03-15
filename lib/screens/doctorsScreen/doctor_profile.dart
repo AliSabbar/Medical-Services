@@ -13,6 +13,7 @@ import 'package:medical_services/providers/auth_provider.dart';
 import 'package:medical_services/settings/colors.dart';
 import 'package:provider/provider.dart';
 
+import '../../models/list_doctor_model.dart';
 import '../../settings/routes_manger.dart';
 
 class DoctorProfile extends StatefulWidget {
@@ -24,8 +25,27 @@ class DoctorProfile extends StatefulWidget {
 
 class DoctorProfileState extends State<DoctorProfile> {
   bool isExpand = false;
+
+  @override
+  void initState() {
+      Future.delayed(const Duration(seconds: 1), () {
+    context.read<DoctorProvider>().getFav(context);
+    });
+
+    super.initState();
+  } 
+
   @override
   Widget build(BuildContext context) {
+    var provRead = context.read<AuthProvider>();
+    var provWatch = context.watch<AuthProvider>();
+    var provDocRead = context.read<DoctorProvider>();
+    var provDocWatch = context.watch<DoctorProvider>();
+    bool isExist = provDocWatch.isExist(
+        doctorID: widget.doctorModel.id,
+        userID: provWatch.userModel?.data.id,
+        context: context);
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: OrientationBuilder(
@@ -34,17 +54,21 @@ class DoctorProfileState extends State<DoctorProfile> {
               backgroundColor: AppColors.secondaryColor,
               actions: [
                 GestureDetector(
-                  onTap: () {
-                    context.read<DoctorProvider>().addDoctorToFav(
+                  onTap: () async {
+                    provDocRead.addAndRemoveFavDoc(
+                        isExist: isExist,
                         doctorID: widget.doctorModel.id,
-                        userID:
-                            context.read<AuthProvider>().userModel!.data.id);
+                        userID: provRead.userModel!.data.id,
+                        context: context);
                   },
                   child: Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20.w),
-                    child: const Icon(
-                      Icons.favorite_outline_rounded,
+                    child: Icon(
+                      isExist
+                          ? Icons.favorite_rounded
+                          : Icons.favorite_outline_rounded,
                       size: 30,
+                      color: isExist ? Colors.red : null,
                     ),
                   ),
                 ),
