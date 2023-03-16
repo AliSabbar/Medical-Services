@@ -3,7 +3,7 @@ import 'package:flutter_svg/svg.dart';
 
 class Stars extends StatelessWidget {
   Stars({Key? key, required this.countStar}) : super(key: key);
-  int? countStar;
+  int countStar;
   @override
   Widget build(BuildContext context) {
     return Row(

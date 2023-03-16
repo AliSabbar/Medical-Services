@@ -31,6 +31,7 @@ class DefaultListView extends StatelessWidget {
               imgUrl: imgUrl,
               onTap: onTap,
               title: title,
+              starCount: 1,
             );
             // must take the number of stars
           }),

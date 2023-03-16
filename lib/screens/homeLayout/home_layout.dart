@@ -32,7 +32,7 @@ class _HomeLayOutState extends State<HomeLayOut> {
   void initState() {
     EndPoints.token == null
         ? () {}
-        : Future.delayed(const Duration(seconds: 1), () {
+        : Future.delayed(const Duration(seconds: 0), () {
             print("object");
             context
                     .read<AuthProvider>()

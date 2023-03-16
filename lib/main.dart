@@ -13,13 +13,15 @@ import 'network/local/shared_helper.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]); //! DELETE THIS LATER THE PHONE ONLY IN PORTRAIT MODE
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp
+  ]); //! DELETE THIS LATER THE PHONE ONLY IN PORTRAIT MODE
 
   await SharedHelper.init();
   dynamic onBoarding = SharedHelper.getData(key: "OnBoarding");
   EndPoints.token = SharedHelper.getData(key: 'token');
   Widget startWidget;
-  if (onBoarding != null) { 
+  if (onBoarding != null) {
     if (EndPoints.token != null) {
       startWidget = const HomeLayOut();
     } else {

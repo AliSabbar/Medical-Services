@@ -44,8 +44,11 @@ class DefaultClinicsTile extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: const TextStyle(
-                      fontSize: 17, fontWeight: FontWeight.bold),
+                  //make the tall name go to the next line
+                  //for ex noor saad
+                  //jabbar
+                  style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
+                  maxLines: 2,
                 ),
                 SizedBox(
                   height: 4.h,
@@ -57,7 +60,7 @@ class DefaultClinicsTile extends StatelessWidget {
                 ),
               ],
             ),
-           const Spacer(),
+            const Spacer(),
             GestureDetector(
               onTap: () {},
               child: Row(
@@ -69,11 +72,10 @@ class DefaultClinicsTile extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                         color: AppColors.greyColor),
                   ),
-                  
-                   SvgPicture.asset('assets/icons/arrowside.svg'),
-
-                   SizedBox(width: 10.w,)
-                
+                  SvgPicture.asset('assets/icons/arrowside.svg'),
+                  SizedBox(
+                    width: 10.w,
+                  )
                 ],
               ),
             )

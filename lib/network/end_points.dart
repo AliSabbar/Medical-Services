@@ -1,6 +1,6 @@
 class EndPoints {
   // ! BASE URL
-  static String baseUrl = "https://medical-services.onrender.com/";
+  static String baseUrl = "https://medical-services1.onrender.com/";
   //! TOKEN
   static String? token;
   // ? AUTH END POINTS
@@ -19,4 +19,6 @@ class EndPoints {
   static String removeDoctorFromFav = "admin/user/removeFavorite/";
   //? DOCTOR
   static String getDoctorById = "admin/dr/";
+  static String getClinicsNearMe = "admin/hf/getNearMe";
+  static String getClinicTopRating = "admin/hf/getAllHfByRating";
 }

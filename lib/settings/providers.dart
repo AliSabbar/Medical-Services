@@ -2,6 +2,7 @@ import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
 import '../providers/auth_provider.dart';
+import '../providers/clinics_provider.dart';
 import '../providers/doctor_provider.dart';
 import '../providers/home_provider.dart';
 import '../providers/sr_edit_profileDoctor_provider.dart';
@@ -16,5 +17,8 @@ class Providers {
     ChangeNotifierProvider(create: (_) => SrEditDoctorProfileProvider()),
     ChangeNotifierProvider(create: (_) => DoctorProvider()),
     ChangeNotifierProvider(create: (_) => UserProfileProvider()),
+    ChangeNotifierProvider(create: (_) => ClinicsProvider()),
+        
+
   ];
 }
