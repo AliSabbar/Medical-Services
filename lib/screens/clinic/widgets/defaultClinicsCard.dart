@@ -5,7 +5,7 @@ import 'package:medical_services/components/starsTest/stars.dart';
 import 'package:medical_services/providers/clinics_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../settings/colors.dart';
+import '../../../settings/colors.dart';
 
 class DefaultClinicsCard extends StatelessWidget {
   const DefaultClinicsCard({

@@ -19,6 +19,9 @@ class EndPoints {
   static String removeDoctorFromFav = "admin/user/removeFavorite/";
   //? DOCTOR
   static String getDoctorById = "admin/dr/";
+  //? CLINICS
   static String getClinicsNearMe = "admin/hf/getNearMe";
   static String getClinicTopRating = "admin/hf/getAllHfByRating";
+  static String getAllClinics = "admin/hf/";
+  static String getClinicById = "admin/hf/";
 }

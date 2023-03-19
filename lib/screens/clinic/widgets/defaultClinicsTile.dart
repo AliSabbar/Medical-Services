@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:medical_services/components/starsTest/stars.dart';
 
-import '../settings/colors.dart';
+import '../../../settings/colors.dart';
 
 class DefaultClinicsTile extends StatelessWidget {
   const DefaultClinicsTile(
-      {Key? key, required this.imgUrl, required this.title})
+      {Key? key,
+      required this.imgUrl,
+      required this.title,
+      required this.starCount, required this.onTap})
       : super(key: key);
   final String imgUrl;
   final String title;
+  final int starCount;
+  final VoidCallback onTap;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: onTap,
       child: Container(
         width: 302.w,
         height: 111.h,
@@ -44,20 +50,14 @@ class DefaultClinicsTile extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  //make the tall name go to the next line
-                  //for ex noor saad
-                  //jabbar
-                  style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
+                  style:
+                      TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
                   maxLines: 2,
                 ),
                 SizedBox(
                   height: 4.h,
                 ),
-                SvgPicture.asset(
-                  'assets/icons/stars.svg',
-                  width: 60.w,
-                  height: 13.h,
-                ),
+                Stars(countStar: starCount)
               ],
             ),
             const Spacer(),

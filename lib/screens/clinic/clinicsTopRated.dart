@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 
+import 'widgets/defaultClinicsTile.dart';
 import '../../components/searchWidget.dart';
+import '../../providers/clinics_provider.dart';
 import 'widgets/defaultExpandedListView.dart';
 
 class ClinicsTopRated extends StatelessWidget {
@@ -28,7 +31,33 @@ class ClinicsTopRated extends StatelessWidget {
                 SizedBox(
                   height: 20.h,
                 ),
-                const DefaultExpandedListView(),
+                Expanded(
+                  child: ListView.separated(
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: context
+                        .watch<ClinicsProvider>()
+                        .listclinicTopRating
+                        .length,
+                    shrinkWrap: true,
+                    separatorBuilder: (context, index) => SizedBox(
+                      height: 15.h,
+                    ),
+                    scrollDirection: Axis.vertical,
+                    itemBuilder: (context, index) {
+                      List itemList =
+                          context.watch<ClinicsProvider>().listclinicTopRating;
+                      return DefaultClinicsTile(
+                        imgUrl:
+                            'https://images.unsplash.com/photo-1629909613654-28e377c37b09?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2xpbmljfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=600&q=60',
+                        title: itemList[index].user.name,
+                        starCount: itemList[index].rating.toInt(),
+                        onTap: () {
+                          
+                        },
+                      );
+                    },
+                  ),
+                )
               ],
             ),
           ),

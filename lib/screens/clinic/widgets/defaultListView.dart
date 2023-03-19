@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../components/defaultClinicsCard.dart';
+import 'defaultClinicsCard.dart';
 
+//! this widget not used
 class DefaultListView extends StatelessWidget {
   const DefaultListView({
     Key? key,
@@ -33,7 +34,6 @@ class DefaultListView extends StatelessWidget {
               title: title,
               starCount: 1,
             );
-            // must take the number of stars
           }),
     );
   }

@@ -2,7 +2,7 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:medical_services/components/defaultClinicsCard.dart';
+import 'package:medical_services/screens/clinic/widgets/defaultClinicsCard.dart';
 import 'package:medical_services/screens/clinic/widgets/defaultListView.dart';
 import 'package:medical_services/screens/homeScreen/widgets/miss_doctor.dart';
 import 'package:medical_services/settings/colors.dart';
@@ -21,7 +21,6 @@ class ClinicsScreen extends StatefulWidget {
 class _ClinicsScreenState extends State<ClinicsScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     Future.delayed(const Duration(milliseconds: 0), () {
       context.read<ClinicsProvider>().getClinicsNearMe();
@@ -33,6 +32,7 @@ class _ClinicsScreenState extends State<ClinicsScreen> {
   Widget build(BuildContext context) {
     var provRead = context.read<ClinicsProvider>();
     var provWatch = context.watch<ClinicsProvider>();
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: OrientationBuilder(
@@ -40,7 +40,6 @@ class _ClinicsScreenState extends State<ClinicsScreen> {
           appBar: AppBar(
             title: const Text(
               'العيادات',
-              //make the size bigger
             ),
           ),
           body: provWatch.isLoading
@@ -54,6 +53,7 @@ class _ClinicsScreenState extends State<ClinicsScreen> {
                         SizedBox(
                           height: 10.h,
                         ),
+                        // 3afitc card
                         const MissDoctor(
                           title: 'العيادات الطبية',
                         ),
@@ -85,6 +85,7 @@ class _ClinicsScreenState extends State<ClinicsScreen> {
                         SizedBox(
                           height: 10.h,
                         ),
+                        //! first list clinics near me
                         SizedBox(
                           height: 200.h,
                           child: ListView.separated(
@@ -103,7 +104,6 @@ class _ClinicsScreenState extends State<ClinicsScreen> {
                               List itemList = context
                                   .watch<ClinicsProvider>()
                                   .listclinicsNearMe;
-
                               return DefaultClinicsCard(
                                 imgUrl:
                                     'https://images.unsplash.com/photo-1629909613654-28e377c37b09?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2xpbmljfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=600&q=60',
@@ -114,14 +114,6 @@ class _ClinicsScreenState extends State<ClinicsScreen> {
                             },
                           ),
                         ),
-                        /*   DefaultListView(
-                    imgUrl:
-                        'https://images.unsplash.com/photo-1629909613654-28e377c37b09?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2xpbmljfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=600&q=60',
-                    onTap: () {
-                      Navigator.pushNamed(context, Routes.clinicProfileScreen);
-                    },
-                    title: 'عيادة الهلال الاحمر  الاهلية',
-                  ), */
                         SizedBox(
                           height: 20.h,
                         ),
@@ -150,14 +142,14 @@ class _ClinicsScreenState extends State<ClinicsScreen> {
                         SizedBox(
                           height: 10.h,
                         ),
-                        // the first list
+                        //! second list top rated clinics
                         SizedBox(
                           height: 200.h,
                           child: ListView.separated(
                             scrollDirection: Axis.horizontal,
                             itemCount: context
                                 .watch<ClinicsProvider>()
-                                .ListclinicTopRating
+                                .listclinicTopRating
                                 .length,
                             separatorBuilder:
                                 (BuildContext context, int index) {
@@ -168,7 +160,7 @@ class _ClinicsScreenState extends State<ClinicsScreen> {
                             itemBuilder: (BuildContext context, int index) {
                               List itemList = context
                                   .watch<ClinicsProvider>()
-                                  .ListclinicTopRating;
+                                  .listclinicTopRating;
                               return DefaultClinicsCard(
                                   imgUrl:
                                       'https://images.unsplash.com/photo-1629909613654-28e377c37b09?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2xpbmljfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=600&q=60',

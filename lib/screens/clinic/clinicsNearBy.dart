@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:medical_services/components/defaultClinicsTile.dart';
+import 'package:medical_services/screens/clinic/widgets/defaultClinicsTile.dart';
 import 'package:medical_services/components/searchWidget.dart';
 import 'package:medical_services/screens/clinic/widgets/defaultExpandedListView.dart';
 import '../../settings/colors.dart';

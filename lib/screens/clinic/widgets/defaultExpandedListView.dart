@@ -3,7 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medical_services/providers/clinics_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../../../components/defaultClinicsTile.dart';
+import 'defaultClinicsTile.dart';
 
 class DefaultExpandedListView extends StatelessWidget {
   const DefaultExpandedListView({Key? key}) : super(key: key);
@@ -22,9 +22,14 @@ class DefaultExpandedListView extends StatelessWidget {
         itemBuilder: (context, index) {
           List itemList = context.watch<ClinicsProvider>().listclinicsNearMe;
           return DefaultClinicsTile(
-              imgUrl:
-                  'https://images.unsplash.com/photo-1629909613654-28e377c37b09?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2xpbmljfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=600&q=60',
-              title: itemList[index].user.name);
+            imgUrl:
+                'https://images.unsplash.com/photo-1629909613654-28e377c37b09?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2xpbmljfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=600&q=60',
+            title: itemList[index].user.name,
+            starCount: itemList[index].rating.toInt(),
+            onTap: () {
+              
+            },
+          );
         },
       ),
     );
