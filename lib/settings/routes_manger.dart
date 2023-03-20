@@ -102,8 +102,9 @@ class RouteGenerator {
                   userProfile: obj,
                 ));
       case Routes.clinicProfileScreen:
+        Object? obj = settings.arguments;
         return MaterialPageRoute(
-            builder: (context) => const ClinicProfileScreen());
+            builder: (context) =>  ClinicProfileScreen(clinicModel: obj,));
       case Routes.doctorProfileScreen:
         Object? obj = settings.arguments;
         return MaterialPageRoute(

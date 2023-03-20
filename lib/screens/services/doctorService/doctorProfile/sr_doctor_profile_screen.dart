@@ -189,21 +189,21 @@ class SrDoctorProfileScreenState extends State<SrDoctorProfileScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             DefaultProfileInfoCard(
-                              ContainerColor: AppColors.ratingCardProfileColor,
+                              containerColor: AppColors.ratingCardProfileColor,
                               title: 'التقييم',
-                              rating: '4.5',
+                              value: '4.5',
                               iconUrl: 'assets/icons/star.svg',
                             ),
                             DefaultProfileInfoCard(
-                              ContainerColor: AppColors.secondaryColor,
+                              containerColor: AppColors.secondaryColor,
                               title: 'الخبرات',
-                              rating: '+ ${provWatch.doctorModel?.data.xp}',
+                              value: '+ ${provWatch.doctorModel?.data.xp}',
                               iconUrl: 'assets/icons/exp.svg',
                             ),
                             DefaultProfileInfoCard(
-                              ContainerColor: AppColors.greenColor,
+                              containerColor: AppColors.greenColor,
                               title: 'الكشفية',
-                              rating: '${provWatch.doctorModel?.data.cost} الف',
+                              value: '${provWatch.doctorModel?.data.cost} الف',
                               iconUrl: 'assets/icons/money_prof.svg',
                             )
                           ],

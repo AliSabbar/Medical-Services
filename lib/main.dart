@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
         title: 'Medical Services',
         debugShowCheckedModeBanner: false,
         theme: lightTheme, //? <-- change theme
-        home: startWidget, //! this is your home widget
+        home: SignInScreen(), //! this is your home widget
         onGenerateRoute: RouteGenerator.getRoute,
       ),
     );

@@ -28,12 +28,12 @@ class DoctorProfileState extends State<DoctorProfile> {
 
   @override
   void initState() {
-      Future.delayed(const Duration(seconds: 1), () {
-    context.read<DoctorProvider>().getFav(context);
+    Future.delayed(const Duration(seconds: 0), () {
+      context.read<DoctorProvider>().getFav(context);
     });
 
     super.initState();
-  } 
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -155,7 +155,7 @@ class DoctorProfileState extends State<DoctorProfile> {
                                     fontFamily: 'Cairo'),
                                 children: [
                                   TextSpan(
-                                    text: widget.doctorModel.user.setting.bio,
+                                    text: widget.doctorModel.description,
                                   ),
                                   !isExpand
                                       ? TextSpan(
@@ -248,21 +248,21 @@ class DoctorProfileState extends State<DoctorProfile> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             DefaultProfileInfoCard(
-                              ContainerColor: AppColors.ratingCardProfileColor,
+                              containerColor: AppColors.ratingCardProfileColor,
                               title: 'التقييم',
-                              rating: '4.5',
+                              value: '4.5',
                               iconUrl: 'assets/icons/star.svg',
                             ),
                             DefaultProfileInfoCard(
-                              ContainerColor: AppColors.secondaryColor,
+                              containerColor: AppColors.secondaryColor,
                               title: 'الخبرات',
-                              rating: "سنة ${widget.doctorModel.xp}",
+                              value: "سنة ${widget.doctorModel.xp}",
                               iconUrl: 'assets/icons/exp.svg',
                             ),
                             DefaultProfileInfoCard(
-                              ContainerColor: AppColors.greenColor,
+                              containerColor: AppColors.greenColor,
                               title: 'الكشفية',
-                              rating: '${widget.doctorModel.cost} الف',
+                              value: '${widget.doctorModel.cost} الف',
                               iconUrl: 'assets/icons/money_prof.svg',
                             )
                           ],

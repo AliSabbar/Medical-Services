@@ -15,7 +15,8 @@ class DoctorCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, Routes.doctorProfileScreen, arguments: doctorModel);
+        Navigator.pushNamed(context, Routes.doctorProfileScreen,
+            arguments: doctorModel);
       },
       child: Container(
         width: 333.w,
@@ -137,8 +138,7 @@ class DoctorCard extends StatelessWidget {
                             : Colors.red,
                         borderRadius: BorderRadius.circular(20.r),
                       ),
-                      child: Text(
-                          doctorModel.isAvailable ? "متاح" : "غير متاح",
+                      child: Text(doctorModel.isAvailable ? "متاح" : "غير متاح",
                           style: TextStyle(
                               fontSize: 12.sp,
                               fontWeight: FontWeight.bold,
@@ -147,7 +147,11 @@ class DoctorCard extends StatelessWidget {
                     const Spacer(),
                     defaultButton(
                         text: 'احجز الان',
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(
+                              context, Routes.doctorProfileScreen,
+                              arguments: doctorModel);
+                        },
                         width: 70,
                         height: 40,
                         fontSize: 14)

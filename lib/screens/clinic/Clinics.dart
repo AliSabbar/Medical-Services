@@ -1,4 +1,3 @@
-import 'dart:ffi';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -53,7 +52,6 @@ class _ClinicsScreenState extends State<ClinicsScreen> {
                         SizedBox(
                           height: 10.h,
                         ),
-                        // 3afitc card
                         const MissDoctor(
                           title: 'العيادات الطبية',
                         ),
@@ -92,7 +90,7 @@ class _ClinicsScreenState extends State<ClinicsScreen> {
                             scrollDirection: Axis.horizontal,
                             itemCount: context
                                 .watch<ClinicsProvider>()
-                                .listclinicsNearMe
+                                .listClinicsNearMe
                                 .length,
                             separatorBuilder:
                                 (BuildContext context, int index) {
@@ -103,12 +101,16 @@ class _ClinicsScreenState extends State<ClinicsScreen> {
                             itemBuilder: (BuildContext context, int index) {
                               List itemList = context
                                   .watch<ClinicsProvider>()
-                                  .listclinicsNearMe;
+                                  .listClinicsNearMe;
                               return DefaultClinicsCard(
                                 imgUrl:
                                     'https://images.unsplash.com/photo-1629909613654-28e377c37b09?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2xpbmljfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=600&q=60',
                                 title: itemList[index].user.name,
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, Routes.clinicProfileScreen,
+                                      arguments: itemList[index]);
+                                },
                                 starCount: itemList[index].rating.toInt(),
                               );
                             },
@@ -149,7 +151,7 @@ class _ClinicsScreenState extends State<ClinicsScreen> {
                             scrollDirection: Axis.horizontal,
                             itemCount: context
                                 .watch<ClinicsProvider>()
-                                .listclinicTopRating
+                                .listClinicTopRating
                                 .length,
                             separatorBuilder:
                                 (BuildContext context, int index) {
@@ -160,12 +162,16 @@ class _ClinicsScreenState extends State<ClinicsScreen> {
                             itemBuilder: (BuildContext context, int index) {
                               List itemList = context
                                   .watch<ClinicsProvider>()
-                                  .listclinicTopRating;
+                                  .listClinicTopRating;
                               return DefaultClinicsCard(
                                   imgUrl:
                                       'https://images.unsplash.com/photo-1629909613654-28e377c37b09?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2xpbmljfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=600&q=60',
                                   title: itemList[index].user.name,
-                                  onTap: () {},
+                                  onTap: () {
+                                                Navigator.pushNamed(
+                                      context, Routes.clinicProfileScreen,
+                                      arguments: itemList[index]);
+                                  },
                                   starCount: itemList[index].rating.toInt());
                             },
                           ),

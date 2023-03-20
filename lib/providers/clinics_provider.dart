@@ -9,8 +9,8 @@ import '../models/allClinics_model.dart';
 import '../models/clinic_model.dart';
 
 class ClinicsProvider extends ChangeNotifier {
-  List listclinicsNearMe = [];
-  List listclinicTopRating = [];
+  List listClinicsNearMe = [];
+  List listClinicTopRating = [];
   List listAllClinics = [];
   var clinic;
   bool isLoading = false;
@@ -19,7 +19,7 @@ class ClinicsProvider extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
     ApiHelper.getData(url: EndPoints.getClinicsNearMe).then((value) async {
-      listclinicsNearMe = await value['data']
+      listClinicsNearMe = await value['data']
           .map((e) => ClinicsNearMeModel.fromJson(e))
           .toList();
       isLoading = false;
@@ -35,7 +35,7 @@ class ClinicsProvider extends ChangeNotifier {
     isLoading = true;
     notifyListeners();
     ApiHelper.getData(url: EndPoints.getClinicTopRating).then((value) async {
-      listclinicTopRating =
+      listClinicTopRating =
           await value['data'].map((e) => ClinicsTopRating.fromJson(e)).toList();
       isLoading = false;
       notifyListeners();

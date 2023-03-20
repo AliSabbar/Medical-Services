@@ -11,7 +11,9 @@ import '../../settings/routes_manger.dart';
 import 'widgets/defaultListView.dart';
 
 class ClinicProfileScreen extends StatefulWidget {
-  const ClinicProfileScreen({Key? key}) : super(key: key);
+  ClinicProfileScreen({Key? key, required this.clinicModel}) : super(key: key);
+
+  var clinicModel;
 
   @override
   State<ClinicProfileScreen> createState() => _ClinicProfileScreenState();
@@ -55,7 +57,7 @@ class _ClinicProfileScreenState extends State<ClinicProfileScreen> {
                             height: 11.h,
                           ),
                           Text(
-                            "عيادة النهرين",
+                            widget.clinicModel.user.name,
                             style: Theme.of(context).textTheme.headlineMedium,
                             maxLines: 1,
                             textAlign: TextAlign.center,
@@ -102,7 +104,7 @@ class _ClinicProfileScreenState extends State<ClinicProfileScreen> {
                           height: 7.h,
                         ),
                         Text(
-                          "دكتورة سميرة علي محمد , من افضل الجراحين في بغداد ,حائزة على شهادات عالمية في بريطانيا و امريكا ",
+                          widget.clinicModel.description,
                           style: TextStyle(
                             color: AppColors.greyColor,
                             fontSize: 14.sp,
@@ -115,21 +117,21 @@ class _ClinicProfileScreenState extends State<ClinicProfileScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             DefaultProfileInfoCard(
-                              ContainerColor: AppColors.ratingCardProfileColor,
+                              containerColor: AppColors.ratingCardProfileColor,
                               title: 'التقييم',
-                              rating: '4.5',
+                              value: widget.clinicModel.rating.toString(),
                               iconUrl: 'assets/icons/star.svg',
                             ),
                             DefaultProfileInfoCard(
-                              ContainerColor: AppColors.secondaryColor,
+                              containerColor: AppColors.secondaryColor,
                               title: 'التخصصات',
-                              rating: '10',
+                              value: widget.clinicModel.specialtiesNumbers.toString(),
                               iconUrl: 'assets/icons/fluent_doctor.svg',
                             ),
                             DefaultProfileInfoCard(
-                              ContainerColor: AppColors.numberofDocCardColor,
+                              containerColor: AppColors.numberofDocCardColor,
                               title: 'الاطباء',
-                              rating: '17',
+                              value: widget.clinicModel.drNumbers.toString(),
                               iconUrl: 'assets/icons/group.svg',
                             )
                           ],

@@ -7,15 +7,15 @@ import '../settings/colors.dart';
 class DefaultProfileInfoCard extends StatelessWidget {
   const DefaultProfileInfoCard(
       {Key? key,
-      required this.ContainerColor,
+      required this.containerColor,
       required this.title,
-      required this.rating,
+      required this.value,
       required this.iconUrl})
       : super(key: key);
   // ignore: non_constant_identifier_names
-  final Color ContainerColor;
+  final Color containerColor;
   final String title;
-  final String rating;
+  final String value;
   final String iconUrl;
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class DefaultProfileInfoCard extends StatelessWidget {
               width: 111.w,
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(20.r)),
-                  color: ContainerColor),
+                  color: containerColor),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -44,7 +44,7 @@ class DefaultProfileInfoCard extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        rating,
+                        value,
                         style: TextStyle(
                             fontSize: Orientation.landscape == orientation
                                 ? 20.sp

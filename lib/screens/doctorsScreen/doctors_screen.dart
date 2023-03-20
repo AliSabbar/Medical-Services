@@ -42,10 +42,12 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
                 SizedBox(
                   height: 20.h,
                 ),
+                // ! SEARCH
                 SearchWidget(controller: searchController),
                 SizedBox(
                   height: 10.h,
                 ),
+                //! FILLETER 
                 Row(
                   children: [
                     GestureDetector(
@@ -103,6 +105,7 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
                     ),
                     GestureDetector(
                         onTap: () {
+                          // ! SORT
                           showModalBottomSheet(
                               context: context,
                               builder: (context) => Directionality(

@@ -10,7 +10,8 @@ class DefaultClinicsTile extends StatelessWidget {
       {Key? key,
       required this.imgUrl,
       required this.title,
-      required this.starCount, required this.onTap})
+      required this.starCount,
+      required this.onTap})
       : super(key: key);
   final String imgUrl;
   final String title;
@@ -21,48 +22,55 @@ class DefaultClinicsTile extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 302.w,
-        height: 111.h,
         decoration: BoxDecoration(
           color: AppColors.backgroundCardColor,
           borderRadius: BorderRadius.circular(20),
         ),
         child: Row(
           children: [
-            Container(
-              width: 115.w,
-              height: 111.h,
-              decoration: BoxDecoration(
-                borderRadius: const BorderRadius.only(
-                  topRight: Radius.circular(20),
-                  bottomRight: Radius.circular(20),
+            Expanded(
+              child: Container(
+                width: 115.w,
+                height: 111.h,
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.only(
+                    topRight: Radius.circular(20),
+                    bottomRight: Radius.circular(20),
+                  ),
+                  image: DecorationImage(
+                      image: NetworkImage(imgUrl), fit: BoxFit.cover),
                 ),
-                image: DecorationImage(
-                    image: NetworkImage(imgUrl), fit: BoxFit.cover),
               ),
             ),
             SizedBox(
-              width: 15.w,
+              width: 10.w,
             ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style:
-                      TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
-                  maxLines: 2,
-                ),
-                SizedBox(
-                  height: 4.h,
-                ),
-                Stars(countStar: starCount)
-              ],
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    overflow: TextOverflow.ellipsis,
+                    style:
+                        TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
+                    maxLines: 2,
+                  ),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Stars(countStar: starCount),
+                    ],
+                  )
+                ],
+              ),
             ),
-            const Spacer(),
             GestureDetector(
-              onTap: () {},
+              onTap: onTap,
               child: Row(
                 children: [
                   Text(
@@ -74,8 +82,8 @@ class DefaultClinicsTile extends StatelessWidget {
                   ),
                   SvgPicture.asset('assets/icons/arrowside.svg'),
                   SizedBox(
-                    width: 10.w,
-                  )
+                    width: 15.w,
+                  ),
                 ],
               ),
             )
