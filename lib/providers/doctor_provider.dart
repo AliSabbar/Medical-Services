@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:medical_services/components/defaultToast.dart';
+import 'package:medical_services/models/fav_docroe_model.dart';
 import 'package:medical_services/network/end_points.dart';
 import 'package:medical_services/network/remote/api_helper.dart';
 import 'package:medical_services/providers/auth_provider.dart';
@@ -12,6 +13,7 @@ import '../settings/routes_manger.dart';
 class DoctorProvider extends ChangeNotifier {
   List doctorsListSP = [];
   List favDoctors = [];
+  bool isLoading = false;
 
 // ! SORTING AND FLITTER
 
@@ -85,40 +87,21 @@ class DoctorProvider extends ChangeNotifier {
 
 //! GET FAV
 
-  getFav(BuildContext ctx) {
-    favDoctors = ctx
-        .read<AuthProvider>()
-        .userModel!
-        .data
-        .favoritedr
-        .map((e) => ListDoctorModel.fromJson(e))
-        .toList();
-
-    print(favDoctors);
-  }
-
-  isExist({
-    required doctorID,
-    required userID,
-    required context,
-  }) {
-    return favDoctors.any((item) => item.id == doctorID);
-  }
-
-  addAndRemoveFavDoc(
-      {required bool isExist,
-      required String doctorID,
-      required String userID,
-      required BuildContext context}) async {
-    if (isExist) {
-      removeDoctorFromFav(doctorID: doctorID, userID: userID);
-      context.read<AuthProvider>().getUserDataById(id: userID);
+  getFav({required String userId}) {
+    isLoading = true;
+    notifyListeners();
+    ApiHelper.getData(url: EndPoints.getFav + userId).then((value) async {
+      favDoctors = await value['data']['favoritedr']
+          .map((e) => FavDoctorModel.fromJson(e))
+          .toList();
+      isLoading = false;
       notifyListeners();
-    } else if (!isExist) {
-      addDoctorToFav(doctorID: doctorID, userID: userID);
-      isExist = true;
-      getFav(context);
+      print(favDoctors);
+    }).catchError((e) {
+      isLoading = false;
       notifyListeners();
-    }
+      defaultToast(message: 'لا يمكن الاتصال بالانترنت', color: Colors.red);
+      print('ERROR IN GET FAV = $e');
+    });
   }
 }

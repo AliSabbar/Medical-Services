@@ -1,75 +1,15 @@
 // To parse this JSON data, do
 //
-//     final clinicsTopRating = clinicsTopRatingFromJson(jsonString);
+//     final favDoctorModel = favDoctorModelFromJson(jsonString);
 
 import 'dart:convert';
 
-List<ClinicsTopRating> clinicsTopRatingFromJson(String str) => List<ClinicsTopRating>.from(json.decode(str).map((x) => ClinicsTopRating.fromJson(x)));
+List<FavDoctorModel> favDoctorModelFromJson(String str) => List<FavDoctorModel>.from(json.decode(str).map((x) => FavDoctorModel.fromJson(x)));
 
-String clinicsTopRatingToJson(List<ClinicsTopRating> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String favDoctorModelToJson(List<FavDoctorModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class ClinicsTopRating {
-    ClinicsTopRating({
-        required this.id,
-        required this.userId,
-        required this.drNumbers,
-        required this.openAt,
-        required this.closeAt,
-        this.rating,
-        required this.specialtiesNumbers,
-        required this.isAvailable,
-        required this.description,
-        required this.dr,
-        required this.specialties,
-        required this.user,
-    });
-
-    String id;
-    String userId;
-    int drNumbers;
-    int openAt;
-    int closeAt;
-    double? rating;
-    int specialtiesNumbers;
-    bool isAvailable;
-    String description;
-    List<Dr> dr;
-    List<dynamic> specialties;
-    User user;
-
-    factory ClinicsTopRating.fromJson(Map<String, dynamic> json) => ClinicsTopRating(
-        id: json["id"],
-        userId: json["userId"],
-        drNumbers: json["drNumbers"],
-        openAt: json["openAt"],
-        closeAt: json["closeAt"],
-        rating: json["rating"]?.toDouble(),
-        specialtiesNumbers: json["specialtiesNumbers"],
-        isAvailable: json["isAvailable"],
-        description: json["description"],
-        dr: List<Dr>.from(json["dr"].map((x) => Dr.fromJson(x))),
-        specialties: List<dynamic>.from(json["specialties"].map((x) => x)),
-        user: User.fromJson(json["user"]),
-    );
-
-    Map<String, dynamic> toJson() => {
-        "id": id,
-        "userId": userId,
-        "drNumbers": drNumbers,
-        "openAt": openAt,
-        "closeAt": closeAt,
-        "rating": rating,
-        "specialtiesNumbers": specialtiesNumbers,
-        "isAvailable": isAvailable,
-        "description": description,
-        "dr": List<dynamic>.from(dr.map((x) => x.toJson())),
-        "specialties": List<dynamic>.from(specialties.map((x) => x)),
-        "user": user.toJson(),
-    };
-}
-
-class Dr {
-    Dr({
+class FavDoctorModel {
+    FavDoctorModel({
         required this.id,
         required this.userId,
         required this.cost,
@@ -80,7 +20,8 @@ class Dr {
         required this.description,
         required this.magerSpecialties,
         required this.isAvailable,
-        required this.hfId,
+        this.hfId,
+        required this.user,
     });
 
     String id;
@@ -93,9 +34,10 @@ class Dr {
     String description;
     String magerSpecialties;
     bool isAvailable;
-    String hfId;
+    dynamic hfId;
+    User user;
 
-    factory Dr.fromJson(Map<String, dynamic> json) => Dr(
+    factory FavDoctorModel.fromJson(Map<String, dynamic> json) => FavDoctorModel(
         id: json["id"],
         userId: json["userId"],
         cost: json["cost"],
@@ -107,6 +49,7 @@ class Dr {
         magerSpecialties: json["magerSpecialties"],
         isAvailable: json["isAvailable"],
         hfId: json["hfId"],
+        user: User.fromJson(json["user"]),
     );
 
     Map<String, dynamic> toJson() => {
@@ -121,6 +64,7 @@ class Dr {
         "magerSpecialties": magerSpecialties,
         "isAvailable": isAvailable,
         "hfId": hfId,
+        "user": user.toJson(),
     };
 }
 
@@ -136,6 +80,7 @@ class User {
         required this.createdAt,
         required this.updatedAt,
         this.otpId,
+        required this.address,
         required this.setting,
         required this.role,
     });
@@ -150,6 +95,7 @@ class User {
     DateTime createdAt;
     DateTime updatedAt;
     dynamic otpId;
+    Address address;
     Setting setting;
     Role role;
 
@@ -164,6 +110,7 @@ class User {
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
         otpId: json["otpId"],
+        address: Address.fromJson(json["address"]),
         setting: Setting.fromJson(json["setting"]),
         role: Role.fromJson(json["role"]),
     );
@@ -179,8 +126,33 @@ class User {
         "createdAt": createdAt.toIso8601String(),
         "updatedAt": updatedAt.toIso8601String(),
         "otpId": otpId,
+        "address": address.toJson(),
         "setting": setting.toJson(),
         "role": role.toJson(),
+    };
+}
+
+class Address {
+    Address({
+        required this.id,
+        required this.city,
+        required this.town,
+    });
+
+    String id;
+    String city;
+    String town;
+
+    factory Address.fromJson(Map<String, dynamic> json) => Address(
+        id: json["id"],
+        city: json["city"],
+        town: json["town"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "city": city,
+        "town": town,
     };
 }
 

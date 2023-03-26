@@ -298,6 +298,7 @@ class AuthProvider extends ChangeNotifier {
   }) {
     SharedHelper.removeData(key: 'token').then((value) async {
       userModel = null;
+      doctorModel = null;
       EndPoints.token = null;
       await SharedHelper.removeData(key: 'userId');
       print(SharedHelper.getData(key: 'userId'));

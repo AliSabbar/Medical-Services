@@ -154,13 +154,12 @@ class _SignInScreenState extends State<SignInScreen> {
                                               ),
                                               TextButton(
                                                 onPressed: () {
-                                                  context 
+                                                  context
                                                       .read<AuthProvider>()
                                                       .forgotPassword(
                                                           forgotPasswordController:
                                                               forgotPasswordController,
                                                           context: context);
-                                                
 
                                                   FocusScope.of(context)
                                                       .unfocus();

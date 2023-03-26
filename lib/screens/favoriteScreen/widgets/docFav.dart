@@ -21,12 +21,18 @@ class DoctorFavorites extends StatefulWidget {
 class _DoctorFavoritesState extends State<DoctorFavorites> {
   @override
   void initState() {
-    context.read<DoctorProvider>().getFav(context);
+    Future.delayed(const Duration(seconds: 1), () {
+      context
+          .read<DoctorProvider>()
+          .getFav(userId: SharedHelper.getData(key: 'userId'));
+    });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    var provRead = context.read<DoctorProvider>();
+    var provWatch = context.watch<DoctorProvider>();
     return context.watch<DoctorProvider>().favDoctors.isEmpty
         ? Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -45,21 +51,23 @@ class _DoctorFavoritesState extends State<DoctorFavorites> {
               )
             ],
           )
-        : ListView.separated(
-            physics: const BouncingScrollPhysics(),
-            padding: const EdgeInsets.all(15),
-            itemCount: context.watch<DoctorProvider>().favDoctors.length,
-            separatorBuilder: (BuildContext context, int index) {
-              return SizedBox(
-                height: 30.h,
+        : provWatch.isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : ListView.separated(
+                physics: const BouncingScrollPhysics(),
+                padding: const EdgeInsets.all(15),
+                itemCount: provWatch.favDoctors.length,
+                separatorBuilder: (BuildContext context, int index) {
+                  return SizedBox(
+                    height: 30.h,
+                  );
+                },
+                itemBuilder: (BuildContext context, int index) {
+                  //! pass doctor model
+                  return DoctorCard(
+                    doctorModel: provWatch.favDoctors[index],
+                  );
+                },
               );
-            },
-            itemBuilder: (BuildContext context, int index) {
-              //! pass doctor model
-              return DoctorCard(
-                doctorModel: context.watch<DoctorProvider>().favDoctors[index],
-              );
-            },
-          );
   }
 }

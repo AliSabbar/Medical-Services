@@ -7,13 +7,13 @@ import 'package:medical_services/components/defaultProfileContainer.dart';
 import 'package:medical_services/components/defaultProfileInfoCard.dart';
 import 'package:medical_services/components/iconProfile.dart';
 import 'package:medical_services/components/specialtyContainer.dart';
+import 'package:medical_services/components/url_lunchFunction.dart';
 import 'package:medical_services/network/local/shared_helper.dart';
 import 'package:medical_services/providers/doctor_provider.dart';
 import 'package:medical_services/providers/auth_provider.dart';
 import 'package:medical_services/settings/colors.dart';
 import 'package:provider/provider.dart';
 
-import '../../models/list_doctor_model.dart';
 import '../../settings/routes_manger.dart';
 
 class DoctorProfile extends StatefulWidget {
@@ -28,9 +28,7 @@ class DoctorProfileState extends State<DoctorProfile> {
 
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 0), () {
-      context.read<DoctorProvider>().getFav(context);
-    });
+    Future.delayed(const Duration(seconds: 0), () {});
 
     super.initState();
   }
@@ -41,10 +39,6 @@ class DoctorProfileState extends State<DoctorProfile> {
     var provWatch = context.watch<AuthProvider>();
     var provDocRead = context.read<DoctorProvider>();
     var provDocWatch = context.watch<DoctorProvider>();
-    bool isExist = provDocWatch.isExist(
-        doctorID: widget.doctorModel.id,
-        userID: provWatch.userModel?.data.id,
-        context: context);
 
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -53,25 +47,23 @@ class DoctorProfileState extends State<DoctorProfile> {
             appBar: AppBar(
               backgroundColor: AppColors.secondaryColor,
               actions: [
-                GestureDetector(
-                  onTap: () async {
-                    provDocRead.addAndRemoveFavDoc(
-                        isExist: isExist,
-                        doctorID: widget.doctorModel.id,
-                        userID: provRead.userModel!.data.id,
-                        context: context);
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.w),
-                    child: Icon(
-                      isExist
-                          ? Icons.favorite_rounded
-                          : Icons.favorite_outline_rounded,
-                      size: 30,
-                      color: isExist ? Colors.red : null,
-                    ),
-                  ),
-                ),
+                provRead.doctorModel != null
+                    ? const SizedBox()
+                    : GestureDetector(
+                        onTap: () async {
+                          //! here you should work
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20.w),
+                          child: Icon(
+                            true
+                                ? Icons.favorite_rounded
+                                : Icons.favorite_outline_rounded,
+                            size: 30,
+                            color: true ? Colors.red : null,
+                          ),
+                        ),
+                      ),
               ],
             ),
             body: SingleChildScrollView(
@@ -117,14 +109,87 @@ class DoctorProfileState extends State<DoctorProfile> {
                               ),
                               iconProfile(
                                 imgUrl: 'assets/icons/clinic_prof.svg',
-                                onTap: () {},
+                                onTap: () {
+                                  showDialog<void>(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return Directionality(
+                                        textDirection: TextDirection.rtl,
+                                        child: AlertDialog(
+                                          // <-- SEE HERE
+                                          title: Text(
+                                            ' العيادة واوقات الاستشارة',
+                                            style: TextStyle(
+                                                fontSize: 17.sp,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          content: SingleChildScrollView(
+                                            child: ListBody(
+                                              children: <Widget>[
+                                                Row(
+                                                  children: <Widget>[
+                                                    SvgPicture.asset(
+                                                        'assets/icons/time.svg'),
+                                                    SizedBox(
+                                                      width: 10.w,
+                                                    ),
+                                                    Text("اوقات الاستشارة",
+                                                        style: TextStyle(
+                                                            fontSize: 15.sp,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w600)),
+                                                    const Spacer(),
+                                                    Text(
+                                                        "${widget.doctorModel.openAt} الى ${widget.doctorModel.closeAt}"),
+                                                  ],
+                                                ),
+                                                SizedBox(height: 15.w),
+                                                Row(
+                                                  children: <Widget>[
+                                                    SvgPicture.asset(
+                                                        'assets/icons/clinic_prof.svg'),
+                                                    SizedBox(
+                                                      width: 10.w,
+                                                    ),
+                                                    Text("العيادة",
+                                                        style: TextStyle(
+                                                            fontSize: 15.sp,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w600)),
+                                                    const Spacer(),
+                                                    // ! name of clinic
+                                                    Text("عيادة النهرين"),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          actions: <Widget>[
+                                            TextButton(
+                                              child: const Text('اغلاق'),
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
                               ),
                               SizedBox(
                                 width: 10.w,
                               ),
                               iconProfile(
                                 imgUrl: 'assets/icons/call.svg',
-                                onTap: () {},
+                                onTap: () async {
+                                  UrlLunch.makeCall(
+                                      phoneNumber:
+                                          widget.doctorModel.user.phoneNumber);
+                                },
                               )
                             ],
                           ),
@@ -250,7 +315,7 @@ class DoctorProfileState extends State<DoctorProfile> {
                             DefaultProfileInfoCard(
                               containerColor: AppColors.ratingCardProfileColor,
                               title: 'التقييم',
-                              value: '4.5',
+                              value: widget.doctorModel.rating.toString(),
                               iconUrl: 'assets/icons/star.svg',
                             ),
                             DefaultProfileInfoCard(

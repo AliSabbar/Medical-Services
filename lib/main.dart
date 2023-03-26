@@ -13,9 +13,8 @@ import 'network/local/shared_helper.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp
-  ]); //! DELETE THIS LATER THE PHONE ONLY IN PORTRAIT MODE
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp]); //! THE APPLICATION RUN ONLY IN PORTRAIT MODE
 
   await SharedHelper.init();
   dynamic onBoarding = SharedHelper.getData(key: "OnBoarding");
@@ -53,7 +52,7 @@ class MyApp extends StatelessWidget {
         title: 'Medical Services',
         debugShowCheckedModeBanner: false,
         theme: lightTheme, //? <-- change theme
-        home: SignInScreen(), //! this is your home widget
+        home: startWidget, //! this is your home widget
         onGenerateRoute: RouteGenerator.getRoute,
       ),
     );

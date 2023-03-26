@@ -5,10 +5,12 @@ import 'package:medical_services/components/defaultProfileContainer.dart';
 import 'package:medical_services/components/defaultProfileInfoCard.dart';
 import 'package:medical_services/components/iconProfile.dart';
 import 'package:medical_services/components/specialtyContainer.dart';
+import 'package:medical_services/components/url_lunchFunction.dart';
+import 'package:medical_services/providers/auth_provider.dart';
 import 'package:medical_services/settings/colors.dart';
+import 'package:provider/provider.dart';
 
 import '../../settings/routes_manger.dart';
-import 'widgets/defaultListView.dart';
 
 class ClinicProfileScreen extends StatefulWidget {
   ClinicProfileScreen({Key? key, required this.clinicModel}) : super(key: key);
@@ -29,16 +31,18 @@ class _ClinicProfileScreenState extends State<ClinicProfileScreen> {
             appBar: AppBar(
               backgroundColor: AppColors.secondaryColor,
               actions: [
-                GestureDetector(
-                  onTap: () {},
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.w),
-                    child: const Icon(
-                      Icons.favorite_outline_rounded,
-                      size: 30,
-                    ),
-                  ),
-                ),
+                context.read<AuthProvider>().doctorModel != null
+                    ? const SizedBox()
+                    : GestureDetector(
+                        onTap: () {},
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 20.w),
+                          child: const Icon(
+                            Icons.favorite_outline_rounded,
+                            size: 30,
+                          ),
+                        ),
+                      ),
               ],
             ),
             body: SingleChildScrollView(
@@ -84,7 +88,11 @@ class _ClinicProfileScreenState extends State<ClinicProfileScreen> {
                               ),
                               iconProfile(
                                 imgUrl: 'assets/icons/call.svg',
-                                onTap: () {},
+                                onTap: () {
+                                  UrlLunch.makeCall(
+                                      phoneNumber:
+                                          widget.clinicModel.user.phoneNumber);
+                                },
                               )
                             ],
                           ),
@@ -125,7 +133,8 @@ class _ClinicProfileScreenState extends State<ClinicProfileScreen> {
                             DefaultProfileInfoCard(
                               containerColor: AppColors.secondaryColor,
                               title: 'التخصصات',
-                              value: widget.clinicModel.specialtiesNumbers.toString(),
+                              value: widget.clinicModel.specialtiesNumbers
+                                  .toString(),
                               iconUrl: 'assets/icons/fluent_doctor.svg',
                             ),
                             DefaultProfileInfoCard(
@@ -146,20 +155,30 @@ class _ClinicProfileScreenState extends State<ClinicProfileScreen> {
                         SizedBox(
                           height: 7.h,
                         ),
-                        SizedBox(
-                          height: 180.h,
-                          child: ListView.separated(
-                              scrollDirection: Axis.horizontal,
-                              physics: const BouncingScrollPhysics(),
-                              itemCount: 5,
-                              shrinkWrap: true,
-                              separatorBuilder: (context, index) => SizedBox(
-                                    width: 20.w,
-                                  ),
-                              itemBuilder: (context, index) {
-                                return const DoctorsCard();
-                              }),
-                        ),
+                        widget.clinicModel.dr.isEmpty
+                            ? const EmptyDocAndClinic(
+                                name: 'لايوجد اطباء بعد',
+                                svgUrl: 'assets/icons/group.svg',
+                              )
+                            : SizedBox(
+                                height: 180.h,
+                                child: ListView.separated(
+                                    scrollDirection: Axis.horizontal,
+                                    physics: const BouncingScrollPhysics(),
+                                    itemCount: widget.clinicModel.dr.length,
+                                    shrinkWrap: true,
+                                    separatorBuilder: (context, index) =>
+                                        SizedBox(
+                                          width: 20.w,
+                                        ),
+                                    itemBuilder: (context, index) {
+                                      return doctorsCard(
+                                        context: context,
+                                        doctorModel:
+                                            widget.clinicModel.dr[index],
+                                      );
+                                    }),
+                              ),
                         SizedBox(
                           height: 20.h,
                         ),
@@ -170,32 +189,40 @@ class _ClinicProfileScreenState extends State<ClinicProfileScreen> {
                         SizedBox(
                           height: 7.h,
                         ),
-                        SizedBox(
-                          height: 59.h,
-                          child: ListView.separated(
-                            scrollDirection: Axis.horizontal,
-                            physics: const BouncingScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: 5,
-                            separatorBuilder:
-                                (BuildContext context, int index) {
-                              return SizedBox(
-                                width: 20.w,
-                              );
-                            },
-                            itemBuilder: (BuildContext context, int index) {
-                              return specialtyContainer(
-                                  width: 180,
-                                  height: 59,
-                                  circleRadius: 15,
-                                  fontSize: 14,
-                                  title: "اذن وانف وحنجرة",
-                                  image:
-                                      'https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX32581005.jpg',
-                                  onTap: () {});
-                            },
-                          ),
-                        ),
+                        widget.clinicModel.specialties.isEmpty
+                            ? const EmptyDocAndClinic(
+                                name: 'لاتوجد تخصصات بعد',
+                                svgUrl: "assets/icons/clinic.svg",
+                              )
+                            : SizedBox(
+                                height: 59.h,
+                                child: ListView.separated(
+                                  scrollDirection: Axis.horizontal,
+                                  physics: const BouncingScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount:
+                                      widget.clinicModel.specialties.length,
+                                  separatorBuilder:
+                                      (BuildContext context, int index) {
+                                    return SizedBox(
+                                      width: 20.w,
+                                    );
+                                  },
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return specialtyContainer(
+                                        width: 180,
+                                        height: 59,
+                                        circleRadius: 15,
+                                        fontSize: 14,
+                                        title: widget.clinicModel
+                                            .specialties[index].name,
+                                        image:
+                                            'https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX32581005.jpg',
+                                        onTap: () {});
+                                  },
+                                ),
+                              ),
                         SizedBox(
                           height: 10.h,
                         )
@@ -210,14 +237,46 @@ class _ClinicProfileScreenState extends State<ClinicProfileScreen> {
   }
 }
 
-class DoctorsCard extends StatelessWidget {
-  const DoctorsCard({
+class EmptyDocAndClinic extends StatelessWidget {
+  const EmptyDocAndClinic({
     super.key,
+    required this.name,
+    required this.svgUrl,
   });
+
+  final String name;
+  final String svgUrl;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Center(
+      child: Column(
+        children: <Widget>[
+          SvgPicture.asset(
+            svgUrl,
+            width: 40.w,
+            color: AppColors.primaryColor,
+          ),
+          SizedBox(
+            height: 5.h,
+          ),
+          Text(
+            name,
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14.sp),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+Widget doctorsCard({required doctorModel, required context}) {
+  return GestureDetector(
+    onTap: () {
+      Navigator.pushNamed(context, Routes.doctorProfileScreen,
+          arguments: doctorModel);
+    },
+    child: Container(
       width: 155.w,
       height: 180.h,
       decoration: BoxDecoration(
@@ -241,7 +300,7 @@ class DoctorsCard extends StatelessWidget {
           Expanded(
             flex: 1,
             child: Text(
-              "دكتور محمد علي حسين",
+              doctorModel.user.name.toString(),
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize: 14.sp,
@@ -252,7 +311,7 @@ class DoctorsCard extends StatelessWidget {
           ),
           Expanded(
             child: Text(
-              "جلدية",
+              doctorModel.magerSpecialties.toString(),
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 14.sp,
@@ -263,6 +322,6 @@ class DoctorsCard extends StatelessWidget {
           ),
         ],
       ),
-    );
-  }
+    ),
+  );
 }

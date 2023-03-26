@@ -1,12 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:medical_services/components/appointmentMessage.dart';
-import 'package:medical_services/components/doctorCard.dart';
-import 'package:provider/provider.dart';
-
-import '../../../components/appointmentCard.dart';
-import '../../clinic/widgets/defaultClinicsTile.dart';
-import '../../../providers/clinics_provider.dart';
 
 class ClinicFav extends StatelessWidget {
   const ClinicFav({super.key});

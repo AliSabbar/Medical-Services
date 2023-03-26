@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medical_services/components/defaultButton.dart';
+import 'package:medical_services/components/starsTest/stars.dart';
 import 'package:medical_services/settings/routes_manger.dart';
 
 import '../settings/colors.dart';
@@ -62,24 +63,10 @@ class DoctorCard extends StatelessWidget {
                     SizedBox(
                       height: 10.h,
                     ),
-                    SizedBox(
-                      width: 100.w,
-                      height: 11.h,
-                      child: ListView.separated(
-                        physics: const NeverScrollableScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 5,
-                        separatorBuilder: (BuildContext context, int index) {
-                          return const SizedBox(width: 3);
-                        },
-                        itemBuilder: (BuildContext context, int index) {
-                          return Icon(
-                            Icons.star,
-                            color: AppColors.yellowColor,
-                            size: 11,
-                          );
-                        },
-                      ),
+                    Row(
+                      children: [
+                        Stars(countStar: doctorModel.rating.toInt()),
+                      ],
                     ),
                     SizedBox(
                       height: 15.h,

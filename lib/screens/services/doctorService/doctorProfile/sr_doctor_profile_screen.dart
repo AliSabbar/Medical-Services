@@ -124,19 +124,20 @@ class SrDoctorProfileScreenState extends State<SrDoctorProfileScreen> {
                               "عن الطبيب",
                               style: Theme.of(context).textTheme.headlineMedium,
                             ),
-                            GestureDetector(
-                              onTap: () {
-                                Navigator.pushNamed(context,
-                                    Routes.editDoctorProfileServiceScreen);
-                              },
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(horizontal: 20.w),
-                                child: const Icon(
-                                  Icons.mode_edit_outline_rounded,
-                                  size: 20,
-                                ),
-                              ),
-                            ),
+                            // ! i will do it late
+                            // GestureDetector(
+                            //   onTap: () {
+                            //     Navigator.pushNamed(context,
+                            //         Routes.editDoctorProfileServiceScreen);
+                            //   },
+                            //   child: Padding(
+                            //     padding: EdgeInsets.symmetric(horizontal: 20.w),
+                            //     child: const Icon(
+                            //       Icons.mode_edit_outline_rounded,
+                            //       size: 20,
+                            //     ),
+                            //   ),
+                            // ),
                           ],
                         ),
                         SizedBox(

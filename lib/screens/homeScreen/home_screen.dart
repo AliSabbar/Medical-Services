@@ -118,9 +118,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                           ?.data
                                           .role
                                           .name ==
-                                      "user"
-                                  ? appointmentCard()
-                                  : patientCard();
+                                      "dr"
+                                  ? patientCard()
+                                  : appointmentCard();
                             },
                           ),
                         )
