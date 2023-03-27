@@ -103,10 +103,10 @@ class AuthProvider extends ChangeNotifier {
   }
 
 // ! OTP
-  otp({
+  Future otp({
     required String phoneNumber,
   }) {
-    ApiHelper.postData(url: EndPoints.otp, body: {
+    var data = ApiHelper.postData(url: EndPoints.otp, body: {
       "phoneNumber": phoneNumber,
     }).then((value) {
       if (value['success'] == true) {
@@ -115,10 +115,13 @@ class AuthProvider extends ChangeNotifier {
         defaultToast(message: 'لايوجد مستخدم بهذا الرقم', color: Colors.red);
       }
       print(value);
+      return value;
     }).catchError((e) {
       defaultToast(message: 'تحقق من اتصالك بالانترنت', color: Colors.red);
       print("Error in OTP = $e");
     });
+
+    return (data);
   }
 
   verifyOtp(
@@ -185,8 +188,6 @@ class AuthProvider extends ChangeNotifier {
 
         print("================ USER ROLE = ${value['data']['roleName']}");
 
-// !  =================================
-
         if (value['data']['roleName'] == "dr") {
           print("================= DOCTOR MODEL =================");
           await getDoctorData(doctorId: value['data']['drIdOrHfId']);
@@ -252,13 +253,18 @@ class AuthProvider extends ChangeNotifier {
         forgotPasswordController.text.length != 12) {
       defaultToast(message: 'الرجاء ادخال رقم هاتف صحيح', color: Colors.red);
     } else {
-      otp(phoneNumber: "+964 ${forgotPasswordController.text}");
+      otp(phoneNumber: "+964 ${forgotPasswordController.text}").then((value) {
+        print("========================= answer = $value");
+        if(value['success']){
 
       Navigator.pushNamed(context, Routes.otpScreen, arguments: {
         'title': 'نسيت كلمة المرور',
         'userData': {
           "phoneNumber": "+964 ${forgotPasswordController.text}",
           "type": "forget",
+        }
+      });
+
         }
       });
     }

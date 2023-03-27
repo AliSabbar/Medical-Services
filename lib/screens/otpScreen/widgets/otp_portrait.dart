@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,16 +10,52 @@ import 'package:provider/provider.dart';
 import '../../../components/defaultButton.dart';
 import '../../../settings/colors.dart';
 
-class OtpPortrait extends StatelessWidget {
+class OtpPortrait extends StatefulWidget {
   OtpPortrait({super.key, this.userData});
-
-  String? otpCode;
 
   var userData;
 
   @override
+  State<OtpPortrait> createState() => _OtpPortraitState();
+}
+
+class _OtpPortraitState extends State<OtpPortrait> {
+  String? otpCode;
+
+  int counter = 30;
+  late Timer timer;
+// ! START TIMER
+  void startTimer() {
+    const oneSec = Duration(seconds: 1);
+    timer = Timer.periodic(
+      oneSec,
+      (Timer timer) => setState(
+        () {
+          if (counter < 1) {
+            timer.cancel();
+          } else {
+            counter = counter - 1;
+          }
+        },
+      ),
+    );
+  }
+
+  @override
+  void initState() {
+    startTimer();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    print(userData['type']);
+    print(widget.userData['type']);
     double wMQ = MediaQuery.of(context).size.width;
 
     return SingleChildScrollView(
@@ -50,7 +88,7 @@ class OtpPortrait extends StatelessWidget {
               ),
               //! change this when API WORK
               Text(
-                userData['phoneNumber'].toString(),
+                widget.userData['phoneNumber'].toString(),
                 textDirection: TextDirection.ltr,
                 style: TextStyle(
                     fontSize: 15,
@@ -82,11 +120,10 @@ class OtpPortrait extends StatelessWidget {
               onSubmit: (String verificationCode) async {
                 print(verificationCode);
                 await context.read<AuthProvider>().verifyOtp(
-                    phoneNumber: userData['phoneNumber'],
+                    phoneNumber: widget.userData['phoneNumber'],
                     otpCode: verificationCode,
                     context: context,
-                    type: userData['type']
-                    );
+                    type: widget.userData['type']);
                 print('Code entered is $verificationCode');
               },
             ),
@@ -102,18 +139,25 @@ class OtpPortrait extends StatelessWidget {
                   'اعادة ارسال الرمز : ',
                   style: TextStyle(fontSize: 15.sp),
                 ),
-                // ! Timer I will Do IT Later 💀
-                Text("1:17"),
-                TextButton(
-                    onPressed: () {
-                      context
-                          .read<AuthProvider>()
-                          .otp(phoneNumber: userData['phoneNumber']);
-                    },
-                    child: Text(
-                      "اعادة ارسال رمز",
-                      style: TextStyle(fontSize: 15.sp),
-                    ))
+                //! TIMER
+                Text("$counter ثانية"),
+                counter <= 0
+                    ? TextButton(
+                        onPressed: () {
+                          context
+                              .read<AuthProvider>()
+                              .otp(phoneNumber: widget.userData['phoneNumber']);
+
+                          setState(() {
+                            counter = 30;
+                          });
+                          startTimer();
+                        },
+                        child: Text(
+                          "اعادة ارسال رمز",
+                          style: TextStyle(fontSize: 15.sp),
+                        ))
+                    : const SizedBox()
               ],
             ),
           ),
