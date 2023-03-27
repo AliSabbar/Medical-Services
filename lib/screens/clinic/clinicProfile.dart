@@ -7,9 +7,11 @@ import 'package:medical_services/components/iconProfile.dart';
 import 'package:medical_services/components/specialtyContainer.dart';
 import 'package:medical_services/components/url_lunchFunction.dart';
 import 'package:medical_services/providers/auth_provider.dart';
+import 'package:medical_services/providers/clinics_provider.dart';
 import 'package:medical_services/settings/colors.dart';
 import 'package:provider/provider.dart';
 
+import '../../network/local/shared_helper.dart';
 import '../../settings/routes_manger.dart';
 
 class ClinicProfileScreen extends StatefulWidget {
@@ -23,7 +25,26 @@ class ClinicProfileScreen extends StatefulWidget {
 
 class _ClinicProfileScreenState extends State<ClinicProfileScreen> {
   @override
+  void initState() {
+    Future.delayed(const Duration(seconds: 0), () {
+      // ! GET FAV
+      context
+          .read<ClinicsProvider>()
+          .getFav(userId: SharedHelper.getData(key: 'userId'));
+      // ! CHECK IF CLINIC IN FAV
+      context
+          .read<ClinicsProvider>()
+          .checkClinicInFav(clinicId: widget.clinicModel.id);
+    });
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var provRead = context.read<ClinicsProvider>();
+    var provWatch = context.watch<ClinicsProvider>();
+    print(provRead.checkClinicInFav(clinicId: widget.clinicModel.id));
     return Directionality(
       textDirection: TextDirection.rtl,
       child: OrientationBuilder(
@@ -34,13 +55,23 @@ class _ClinicProfileScreenState extends State<ClinicProfileScreen> {
                 context.read<AuthProvider>().doctorModel != null
                     ? const SizedBox()
                     : GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          // ! here tap
+                          provRead.addORremoveClinicFromFav(
+                              clinicID: widget.clinicModel.id,
+                              userID: SharedHelper.getData(key: 'userId'));
+                        },
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: 20.w),
-                          child: const Icon(
-                            Icons.favorite_outline_rounded,
-                            size: 30,
-                          ),
+                          child: provWatch.isLoading
+                              ? const Center(child: CircularProgressIndicator())
+                              : Icon(
+                                  provWatch.isExist
+                                      ? Icons.favorite_rounded
+                                      : Icons.favorite_outline_rounded,
+                                  size: 30,
+                                  color: provWatch.isExist ? Colors.red : null,
+                                ),
                         ),
                       ),
               ],

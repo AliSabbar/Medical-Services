@@ -21,7 +21,7 @@ class DoctorFavorites extends StatefulWidget {
 class _DoctorFavoritesState extends State<DoctorFavorites> {
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 0), () {
       context
           .read<DoctorProvider>()
           .getFav(userId: SharedHelper.getData(key: 'userId'));
@@ -33,7 +33,7 @@ class _DoctorFavoritesState extends State<DoctorFavorites> {
   Widget build(BuildContext context) {
     var provRead = context.read<DoctorProvider>();
     var provWatch = context.watch<DoctorProvider>();
-    return context.watch<DoctorProvider>().favDoctors.isEmpty
+    return provWatch.favDoctors.isEmpty
         ? Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -63,7 +63,6 @@ class _DoctorFavoritesState extends State<DoctorFavorites> {
                   );
                 },
                 itemBuilder: (BuildContext context, int index) {
-                  //! pass doctor model
                   return DoctorCard(
                     doctorModel: provWatch.favDoctors[index],
                   );

@@ -25,10 +25,18 @@ class DoctorProfile extends StatefulWidget {
 
 class DoctorProfileState extends State<DoctorProfile> {
   bool isExpand = false;
-
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 0), () {});
+    Future.delayed(const Duration(seconds: 0), () {
+      // ! GET FAV 
+      context
+          .read<DoctorProvider>()
+          .getFav(userId: SharedHelper.getData(key: 'userId'));
+      // ! CHECK IF DOC IN FAV
+      context
+          .read<DoctorProvider>()
+          .checkDocInFav(doctorId: widget.doctorModel.id);
+    });
 
     super.initState();
   }
@@ -39,6 +47,8 @@ class DoctorProfileState extends State<DoctorProfile> {
     var provWatch = context.watch<AuthProvider>();
     var provDocRead = context.read<DoctorProvider>();
     var provDocWatch = context.watch<DoctorProvider>();
+
+    print(provDocRead.checkDocInFav(doctorId: widget.doctorModel.id));
 
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -52,16 +62,22 @@ class DoctorProfileState extends State<DoctorProfile> {
                     : GestureDetector(
                         onTap: () async {
                           //! here you should work
+                          provDocRead.addORremoveDocFromFav(
+                              doctorID: widget.doctorModel.id,
+                              userID: SharedHelper.getData(key: 'userId'));
                         },
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: 20.w),
-                          child: Icon(
-                            true
-                                ? Icons.favorite_rounded
-                                : Icons.favorite_outline_rounded,
-                            size: 30,
-                            color: true ? Colors.red : null,
-                          ),
+                          child: provDocWatch.isLoading
+                              ? const Center(child: CircularProgressIndicator())
+                              : Icon(
+                                  provDocWatch.isExist
+                                      ? Icons.favorite_rounded
+                                      : Icons.favorite_outline_rounded,
+                                  size: 30,
+                                  color:
+                                      provDocWatch.isExist ? Colors.red : null,
+                                ),
                         ),
                       ),
               ],
