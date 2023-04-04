@@ -53,7 +53,7 @@ class _HomeLayOutState extends State<HomeLayOut> {
     List appbarTitle = [
       'مرحبا ,',
       'حجوزاتي',
-      EndPoints.token == null || provAuthWatch.userModel?.data.role.name == "dr"
+      EndPoints.token != null && provAuthWatch.userModel?.data.role.name == "dr"
           ? 'اضافة حجز'
           : 'المفضلة',
       'الاشعارات'

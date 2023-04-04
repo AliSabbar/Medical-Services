@@ -14,6 +14,7 @@ import 'package:medical_services/providers/auth_provider.dart';
 import 'package:medical_services/settings/colors.dart';
 import 'package:provider/provider.dart';
 
+import '../../network/end_points.dart';
 import '../../settings/routes_manger.dart';
 
 class DoctorProfile extends StatefulWidget {
@@ -27,16 +28,18 @@ class DoctorProfileState extends State<DoctorProfile> {
   bool isExpand = false;
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 0), () {
-      // ! GET FAV 
-      context
-          .read<DoctorProvider>()
-          .getFav(userId: SharedHelper.getData(key: 'userId'));
-      // ! CHECK IF DOC IN FAV
-      context
-          .read<DoctorProvider>()
-          .checkDocInFav(doctorId: widget.doctorModel.id);
-    });
+    EndPoints.token == null
+        ? () {}
+        : Future.delayed(const Duration(seconds: 0), () {
+            // ! GET FAV
+            context
+                .read<DoctorProvider>()
+                .getFav(userId: SharedHelper.getData(key: 'userId'));
+            // ! CHECK IF DOC IN FAV
+            context
+                .read<DoctorProvider>()
+                .checkDocInFav(doctorId: widget.doctorModel.id);
+          });
 
     super.initState();
   }
@@ -66,19 +69,23 @@ class DoctorProfileState extends State<DoctorProfile> {
                               doctorID: widget.doctorModel.id,
                               userID: SharedHelper.getData(key: 'userId'));
                         },
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 20.w),
-                          child: provDocWatch.isLoading
-                              ? const Center(child: CircularProgressIndicator())
-                              : Icon(
-                                  provDocWatch.isExist
-                                      ? Icons.favorite_rounded
-                                      : Icons.favorite_outline_rounded,
-                                  size: 30,
-                                  color:
-                                      provDocWatch.isExist ? Colors.red : null,
-                                ),
-                        ),
+                        child: EndPoints.token == null
+                            ? const SizedBox()
+                            : Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                                child: provDocWatch.isLoading
+                                    ? const Center(
+                                        child: CircularProgressIndicator())
+                                    : Icon(
+                                        provDocWatch.isExist
+                                            ? Icons.favorite_rounded
+                                            : Icons.favorite_outline_rounded,
+                                        size: 30,
+                                        color: provDocWatch.isExist
+                                            ? Colors.red
+                                            : null,
+                                      ),
+                              ),
                       ),
               ],
             ),
@@ -236,7 +243,7 @@ class DoctorProfileState extends State<DoctorProfile> {
                                     fontFamily: 'Cairo'),
                                 children: [
                                   TextSpan(
-                                    text: widget.doctorModel.description,
+                                    text: widget.doctorModel.user.setting.bio,
                                   ),
                                   !isExpand
                                       ? TextSpan(

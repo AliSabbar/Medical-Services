@@ -11,6 +11,7 @@ import 'package:medical_services/providers/clinics_provider.dart';
 import 'package:medical_services/settings/colors.dart';
 import 'package:provider/provider.dart';
 
+import '../../network/end_points.dart';
 import '../../network/local/shared_helper.dart';
 import '../../settings/routes_manger.dart';
 
@@ -26,16 +27,18 @@ class ClinicProfileScreen extends StatefulWidget {
 class _ClinicProfileScreenState extends State<ClinicProfileScreen> {
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 0), () {
-      // ! GET FAV
-      context
-          .read<ClinicsProvider>()
-          .getFav(userId: SharedHelper.getData(key: 'userId'));
-      // ! CHECK IF CLINIC IN FAV
-      context
-          .read<ClinicsProvider>()
-          .checkClinicInFav(clinicId: widget.clinicModel.id);
-    });
+    EndPoints.token == null
+        ? () {}
+        : Future.delayed(const Duration(seconds: 0), () {
+            // ! GET FAV
+            context
+                .read<ClinicsProvider>()
+                .getFav(userId: SharedHelper.getData(key: 'userId'));
+            // ! CHECK IF CLINIC IN FAV
+            context
+                .read<ClinicsProvider>()
+                .checkClinicInFav(clinicId: widget.clinicModel.id);
+          });
 
     super.initState();
   }
@@ -52,7 +55,7 @@ class _ClinicProfileScreenState extends State<ClinicProfileScreen> {
             appBar: AppBar(
               backgroundColor: AppColors.secondaryColor,
               actions: [
-                context.read<AuthProvider>().doctorModel != null
+                context.read<AuthProvider>().doctorModel != null || EndPoints.token==null
                     ? const SizedBox()
                     : GestureDetector(
                         onTap: () {

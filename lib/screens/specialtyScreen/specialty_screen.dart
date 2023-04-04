@@ -97,9 +97,10 @@ class _SpecialtyScreenState extends State<SpecialtyScreen> {
                               image:
                                   'https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX32581005.jpg',
                               onTap: () {
-                                context.read<DoctorProvider>().getAllDoctorsSP(
-                                    nameSP: provWatch.specialtyList[index].name,
-                                    context: context);
+                                Navigator.pushNamed(
+                                    context, Routes.doctorsScreen,
+                                    arguments:
+                                        provWatch.specialtyList[index].name);
                               });
                         } else {
                           return const Center(

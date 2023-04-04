@@ -3,11 +3,14 @@ import 'package:medical_services/components/defaultToast.dart';
 import 'package:medical_services/network/end_points.dart';
 import 'package:medical_services/network/remote/api_helper.dart';
 import 'package:medical_services/settings/colors.dart';
+import '../models/doctor_topRating_model.dart';
 import '../models/list_doctor_model.dart';
 import '../settings/routes_manger.dart';
 import '../models/fav_doctor_model.dart';
 
 class DoctorProvider extends ChangeNotifier {
+  late ListDoctorModel listDoctorModelSP;
+  late AllDrByRating allDocByRating;
   List doctorsListSP = [];
   List favDoctors = [];
   bool isLoading = false;
@@ -20,35 +23,92 @@ class DoctorProvider extends ChangeNotifier {
     required value,
   }) {
     sort = value;
+
+    //* top rating
+
+    if (sort == 1) {
+      sortTopRating();
+    }
+
+    //* high pricing
+    else if (sort == 2) {
+      // sortHighPricing();
+    }
+    //* low pricing
+    else if (sort == 3) {
+      // sortLowPricing();
+    }
     notifyListeners();
   }
 
   changeFilleterValue({required value}) {
     filleter = value;
+    if (filleter == 1) {
+      print(filleter);
+    } else if (filleter == 2) {
+      print(filleter);
+    } else if (filleter == 3) {
+      print(filleter);
+    }
     notifyListeners();
   }
 
 // ! GET ALL DOCTOR SAME SPECIALTY
 
   getAllDoctorsSP({required String nameSP, required context}) async {
+    isLoading = true;
+    notifyListeners();
     ApiHelper.postData(url: EndPoints.getAllDoctorsSP, body: {'name': nameSP})
         .then((value) async {
-      doctorsListSP = await value['data'][0]['dr']
-          .map((e) => ListDoctorModel.fromJson(e))
-          .toList();
+      listDoctorModelSP = ListDoctorModel.fromJson(value);
+      // doctorsListSP = await value['data'][0]['dr']
+      //     .map((e) => ListDoctorModel.fromJson(e))
+      //     .toList();
+      doctorsListSP = listDoctorModelSP.data[0].dr!;
       if (doctorsListSP.isEmpty) {
         defaultToast(
             message: "لايوجد اطباء في هذا الاختصاص",
             color: AppColors.secondaryColor);
-      } else {
-        Navigator.pushNamed(context, Routes.doctorsScreen);
       }
+      isLoading = false;
+      notifyListeners();
       print(doctorsListSP);
     }).catchError((e) {
+      isLoading = false;
+      notifyListeners();
       defaultToast(message: 'تحقق من اتصالك بالانترنت', color: Colors.red);
       print('error happen in get all doctors sp = $e');
     });
   }
+
+// * SORT
+
+  // ! SORTING TOP RATING
+
+  sortTopRating() async {
+    ApiHelper.getData(url: "${EndPoints.getDocTopRating}?size=10&page=1")
+        .then((value) {
+      allDocByRating = AllDrByRating.fromJson(value);
+      doctorsListSP = allDocByRating.data;
+      print(allDocByRating.data);
+      notifyListeners();
+    });
+  }
+
+  // // ! SORTING HIGH PRICING
+
+  // sortHighPricing() {
+  //   doctorsListSP.sort((a, b) => b.cost.compareTo(a.cost));
+  //   print("HIGH PRICING = ${doctorsListSP.map((e) => e.cost)}");
+  // }
+  // // ! SORTING LOW PRICING
+
+  // sortLowPricing() {
+  //   doctorsListSP.sort((a, b) => a.cost.compareTo(b.cost));
+  //   print("Low PRICING = ${doctorsListSP.map((e) => e.cost)}");
+  // }
+
+// * FILLETER
 
   // ! ADD DOCTOR TO FAVORITE
 

@@ -83,7 +83,8 @@ class RouteGenerator {
       case Routes.specialtyScreen:
         return MaterialPageRoute(builder: (context) => const SpecialtyScreen());
       case Routes.doctorsScreen:
-        return MaterialPageRoute(builder: (context) => const DoctorsScreen());
+        Object? obj = settings.arguments;
+        return MaterialPageRoute(builder: (context) =>  DoctorsScreen(specialtyName: obj,));
       case Routes.choiceAccount:
         return MaterialPageRoute(builder: (context) => const ChoiceAccount());
       case Routes.providingService:
