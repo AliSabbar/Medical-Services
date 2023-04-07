@@ -63,21 +63,6 @@ class DefaultClinicsCard extends StatelessWidget {
             SizedBox(
               height: 10.h,
             ),
-            // rating
-            /*   Container(
-              alignment: Alignment.center,
-              height: 20,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 5,
-                itemBuilder: (BuildContext context, int index) {
-                  return Icon(
-                    Icons.star,
-                    size: 10,
-                  );
-                },
-              ),
-            ), */
             Stars(countStar: starCount),
             SizedBox(
               height: 10.h,

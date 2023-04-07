@@ -26,4 +26,8 @@ class EndPoints {
   static String getClinicTopRating = "admin/hf/getAllHfByRating";
   static String getAllClinics = "admin/hf/";
   static String getClinicById = "admin/hf/";
+
+  // ? BOOKING
+  static String getDocAppointment = "admin/booking/dr/";
+
 }

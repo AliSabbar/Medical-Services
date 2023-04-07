@@ -53,6 +53,8 @@ class DoctorProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  
+
 // ! GET ALL DOCTOR SAME SPECIALTY
 
   getAllDoctorsSP({required String nameSP, required context}) async {
@@ -61,9 +63,6 @@ class DoctorProvider extends ChangeNotifier {
     ApiHelper.postData(url: EndPoints.getAllDoctorsSP, body: {'name': nameSP})
         .then((value) async {
       listDoctorModelSP = ListDoctorModel.fromJson(value);
-      // doctorsListSP = await value['data'][0]['dr']
-      //     .map((e) => ListDoctorModel.fromJson(e))
-      //     .toList();
       doctorsListSP = listDoctorModelSP.data[0].dr!;
       if (doctorsListSP.isEmpty) {
         defaultToast(
@@ -81,6 +80,17 @@ class DoctorProvider extends ChangeNotifier {
     });
   }
 
+  // ! SEARCH DOCTOR 
+
+  searchDoctor({
+    required String search,
+  }) {
+    doctorsListSP = doctorsListSP
+        .where((element) => element.user.name.contains(search))
+        .toList();
+    notifyListeners();
+  }
+
 // * SORT
 
   // ! SORTING TOP RATING
@@ -95,20 +105,6 @@ class DoctorProvider extends ChangeNotifier {
     });
   }
 
-  // // ! SORTING HIGH PRICING
-
-  // sortHighPricing() {
-  //   doctorsListSP.sort((a, b) => b.cost.compareTo(a.cost));
-  //   print("HIGH PRICING = ${doctorsListSP.map((e) => e.cost)}");
-  // }
-  // // ! SORTING LOW PRICING
-
-  // sortLowPricing() {
-  //   doctorsListSP.sort((a, b) => a.cost.compareTo(b.cost));
-  //   print("Low PRICING = ${doctorsListSP.map((e) => e.cost)}");
-  // }
-
-// * FILLETER
 
   // ! ADD DOCTOR TO FAVORITE
 

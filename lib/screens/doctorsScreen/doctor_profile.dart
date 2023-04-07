@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 import 'package:medical_services/components/defaultButton.dart';
 import 'package:medical_services/components/defaultProfileContainer.dart';
 import 'package:medical_services/components/defaultProfileInfoCard.dart';
@@ -9,10 +10,12 @@ import 'package:medical_services/components/iconProfile.dart';
 import 'package:medical_services/components/specialtyContainer.dart';
 import 'package:medical_services/components/url_lunchFunction.dart';
 import 'package:medical_services/network/local/shared_helper.dart';
+import 'package:medical_services/providers/booking_provider.dart';
 import 'package:medical_services/providers/doctor_provider.dart';
 import 'package:medical_services/providers/auth_provider.dart';
 import 'package:medical_services/settings/colors.dart';
 import 'package:provider/provider.dart';
+import 'dart:ui' as ui;
 
 import '../../network/end_points.dart';
 import '../../settings/routes_manger.dart';
@@ -20,12 +23,14 @@ import '../../settings/routes_manger.dart';
 class DoctorProfile extends StatefulWidget {
   DoctorProfile({Key? key, required this.doctorModel}) : super(key: key);
   var doctorModel;
+
   @override
   State<DoctorProfile> createState() => DoctorProfileState();
 }
 
 class DoctorProfileState extends State<DoctorProfile> {
   bool isExpand = false;
+
   @override
   void initState() {
     EndPoints.token == null
@@ -39,6 +44,11 @@ class DoctorProfileState extends State<DoctorProfile> {
             context
                 .read<DoctorProvider>()
                 .checkDocInFav(doctorId: widget.doctorModel.id);
+
+            // ! GET APPOINTMENT
+
+            context.read<BookingProvider>().getAppointment(
+                drID: widget.doctorModel.id, date: DateTime.now().toString());
           });
 
     super.initState();
@@ -54,7 +64,7 @@ class DoctorProfileState extends State<DoctorProfile> {
     print(provDocRead.checkDocInFav(doctorId: widget.doctorModel.id));
 
     return Directionality(
-      textDirection: TextDirection.rtl,
+      textDirection: ui.TextDirection.rtl,
       child: OrientationBuilder(
         builder: (context, orientation) => Scaffold(
             appBar: AppBar(
@@ -137,7 +147,7 @@ class DoctorProfileState extends State<DoctorProfile> {
                                     context: context,
                                     builder: (BuildContext context) {
                                       return Directionality(
-                                        textDirection: TextDirection.rtl,
+                                        textDirection: ui.TextDirection.rtl,
                                         child: AlertDialog(
                                           // <-- SEE HERE
                                           title: Text(
@@ -375,73 +385,56 @@ class DoctorProfileState extends State<DoctorProfile> {
                             color: const Color(0xffF2F7FF),
                             borderRadius: BorderRadius.circular(20.r),
                           ),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: ListView.separated(
-                                  physics: const BouncingScrollPhysics(),
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: 5,
-                                  shrinkWrap: true,
-                                  separatorBuilder:
-                                      (BuildContext context, int index) {
-                                    return const SizedBox(
-                                      width: 20,
-                                    );
-                                  },
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return Container(
-                                      width: 70.w,
-                                      // height: 49.h,
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(20.r)),
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                            alignment: Alignment.center,
-                                            width: double.infinity,
-                                            height: 35.h,
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(20.r),
-                                                topRight: Radius.circular(20.r),
-                                              ),
-                                              color: AppColors.greyColor,
-                                            ),
-                                            child: Text(
-                                              "2-12",
-                                              style: TextStyle(
-                                                fontSize: 15.sp,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white,
-                                              ),
-                                            ),
+                          child: context.watch<BookingProvider>().isLoading
+                              ? const Center(child: CircularProgressIndicator())
+                              : context
+                                      .read<BookingProvider>()
+                                      .capsuleList
+                                      .isEmpty
+                                  ? Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.calendar_month_rounded,
+                                          size: 50,
+                                          color: AppColors.primaryColor,
+                                        ),
+                                        Text('لم يتم اضافة حجوزات بعد')
+                                      ],
+                                    )
+                                  : Row(
+                                      children: [
+                                        Expanded(
+                                          child: ListView.separated(
+                                            physics:
+                                                const BouncingScrollPhysics(),
+                                            scrollDirection: Axis.horizontal,
+                                            itemCount: context
+                                                .read<BookingProvider>()
+                                                .capsuleList
+                                                .length,
+                                            shrinkWrap: true,
+                                            separatorBuilder:
+                                                (BuildContext context,
+                                                    int index) {
+                                              return SizedBox(
+                                                width: 10.w,
+                                              );
+                                            },
+                                            itemBuilder: (BuildContext context,
+                                                int index) {
+                                              return capsuleWidget(
+                                                model: context
+                                                    .read<BookingProvider>()
+                                                    .capsuleModel
+                                                    .data[index],
+                                              );
+                                            },
                                           ),
-                                          Text(
-                                            "من 8:00",
-                                            style: TextStyle(
-                                                fontSize: 16.sp,
-                                                fontWeight: FontWeight.bold,
-                                                color: AppColors.greyColor),
-                                          ),
-                                          Text(
-                                            "الى 12:30",
-                                            style: TextStyle(
-                                                fontSize: 16.sp,
-                                                fontWeight: FontWeight.bold,
-                                                color: AppColors.greyColor),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
+                                        ),
+                                      ],
+                                    ),
                         ),
                         SizedBox(
                           height: 20.h,
@@ -467,59 +460,62 @@ class DoctorProfileState extends State<DoctorProfile> {
   }
 }
 
-class DoctorsCard extends StatelessWidget {
-  const DoctorsCard({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
+Widget capsuleWidget({required model}) {
+  return Builder(builder: (context) {
     return Container(
-      width: 155.w,
-      height: 180.h,
+      width: 75.w,
+      // height: 49.h,
       decoration: BoxDecoration(
-        color: AppColors.backgroundCardColor,
-        borderRadius: BorderRadius.circular(20.r),
-      ),
+          color: Colors.white, borderRadius: BorderRadius.circular(20.r)),
       child: Column(
         children: [
           Expanded(
-            flex: 4,
             child: Container(
+              alignment: Alignment.center,
               width: double.infinity,
+              // height: 35.h,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20.r),
-                  image: DecorationImage(
-                      image: NetworkImage(
-                          'https://img.freepik.com/free-photo/young-bearded-man-with-striped-shirt_273609-5677.jpg'),
-                      fit: BoxFit.cover)),
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Text(
-              "دكتور محمد علي حسين",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: 14.sp,
-                  overflow: TextOverflow.ellipsis,
-                  color: AppColors.primaryColor,
-                  fontWeight: FontWeight.bold),
-            ),
-          ),
-          Expanded(
-            child: Text(
-              "جلدية",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 14.sp,
-                overflow: TextOverflow.ellipsis,
-                color: AppColors.blackColor,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(20.r),
+                  topRight: Radius.circular(20.r),
+                ),
+                color: AppColors.greyColor,
               ),
+              child: Text(
+                "${model.date.month.toString()} - ${model.date.month.toString()} - ${model.date.year.toString()} ",
+                style: TextStyle(
+                  fontSize: 13.sp,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 2,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "من ${context.read<BookingProvider>().convertTime(time: model.openAt)}",
+                  style: TextStyle(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.greyColor),
+                ),
+                Text(
+                  "الى ${context.read<BookingProvider>().convertTime(time: model.closeAt)}",
+                  style: TextStyle(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.greyColor),
+                ),
+              ],
             ),
           ),
         ],
       ),
     );
-  }
+  });
 }

@@ -6,7 +6,6 @@ import 'package:medical_services/network/local/shared_helper.dart';
 import 'package:medical_services/providers/auth_provider.dart';
 import 'package:medical_services/screens/settingsScreen/widgets/settingWidget.dart';
 import 'package:medical_services/settings/colors.dart';
-import 'package:medical_services/settings/routes_manger.dart';
 import 'package:provider/provider.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -29,8 +28,8 @@ class SettingsScreen extends StatelessWidget {
                 SettingsWidget(
                   title: "اللغة",
                   svgIcon: 'assets/icons/set_lang.svg',
-                  backColor: Color(0xffF2F7FF),
-                  backIconColor: Color(0xffAAC4FF),
+                  backColor:const Color(0xffF2F7FF),
+                  backIconColor:const Color(0xffAAC4FF),
                   onTap: () {},
                 ),
                 const SizedBox(height: 20),
@@ -49,15 +48,7 @@ class SettingsScreen extends StatelessWidget {
                   backIconColor: Color(0xffFD8A8A),
                   onTap: () {},
                 ),
-                SizedBox(height: 18),
-                SettingsWidget(
-                  title: "مطورين التطبيق",
-                  svgIcon: 'assets/icons/set_code.svg',
-                  backColor: Color(0x70FFE5D7),
-                  backIconColor: Color(0xffFEBE8C),
-                  onTap: () {},
-                ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 25),
                 defaultButton(
                     text: 'تسجيل خروج',
                     onPressed: () {

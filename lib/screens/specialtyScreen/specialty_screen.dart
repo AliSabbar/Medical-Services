@@ -21,15 +21,15 @@ class _SpecialtyScreenState extends State<SpecialtyScreen> {
   @override
   void initState() {
     Future.delayed(const Duration(milliseconds: 0), () {
-      context.read<HomeProvider>().specialtyList.clear();
-      context.read<HomeProvider>().getAllSpecialty(page: page);
+      var prov = context.read<HomeProvider>();
+      prov.specialtyList.clear();
+      prov.getAllSpecialty(page: page);
       scrollController.addListener(() async {
-        if (context.read<HomeProvider>().isLoading) return;
+        if (prov.isLoading) return;
         if (scrollController.position.pixels ==
             scrollController.position.maxScrollExtent) {
-          if (context.read<HomeProvider>().currentPage !=
-              context.read<HomeProvider>().totalPage) {
-            await context.read<HomeProvider>().getAllSpecialty(page: ++page);
+          if (prov.currentPage != prov.totalPage) {
+            await prov.getAllSpecialty(page: ++page);
           }
         }
       });

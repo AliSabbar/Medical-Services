@@ -18,15 +18,13 @@ class DoctorsScreen extends StatefulWidget {
 
 class _DoctorsScreenState extends State<DoctorsScreen> {
   TextEditingController searchController = TextEditingController();
-
   @override
   void initState() {
     Future.delayed(const Duration(seconds: 0), () {
-      context.read<DoctorProvider>().sort = null;
-      context.read<DoctorProvider>().filleter = null;
-      context
-          .read<DoctorProvider>()
-          .getAllDoctorsSP(nameSP: widget.specialtyName, context: context);
+      var prov = context.read<DoctorProvider>();
+      prov.sort = null;
+      prov.filleter = null;
+      prov.getAllDoctorsSP(nameSP: widget.specialtyName, context: context);
     });
     super.initState();
   }
@@ -62,7 +60,9 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
                       : FloatingActionButton(
                           onPressed: () async {
                             await provRead.getAllDoctorsSP(
-                                nameSP: widget.specialtyName, context: context);
+                              nameSP: widget.specialtyName,
+                              context: context,
+                            );
                             provRead.filleter = null;
                             provRead.sort = null;
                           },
@@ -78,7 +78,17 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
                         height: 20.h,
                       ),
                       // ! SEARCH
-                      SearchWidget(controller: searchController),
+                      SearchWidget(
+                        controller: searchController,
+                        onChange: (name) {
+                          if (name.isEmpty) {
+                        provRead.doctorsListSP.clear();
+                        provRead.getAllDoctorsSP(nameSP: widget.specialtyName, context: context);
+                      } else {
+                        provRead.searchDoctor(search: name);
+                      }
+                        },
+                      ),
                       SizedBox(
                         height: 10.h,
                       ),

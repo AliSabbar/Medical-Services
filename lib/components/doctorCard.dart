@@ -27,19 +27,21 @@ class DoctorCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(20.r)),
         child: Row(
           children: [
-            Container(
-              width: 85.w,
-              height: 180.h,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(20.r),
-                    bottomRight: Radius.circular(20.r),
-                  ),
-                  image: const DecorationImage(
-                    image: NetworkImage(
-                        'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8ZG9jdG9yfGVufDB8fDB8fA%3D%3D&w=1000&q=80'),
-                    fit: BoxFit.cover,
-                  )),
+            Expanded(
+              child: Container(
+                width: 85.w,
+                height: 180.h,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(20.r),
+                      bottomRight: Radius.circular(20.r),
+                    ),
+                    image: const DecorationImage(
+                      image: NetworkImage(
+                          'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8ZG9jdG9yfGVufDB8fDB8fA%3D%3D&w=1000&q=80'),
+                      fit: BoxFit.cover,
+                    )),
+              ),
             ),
             Expanded(
               flex: 2,
@@ -63,13 +65,9 @@ class DoctorCard extends StatelessWidget {
                     SizedBox(
                       height: 10.h,
                     ),
-                    Row(
-                      children: [
-                        Stars(countStar: doctorModel.rating.toInt()),
-                      ],
-                    ),
+                    Stars(countStar: doctorModel.rating.toInt()),
                     SizedBox(
-                      height: 15.h,
+                      height: 10.h,
                     ),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,

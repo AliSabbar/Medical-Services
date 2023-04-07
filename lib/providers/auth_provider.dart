@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:medical_services/components/defaultTextField.dart';
 import 'package:medical_services/components/defaultToast.dart';
 import 'package:medical_services/models/doctor_model.dart';
 import 'package:medical_services/network/end_points.dart';
@@ -255,16 +254,14 @@ class AuthProvider extends ChangeNotifier {
     } else {
       otp(phoneNumber: "+964 ${forgotPasswordController.text}").then((value) {
         print("========================= answer = $value");
-        if(value['success']){
-
-      Navigator.pushNamed(context, Routes.otpScreen, arguments: {
-        'title': 'نسيت كلمة المرور',
-        'userData': {
-          "phoneNumber": "+964 ${forgotPasswordController.text}",
-          "type": "forget",
-        }
-      });
-
+        if (value['success']) {
+          Navigator.pushNamed(context, Routes.otpScreen, arguments: {
+            'title': 'نسيت كلمة المرور',
+            'userData': {
+              "phoneNumber": "+964 ${forgotPasswordController.text}",
+              "type": "forget",
+            }
+          });
         }
       });
     }
