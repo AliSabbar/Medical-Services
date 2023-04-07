@@ -17,6 +17,7 @@ import 'package:medical_services/settings/colors.dart';
 import 'package:provider/provider.dart';
 import 'dart:ui' as ui;
 
+import '../../components/timeDialog.dart';
 import '../../network/end_points.dart';
 import '../../settings/routes_manger.dart';
 
@@ -50,6 +51,9 @@ class DoctorProfileState extends State<DoctorProfile> {
             context.read<BookingProvider>().getAppointment(
                 drID: widget.doctorModel.id, date: DateTime.now().toString());
           });
+    //! Get inside capsules
+    context.read<BookingProvider>().getInsideAllCapsule(
+        drID: widget.doctorModel.id, date: DateTime.now().toString());
 
     super.initState();
   }
@@ -429,6 +433,23 @@ class DoctorProfileState extends State<DoctorProfile> {
                                                     .read<BookingProvider>()
                                                     .capsuleModel
                                                     .data[index],
+                                                //! i start form here
+                                                ontap: () {
+
+                                                  showDialog(
+                                                      context: context,
+                                                      builder: (context) =>
+                                                          ListTimeDialog(
+                                                            timeList: context
+                                                                .read<
+                                                                    BookingProvider>()
+                                                                .insideCapsule
+                                                                .data[index]
+                                                                .time,
+                                                          )
+                                                      //! end
+                                                      );
+                                                },
                                               );
                                             },
                                           ),
@@ -460,61 +481,64 @@ class DoctorProfileState extends State<DoctorProfile> {
   }
 }
 
-Widget capsuleWidget({required model}) {
+Widget capsuleWidget({required model, required VoidCallback ontap}) {
   return Builder(builder: (context) {
-    return Container(
-      width: 75.w,
-      // height: 49.h,
-      decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(20.r)),
-      child: Column(
-        children: [
-          Expanded(
-            child: Container(
-              alignment: Alignment.center,
-              width: double.infinity,
-              // height: 35.h,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(20.r),
-                  topRight: Radius.circular(20.r),
+    return GestureDetector(
+      onTap: ontap,
+      child: Container(
+        width: 75.w,
+        // height: 49.h,
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(20.r)),
+        child: Column(
+          children: [
+            Expanded(
+              child: Container(
+                alignment: Alignment.center,
+                width: double.infinity,
+                // height: 35.h,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20.r),
+                    topRight: Radius.circular(20.r),
+                  ),
+                  color: AppColors.greyColor,
                 ),
-                color: AppColors.greyColor,
-              ),
-              child: Text(
-                "${model.date.month.toString()} - ${model.date.month.toString()} - ${model.date.year.toString()} ",
-                style: TextStyle(
-                  fontSize: 13.sp,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                child: Text(
+                  "${model.date.day.toString()} - ${model.date.month.toString()} - ${model.date.year.toString()} ",
+                  style: TextStyle(
+                    fontSize: 13.sp,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
               ),
             ),
-          ),
-          Expanded(
-            flex: 2,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "من ${context.read<BookingProvider>().convertTime(time: model.openAt)}",
-                  style: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.greyColor),
-                ),
-                Text(
-                  "الى ${context.read<BookingProvider>().convertTime(time: model.closeAt)}",
-                  style: TextStyle(
-                      fontSize: 14.sp,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.greyColor),
-                ),
-              ],
+            Expanded(
+              flex: 2,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "من ${context.read<BookingProvider>().convertTime(time: model.openAt)}",
+                    style: TextStyle(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.greyColor),
+                  ),
+                  Text(
+                    "الى ${context.read<BookingProvider>().convertTime(time: model.closeAt)}",
+                    style: TextStyle(
+                        fontSize: 14.sp,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.greyColor),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   });

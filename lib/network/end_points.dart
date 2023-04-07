@@ -29,5 +29,5 @@ class EndPoints {
 
   // ? BOOKING
   static String getDocAppointment = "admin/booking/dr/";
-
+  static String getInsideCapsule = "admin/booking/date/dr/";
 }
