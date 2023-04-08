@@ -84,7 +84,10 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (context) => const SpecialtyScreen());
       case Routes.doctorsScreen:
         Object? obj = settings.arguments;
-        return MaterialPageRoute(builder: (context) =>  DoctorsScreen(specialtyName: obj,));
+        return MaterialPageRoute(
+            builder: (context) => DoctorsScreen(
+                  specialtyName: obj,
+                ));
       case Routes.choiceAccount:
         return MaterialPageRoute(builder: (context) => const ChoiceAccount());
       case Routes.providingService:
@@ -105,7 +108,9 @@ class RouteGenerator {
       case Routes.clinicProfileScreen:
         Object? obj = settings.arguments;
         return MaterialPageRoute(
-            builder: (context) =>  ClinicProfileScreen(clinicModel: obj,));
+            builder: (context) => ClinicProfileScreen(
+                  clinicModel: obj,
+                ));
       case Routes.doctorProfileScreen:
         Object? obj = settings.arguments;
         return MaterialPageRoute(
@@ -113,8 +118,11 @@ class RouteGenerator {
                   doctorModel: obj,
                 ));
       case Routes.confirmAppointmentScreen:
+        Object? obj = settings.arguments;
         return MaterialPageRoute(
-            builder: (context) => const ConfirmAppointment());
+            builder: (context) => ConfirmAppointment(
+                  data: obj,
+                ));
       case Routes.qrCoderScreen:
         return MaterialPageRoute(builder: (context) => const QrCodeScreen());
       case Routes.settingsScreen:
