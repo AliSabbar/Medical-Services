@@ -51,9 +51,9 @@ class DoctorProfileState extends State<DoctorProfile> {
             context.read<BookingProvider>().getAppointment(
                 drID: widget.doctorModel.id, date: DateTime.now().toString());
           });
-    //! Get inside capsules
-    context.read<BookingProvider>().getInsideAllCapsule(
-        drID: widget.doctorModel.id, date: DateTime.now().toString());
+    // //! Get inside capsules
+    // context.read<BookingProvider>().getInsideAllCapsule(
+    //     drID: widget.doctorModel.id, date: DateTime.now().toString());
 
     super.initState();
   }
@@ -433,23 +433,6 @@ class DoctorProfileState extends State<DoctorProfile> {
                                                     .read<BookingProvider>()
                                                     .capsuleModel
                                                     .data[index],
-                                                //! i start form here
-                                                ontap: () {
-
-                                                  showDialog(
-                                                      context: context,
-                                                      builder: (context) =>
-                                                          ListTimeDialog(
-                                                            timeList: context
-                                                                .read<
-                                                                    BookingProvider>()
-                                                                .insideCapsule
-                                                                .data[index]
-                                                                .time,
-                                                          )
-                                                      //! end
-                                                      );
-                                                },
                                               );
                                             },
                                           ),
@@ -481,10 +464,19 @@ class DoctorProfileState extends State<DoctorProfile> {
   }
 }
 
-Widget capsuleWidget({required model, required VoidCallback ontap}) {
+Widget capsuleWidget({required model}) {
   return Builder(builder: (context) {
     return GestureDetector(
-      onTap: ontap,
+      onTap: () {
+        showDialog(
+            context: context,
+            builder: (context) => ListTimeDialog(
+                  drID: model.dr.id,
+                  date: model.date.toString(),
+                )
+            //! end
+            );
+      },
       child: Container(
         width: 75.w,
         // height: 49.h,
@@ -523,14 +515,14 @@ Widget capsuleWidget({required model, required VoidCallback ontap}) {
                   Text(
                     "من ${context.read<BookingProvider>().convertTime(time: model.openAt)}",
                     style: TextStyle(
-                        fontSize: 14.sp,
+                        fontSize: 12.sp,
                         fontWeight: FontWeight.bold,
                         color: AppColors.greyColor),
                   ),
                   Text(
                     "الى ${context.read<BookingProvider>().convertTime(time: model.closeAt)}",
                     style: TextStyle(
-                        fontSize: 14.sp,
+                        fontSize: 12.sp,
                         fontWeight: FontWeight.bold,
                         color: AppColors.greyColor),
                   ),

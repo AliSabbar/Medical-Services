@@ -10,8 +10,10 @@ class BookingProvider extends ChangeNotifier {
   late CapsuleModel capsuleModel;
   late InsideCapsule insideCapsule;
   bool isLoading = false;
+  bool isLoadingInCap = false;
+  
   List capsuleList = [];
-  List insideCapsuleList = [];
+  List timeList = [];
 
   // ! GET CAPSULE
   getAppointment({
@@ -22,7 +24,7 @@ class BookingProvider extends ChangeNotifier {
     notifyListeners();
     ApiHelper.postData(
         url: "${EndPoints.getDocAppointment}?size=10",
-        body: {"id": drID, "data": date}).then((value) {
+        body: {"id": drID, "date": date}).then((value) {
       capsuleModel = CapsuleModel.fromJson(value);
       capsuleList = capsuleModel.data;
       print(value);
@@ -35,28 +37,31 @@ class BookingProvider extends ChangeNotifier {
     });
   }
 
-//! get inside capsule
+//!  GET INSIDE CAPSULE
   getInsideAllCapsule({
     required String drID,
     required String date,
   }) {
-    isLoading = true;
+    isLoadingInCap = true;
     notifyListeners();
     ApiHelper.postData(
         url: "${EndPoints.getInsideCapsule}?size=10",
-        body: {"id": drID, "data": date}).then((value) {
+        body: {"id": drID, "date": date}).then((value) {
       insideCapsule = InsideCapsule.fromJson(value);
-      insideCapsuleList = insideCapsule.data;
-      print(value);
-      isLoading = false;
+      timeList = insideCapsule.data[0].time;
+      print(timeList);
+      isLoadingInCap = false;
       notifyListeners();
     }).catchError((e) {
-      isLoading = false;
+      isLoadingInCap = false;
       notifyListeners();
       print("Error in GET ALL INSIDE CAPSULE = $e");
     });
   }
 
+
+
+// ! CONVERT FROM 24 H TO 12 H
   String convertTime({required String time}) {
     final inputFormat = DateFormat('HH:mm');
     final outputFormat = DateFormat('h:mm a');
