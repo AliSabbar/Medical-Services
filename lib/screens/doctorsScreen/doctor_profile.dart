@@ -277,6 +277,7 @@ class DoctorProfileState extends State<DoctorProfile> {
                             ),
                             isExpand
                                 ? Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       SizedBox(
                                         height: 20.h,
@@ -316,12 +317,13 @@ class DoctorProfileState extends State<DoctorProfile> {
                                           physics:
                                               const BouncingScrollPhysics(),
                                           shrinkWrap: true,
-                                          itemCount: 5,
+                                          itemCount: widget
+                                              .doctorModel.specialties.length,
                                           separatorBuilder:
                                               (BuildContext context,
                                                   int index) {
                                             return SizedBox(
-                                              width: 20.w,
+                                              width: 10.w,
                                             );
                                           },
                                           itemBuilder: (BuildContext context,
@@ -331,7 +333,7 @@ class DoctorProfileState extends State<DoctorProfile> {
                                                 height: 59,
                                                 circleRadius: 15,
                                                 fontSize: 14,
-                                                title: "اذن وانف وحنجرة",
+                                                title: widget.doctorModel.specialties[index].name,
                                                 image:
                                                     'https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX32581005.jpg',
                                                 onTap: () {});

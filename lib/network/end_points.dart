@@ -18,7 +18,9 @@ class EndPoints {
   static String addToFav = "admin/user/addFavorite/";
   static String removeFromFav = "admin/user/removeFavorite/";
   static String getFav = "admin/user/getFav/";
-  static String getDocTopRating = "admin/dr/getAllDrByRating";
+  static String sortDocByTopRating = "admin/dr/getAllDrByRating";
+  static String sortDocByCost = "admin/dr/getAllDrByCost";
+  static String filleterDocByGender = "admin/dr/getAllDrByGender";
   //? DOCTOR
   static String getDoctorById = "admin/dr/";
   //? CLINICS

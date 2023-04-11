@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:medical_services/components/defaultToast.dart';
+import 'package:medical_services/models/doctor_female_gender_model.dart';
+import 'package:medical_services/models/doctor_low_cost_model.dart';
+import 'package:medical_services/models/doctor_male_gender_model.dart';
 import 'package:medical_services/network/end_points.dart';
 import 'package:medical_services/network/remote/api_helper.dart';
 import 'package:medical_services/settings/colors.dart';
+import '../models/doctor_high_cost_model.dart';
 import '../models/doctor_topRating_model.dart';
 import '../models/list_doctor_model.dart';
 import '../settings/routes_manger.dart';
@@ -11,6 +15,11 @@ import '../models/fav_doctor_model.dart';
 class DoctorProvider extends ChangeNotifier {
   late ListDoctorModel listDoctorModelSP;
   late AllDrByRating allDocByRating;
+  late AllDrByHighCost allDocByHighCost;
+  late AllDrByLowCost allDocByLowCost;
+  late AllMaleDr allMaleDr;
+  late AllFemaleDr allFemaleDr;
+  // late AllDrByLowCost allDocByLowCost;
   List doctorsListSP = [];
   List favDoctors = [];
   bool isLoading = false;
@@ -19,41 +28,45 @@ class DoctorProvider extends ChangeNotifier {
 
   int? sort;
   int? filleter;
-  changeSortValue({
-    required value,
-  }) {
+  changeSortValue(
+      {required value, required String specialtyName, required context}) {
     sort = value;
 
     //* top rating
 
     if (sort == 1) {
-      sortTopRating();
+      sortTopRating(specialtyName: specialtyName);
     }
 
     //* high pricing
     else if (sort == 2) {
-      // sortHighPricing();
+      sortHighCost(specialtyName: specialtyName);
     }
     //* low pricing
     else if (sort == 3) {
-      // sortLowPricing();
+      sortLowCost(specialtyName: specialtyName);
     }
+    Navigator.pop(context);
     notifyListeners();
   }
 
-  changeFilleterValue({required value}) {
+  changeFilleterValue(
+      {required value, required String specialtyName, required context}) {
     filleter = value;
     if (filleter == 1) {
-      print(filleter);
-    } else if (filleter == 2) {
-      print(filleter);
-    } else if (filleter == 3) {
-      print(filleter);
     }
+    //* male dr
+    else if (filleter == 2) {
+      filleterMaleDr(specialtyName: specialtyName);
+    }
+    // * female dr
+    else if (filleter == 3) {
+      filleterFemaleDr(specialtyName: specialtyName);
+    }
+
+    Navigator.pop(context);
     notifyListeners();
   }
-
-  
 
 // ! GET ALL DOCTOR SAME SPECIALTY
 
@@ -80,7 +93,7 @@ class DoctorProvider extends ChangeNotifier {
     });
   }
 
-  // ! SEARCH DOCTOR 
+  // ! SEARCH DOCTOR
 
   searchDoctor({
     required String search,
@@ -95,16 +108,82 @@ class DoctorProvider extends ChangeNotifier {
 
   // ! SORTING TOP RATING
 
-  sortTopRating() async {
-    ApiHelper.getData(url: "${EndPoints.getDocTopRating}?size=10&page=1")
-        .then((value) {
+  sortTopRating({required String specialtyName}) async {
+    ApiHelper.postData(
+        url: "${EndPoints.sortDocByTopRating}?size=10&page=1",
+        body: {
+          "name": specialtyName,
+        }).then((value) {
       allDocByRating = AllDrByRating.fromJson(value);
       doctorsListSP = allDocByRating.data;
-      print(allDocByRating.data);
       notifyListeners();
+    }).catchError((e) {
+      defaultToast(message: "تحقق من الاتصال بالانترنت", color: Colors.red);
+      print("ERROR IN SORT TOP RATING = $e");
     });
   }
 
+  // ! SORTING HIGH COST
+
+  sortHighCost({required String specialtyName}) async {
+    ApiHelper.postData(
+        url: "${EndPoints.sortDocByCost}?size=10&page=1",
+        body: {"name": specialtyName, "type": "high"}).then((value) {
+      allDocByHighCost = AllDrByHighCost.fromJson(value);
+      doctorsListSP = allDocByHighCost.data;
+      notifyListeners();
+    }).catchError((e) {
+      defaultToast(message: "تحقق من الاتصال بالانترنت", color: Colors.red);
+
+      print("ERROR IN SORTING HIGH COST = $e");
+    });
+  }
+
+  // ! SORTING LOW COST
+
+  sortLowCost({required String specialtyName}) async {
+    ApiHelper.postData(
+        url: "${EndPoints.sortDocByCost}?size=10&page=1",
+        body: {"name": specialtyName, "type": "low"}).then((value) {
+      allDocByLowCost = AllDrByLowCost.fromJson(value);
+      doctorsListSP = allDocByLowCost.data;
+      notifyListeners();
+    }).catchError((e) {
+      defaultToast(message: "تحقق من الاتصال بالانترنت", color: Colors.red);
+
+      print("ERROR IN SORTING LOW COST = $e");
+    });
+  }
+
+// * FILLETER
+
+  // ! FILLETER BY GENDER
+
+  filleterMaleDr({required String specialtyName}) async {
+    ApiHelper.postData(
+        url: "${EndPoints.filleterDocByGender}?size=10&page=1",
+        body: {"name": specialtyName, "gender": "ذكر"}).then((value) {
+      allMaleDr = AllMaleDr.fromJson(value);
+      doctorsListSP = allMaleDr.data;
+      notifyListeners();
+    }).catchError((e) {
+      defaultToast(message: "تحقق من الاتصال بالانترنت", color: Colors.red);
+      print("ERROR IM FILLETER MALE DR  = $e");
+    });
+  }
+
+  filleterFemaleDr({required String specialtyName}) async {
+    ApiHelper.postData(
+        url: "${EndPoints.filleterDocByGender}?size=10&page=1",
+        body: {"name": specialtyName, "gender": "انثى"}).then((value) {
+      allFemaleDr = AllFemaleDr.fromJson(value);
+      doctorsListSP = allFemaleDr.data;
+      notifyListeners();
+    }).catchError((e) {
+      defaultToast(message: "تحقق من الاتصال بالانترنت", color: Colors.red);
+      print("ERROR IM FILLETER FEMALE DR  = $e");
+    });
+  }
 
   // ! ADD DOCTOR TO FAVORITE
 

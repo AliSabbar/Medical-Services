@@ -82,11 +82,12 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
                         controller: searchController,
                         onChange: (name) {
                           if (name.isEmpty) {
-                        provRead.doctorsListSP.clear();
-                        provRead.getAllDoctorsSP(nameSP: widget.specialtyName, context: context);
-                      } else {
-                        provRead.searchDoctor(search: name);
-                      }
+                            provRead.doctorsListSP.clear();
+                            provRead.getAllDoctorsSP(
+                                nameSP: widget.specialtyName, context: context);
+                          } else {
+                            provRead.searchDoctor(search: name);
+                          }
                         },
                       ),
                       SizedBox(
@@ -117,7 +118,10 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
                                                   context
                                                       .read<DoctorProvider>()
                                                       .changeFilleterValue(
-                                                          value: v);
+                                                          value: v,
+                                                          specialtyName: widget
+                                                              .specialtyName,
+                                                          context: context);
                                                 }),
                                             RadioListTile(
                                                 title: const Text("دكتور"),
@@ -129,7 +133,10 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
                                                   context
                                                       .read<DoctorProvider>()
                                                       .changeFilleterValue(
-                                                          value: v);
+                                                          value: v,
+                                                          specialtyName: widget
+                                                              .specialtyName,
+                                                          context: context);
                                                 }),
                                             RadioListTile(
                                                 title: const Text("دكتورة"),
@@ -141,7 +148,10 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
                                                   context
                                                       .read<DoctorProvider>()
                                                       .changeFilleterValue(
-                                                          value: v);
+                                                          value: v,
+                                                          specialtyName: widget
+                                                              .specialtyName,
+                                                          context: context);
                                                 }),
                                           ],
                                         ),
@@ -177,8 +187,10 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
                                                     context
                                                         .read<DoctorProvider>()
                                                         .changeSortValue(
-                                                            value: v);
-                                                    Navigator.pop(context);
+                                                            value: v,
+                                                            specialtyName: widget
+                                                                .specialtyName,
+                                                            context: context);
                                                   }),
                                               RadioListTile(
                                                   title:
@@ -191,8 +203,10 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
                                                     context
                                                         .read<DoctorProvider>()
                                                         .changeSortValue(
-                                                            value: v);
-                                                    Navigator.pop(context);
+                                                            value: v,
+                                                            specialtyName: widget
+                                                                .specialtyName,
+                                                            context: context);
                                                   }),
                                               RadioListTile(
                                                   title:
@@ -205,8 +219,10 @@ class _DoctorsScreenState extends State<DoctorsScreen> {
                                                     context
                                                         .read<DoctorProvider>()
                                                         .changeSortValue(
-                                                            value: v);
-                                                    Navigator.pop(context);
+                                                            value: v,
+                                                            specialtyName: widget
+                                                                .specialtyName,
+                                                            context: context);
                                                   }),
                                             ],
                                           ),
