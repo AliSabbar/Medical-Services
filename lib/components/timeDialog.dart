@@ -8,10 +8,12 @@ import 'package:provider/provider.dart';
 import '../models/inside_capsule_model.dart';
 
 class ListTimeDialog extends StatefulWidget {
-  const ListTimeDialog({Key? key, this.drID, this.date}) : super(key: key);
+  const ListTimeDialog({Key? key, this.drID, this.date, this.doctorModel})
+      : super(key: key);
 
   final date;
-  final drID;
+  final doctorModel;
+  final drID; // we will delete this latter and use doctorModel.id
 
   @override
   State<ListTimeDialog> createState() => _ListTimeDialogState();
@@ -59,25 +61,6 @@ class _ListTimeDialogState extends State<ListTimeDialog> {
                 width: double.maxFinite,
                 height: 300.h,
                 child: const Center(child: CircularProgressIndicator()))
-            // : Container(
-            //     decoration: BoxDecoration(
-            //         color: AppColors.secondaryColor,
-            //         borderRadius: const BorderRadius.all(Radius.circular(20))),
-            //     width: double.maxFinite,
-            //     child: ListView.builder(
-            //       shrinkWrap: true,
-            //       itemCount: provWatch.timeList.length,
-            //       itemBuilder: (BuildContext context, int index) {
-            //         return Column(
-            //           crossAxisAlignment: CrossAxisAlignment.center,
-            //           children: [
-
-            //             Divider(),
-            //           ],
-            //         );
-            //       },
-            //     ),
-            //   ),
             : SizedBox(
                 width: double.maxFinite,
                 height: 300.h,
@@ -92,13 +75,22 @@ class _ListTimeDialogState extends State<ListTimeDialog> {
                     return Center(
                       child: GestureDetector(
                         onTap: () {
+                          Navigator.pushNamed(
+                              context, Routes.confirmAppointmentScreen,
+                              arguments: {
+                                'date': date,
+                                "drModel": widget.doctorModel,
+                                "time": provRead.convertTime(
+                              time: provWatch.timeList[index].time.toString(),
+                            )
+                              });
                         },
                         child: Container(
                           padding: const EdgeInsets.all(8.0),
                           decoration: BoxDecoration(
                               // ! color if appointment available or not
                               color:
-                              true ? AppColors.secondaryColor : Colors.red,
+                                  true ? AppColors.secondaryColor : Colors.red,
                               borderRadius: BorderRadius.circular(12.r)),
                           child: Text(
                             provRead.convertTime(

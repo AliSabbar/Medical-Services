@@ -435,6 +435,7 @@ class DoctorProfileState extends State<DoctorProfile> {
                                                     .read<BookingProvider>()
                                                     .capsuleModel
                                                     .data[index],
+                                                doctorModel:widget.doctorModel
                                               );
                                             },
                                           ),
@@ -466,7 +467,7 @@ class DoctorProfileState extends State<DoctorProfile> {
   }
 }
 
-Widget capsuleWidget({required model}) {
+Widget capsuleWidget({required model,required doctorModel}) {
   return Builder(builder: (context) {
     return GestureDetector(
       onTap: () {
@@ -475,6 +476,7 @@ Widget capsuleWidget({required model}) {
             builder: (context) => ListTimeDialog(
                   drID: model.dr.id,
                   date: model.date.toString(),
+                  doctorModel: doctorModel,
                 )
             //! end
             );
