@@ -43,10 +43,10 @@ class DoctorProfileState extends State<DoctorProfile> {
           : null;
       // ! CHECK IF DOC IN FAV
       EndPoints.token != null
-     ? context
-          .read<DoctorProvider>()
-          .checkDocInFav(doctorId: widget.doctorModel.id):
-          null;
+          ? context
+              .read<DoctorProvider>()
+              .checkDocInFav(doctorId: widget.doctorModel.id)
+          : null;
 
       // ! GET APPOINTMENT
 
@@ -445,16 +445,6 @@ class DoctorProfileState extends State<DoctorProfile> {
                         ),
                         SizedBox(
                           height: 20.h,
-                        ),
-                        Center(
-                            child: defaultButton(
-                                text: 'احجز الان',
-                                onPressed: () {
-                                  Navigator.pushNamed(
-                                      context, Routes.confirmAppointmentScreen);
-                                })),
-                        SizedBox(
-                          height: 5.h,
                         ),
                       ],
                     ),

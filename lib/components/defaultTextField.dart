@@ -5,6 +5,7 @@ Widget defaultTextField({
   required String hintText,
   required TextEditingController controller,
   String? initialValue,
+  TextAlign textAlign = TextAlign.start,
   TextDirection? textDirection,
   TextInputType? keyboardType,
   bool obscureText = false,
@@ -30,6 +31,7 @@ Widget defaultTextField({
         color: AppColors.textfieldColor,
         borderRadius: BorderRadius.circular(borderRadius)),
     child: TextFormField(
+      textAlign: textAlign,
       textDirection: textDirection,
       minLines: minLines,
       maxLines: maxLines,

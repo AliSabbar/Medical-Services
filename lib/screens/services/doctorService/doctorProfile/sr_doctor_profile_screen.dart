@@ -12,6 +12,7 @@ import 'package:medical_services/providers/doctor_provider.dart';
 import 'package:medical_services/settings/colors.dart';
 import 'package:provider/provider.dart';
 
+import '../../../../components/url_lunchFunction.dart';
 import '../../../../settings/routes_manger.dart';
 
 class SrDoctorProfileScreen extends StatefulWidget {
@@ -105,7 +106,11 @@ class SrDoctorProfileScreenState extends State<SrDoctorProfileScreen> {
                               ),
                               iconProfile(
                                 imgUrl: 'assets/icons/call.svg',
-                                onTap: () {},
+                                onTap: () {
+                                  UrlLunch.makeCall(
+                                      phoneNumber: provRead
+                                          .doctorModel!.data.user.phoneNumber);
+                                },
                               )
                             ],
                           ),
@@ -163,11 +168,12 @@ class SrDoctorProfileScreenState extends State<SrDoctorProfileScreen> {
                             scrollDirection: Axis.horizontal,
                             physics: const BouncingScrollPhysics(),
                             shrinkWrap: true,
-                            itemCount: 5,
+                            itemCount:
+                                provWatch.doctorModel!.data.specialties.length,
                             separatorBuilder:
                                 (BuildContext context, int index) {
                               return SizedBox(
-                                width: 20.w,
+                                width: 10.w,
                               );
                             },
                             itemBuilder: (BuildContext context, int index) {
@@ -176,7 +182,8 @@ class SrDoctorProfileScreenState extends State<SrDoctorProfileScreen> {
                                   height: 59,
                                   circleRadius: 15,
                                   fontSize: 14,
-                                  title: "اذن وانف وحنجرة",
+                                  title: provRead.doctorModel!.data
+                                      .specialties[index].name,
                                   image:
                                       'https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX32581005.jpg',
                                   onTap: () {});

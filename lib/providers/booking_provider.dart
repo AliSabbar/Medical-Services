@@ -16,9 +16,18 @@ class BookingProvider extends ChangeNotifier {
   bool isLoading = false;
   bool isLoadingInCap = false;
   bool isLoadingConf = false;
-
+  bool isLoadingAddApp = false;
   List capsuleList = [];
   List timeList = [];
+  String initialWaitTime = "15 دقيقة";
+  List waitTime = ['15 دقيقة', "30 دقيقة", '45 دقيقة', '60 دقيقة'];
+
+// ! CHANGE WAIT TIME INDEX
+
+  changeWaitTime({required value}) {
+    initialWaitTime = value;
+    notifyListeners();
+  }
 
   // ! GET CAPSULE
   getAppointment({
@@ -103,6 +112,37 @@ class BookingProvider extends ChangeNotifier {
     });
   }
 
+// ! ADD APPOINTMENT
+
+  addAppointment(
+      {required String startAppointment,
+      required String endAppointment,
+      required String time,
+      required String date,
+      required String drId}) {
+    isLoadingAddApp = true;
+    notifyListeners();
+    ApiHelper.postData(url: EndPoints.addBooking, body: {
+      "start": startAppointment,
+      "end": endAppointment,
+      "time":time,
+      "date": date,
+      "drId": drId,
+    }).then((value) {
+      isLoadingAddApp = false;
+      notifyListeners();
+      print(value);
+      if(value["code"]==201) {
+        defaultToast(message: 'تم اضافة الحجز بنجاح ', color: Colors.green);
+      }
+    }).catchError((e) {
+      print("ERROR IN ADD APPOINTMENT = $e");
+      isLoadingAddApp = false;
+      notifyListeners();
+      defaultToast(message: 'تحقق من الاتصال بالانترنت', color: Colors.red);
+    });
+  }
+
 // ! GENERATE QR CODE
 
   String generateQrCode({
@@ -133,5 +173,15 @@ class BookingProvider extends ChangeNotifier {
 
     final dateTime = inputFormat.parse(time);
     return outputFormat.format(dateTime);
+  }
+
+// ! CONVERT FROM 12 H TO 24 H
+  String convertTime24H({required String time}) {
+    // create a DateTime object from a string in 12-hour format
+    DateTime dateTime = DateFormat('hh:mm a').parse(time);
+    // format the DateTime object in 24-hour format
+    String time24Hour = DateFormat('HH:mm').format(dateTime);
+
+    return time24Hour;
   }
 }
