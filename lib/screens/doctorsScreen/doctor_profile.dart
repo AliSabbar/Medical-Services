@@ -34,27 +34,25 @@ class DoctorProfileState extends State<DoctorProfile> {
 
   @override
   void initState() {
-    EndPoints.token == null
-        ? () {}
-        : Future.delayed(const Duration(seconds: 0), () {
-            // ! GET FAV
-            context
-                .read<DoctorProvider>()
-                .getFav(userId: SharedHelper.getData(key: 'userId'));
-            // ! CHECK IF DOC IN FAV
-            context
-                .read<DoctorProvider>()
-                .checkDocInFav(doctorId: widget.doctorModel.id);
+    Future.delayed(const Duration(seconds: 0), () {
+      // ! GET FAV
+      EndPoints.token != null
+          ? context
+              .read<DoctorProvider>()
+              .getFav(userId: SharedHelper.getData(key: 'userId'))
+          : null;
+      // ! CHECK IF DOC IN FAV
+      EndPoints.token != null
+     ? context
+          .read<DoctorProvider>()
+          .checkDocInFav(doctorId: widget.doctorModel.id):
+          null;
 
-            // ! GET APPOINTMENT
+      // ! GET APPOINTMENT
 
-            context.read<BookingProvider>().getAppointment(
-                drID: widget.doctorModel.id, date: DateTime.now().toString());
-          });
-    // //! Get inside capsules
-    // context.read<BookingProvider>().getInsideAllCapsule(
-    //     drID: widget.doctorModel.id, date: DateTime.now().toString());
-
+      context.read<BookingProvider>().getAppointment(
+          drID: widget.doctorModel.id, date: DateTime.now().toString());
+    });
     super.initState();
   }
 
@@ -277,7 +275,8 @@ class DoctorProfileState extends State<DoctorProfile> {
                             ),
                             isExpand
                                 ? Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       SizedBox(
                                         height: 20.h,
@@ -333,7 +332,8 @@ class DoctorProfileState extends State<DoctorProfile> {
                                                 height: 59,
                                                 circleRadius: 15,
                                                 fontSize: 14,
-                                                title: widget.doctorModel.specialties[index].name,
+                                                title: widget.doctorModel
+                                                    .specialties[index].name,
                                                 image:
                                                     'https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX32581005.jpg',
                                                 onTap: () {});
@@ -431,12 +431,12 @@ class DoctorProfileState extends State<DoctorProfile> {
                                             itemBuilder: (BuildContext context,
                                                 int index) {
                                               return capsuleWidget(
-                                                model: context
-                                                    .read<BookingProvider>()
-                                                    .capsuleModel
-                                                    .data[index],
-                                                doctorModel:widget.doctorModel
-                                              );
+                                                  model: context
+                                                      .read<BookingProvider>()
+                                                      .capsuleModel
+                                                      .data[index],
+                                                  doctorModel:
+                                                      widget.doctorModel);
                                             },
                                           ),
                                         ),
@@ -467,7 +467,7 @@ class DoctorProfileState extends State<DoctorProfile> {
   }
 }
 
-Widget capsuleWidget({required model,required doctorModel}) {
+Widget capsuleWidget({required model, required doctorModel}) {
   return Builder(builder: (context) {
     return GestureDetector(
       onTap: () {

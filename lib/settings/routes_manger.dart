@@ -124,7 +124,8 @@ class RouteGenerator {
                   data: obj,
                 ));
       case Routes.qrCoderScreen:
-        return MaterialPageRoute(builder: (context) => const QrCodeScreen());
+        Object? obj = settings.arguments;
+        return MaterialPageRoute(builder: (context) =>  QrCodeScreen(data:obj));
       case Routes.settingsScreen:
         return MaterialPageRoute(builder: (context) => const SettingsScreen());
       case Routes.guestScreen:

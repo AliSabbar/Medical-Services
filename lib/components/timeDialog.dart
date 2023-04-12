@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:medical_services/components/defaultToast.dart';
+import 'package:medical_services/network/end_points.dart';
 import 'package:medical_services/providers/booking_provider.dart';
 import 'package:medical_services/settings/colors.dart';
 import 'package:medical_services/settings/routes_manger.dart';
@@ -75,22 +77,30 @@ class _ListTimeDialogState extends State<ListTimeDialog> {
                     return Center(
                       child: GestureDetector(
                         onTap: () {
-                          Navigator.pushNamed(
-                              context, Routes.confirmAppointmentScreen,
-                              arguments: {
-                                'date': date,
-                                "drModel": widget.doctorModel,
-                                "time": provRead.convertTime(
-                              time: provWatch.timeList[index].time.toString(),
-                            )
-                              });
+                          provWatch.timeList[index].av
+                              ? EndPoints.token != null
+                                  ? Navigator.pushNamed(
+                                      context, Routes.confirmAppointmentScreen,
+                                      arguments: {
+                                          'date': date,
+                                          "drModel": widget.doctorModel,
+                                          "time": provWatch.timeList[index].time
+                                              .toString(),
+                                        })
+                                  : defaultToast(
+                                      message: "سجل الدخول لحجز الموعد",
+                                      color: Colors.red)
+                              : defaultToast(
+                                  message: "لقد تم حجز هذا الوقت بالفعل",
+                                  color: Colors.yellow);
                         },
                         child: Container(
                           padding: const EdgeInsets.all(8.0),
                           decoration: BoxDecoration(
                               // ! color if appointment available or not
-                              color:
-                                  true ? AppColors.secondaryColor : Colors.red,
+                              color: provWatch.timeList[index].av
+                                  ? AppColors.secondaryColor
+                                  : Colors.red,
                               borderRadius: BorderRadius.circular(12.r)),
                           child: Text(
                             provRead.convertTime(
@@ -106,25 +116,6 @@ class _ListTimeDialogState extends State<ListTimeDialog> {
                   },
                 ),
               ),
-        actionsAlignment: MainAxisAlignment.spaceBetween,
-        actions: <Widget>[
-          TextButton(
-            child: const Text(
-              'اغلاق',
-              style: TextStyle(color: Colors.red),
-            ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          TextButton(
-            child:
-                Text('موافق', style: TextStyle(color: AppColors.primaryColor)),
-            onPressed: () {
-              Navigator.pushNamed(context, Routes.confirmAppointmentScreen);
-            },
-          ),
-        ],
       ),
     );
   }

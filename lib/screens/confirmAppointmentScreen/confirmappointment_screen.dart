@@ -6,7 +6,9 @@ import 'package:medical_services/components/authTitleWidget.dart';
 import 'package:medical_services/components/defaultButton.dart';
 import 'package:medical_services/components/defaultTextField.dart';
 import 'package:medical_services/components/doctorCard.dart';
+import 'package:medical_services/network/local/shared_helper.dart';
 import 'package:medical_services/providers/auth_provider.dart';
+import 'package:medical_services/providers/booking_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../components/defaultDropDownButton.dart';
@@ -39,9 +41,11 @@ class _ConfirmAppointmentState extends State<ConfirmAppointment> {
   @override
   Widget build(BuildContext context) {
     var user = context.read<AuthProvider>().userModel?.data;
+    var provBooking = context.read<BookingProvider>();
     print("Auth = ${context.read<AuthProvider>().userModel?.data.phoneNumber}");
     phoneNumberController.text = user!.phoneNumber.substring(4);
     userNameController.text = user.name;
+    ageController.text = user.setting.dob.toString().substring(0, 10);
     return Directionality(
       textDirection: ui.TextDirection.rtl,
       child: Scaffold(
@@ -74,7 +78,7 @@ class _ConfirmAppointmentState extends State<ConfirmAppointment> {
                 const AuthTitleWidget(title: 'ادخل عمر المريض'),
                 defaultTextField(
                     readOnly: true,
-                    hintText: '07746140233',
+                    hintText: ageController.text,
                     controller: ageController,
                     onTap: () {
                       showDatePicker(
@@ -118,13 +122,27 @@ class _ConfirmAppointmentState extends State<ConfirmAppointment> {
                 SizedBox(
                   height: 15.h,
                 ),
-                Center(
-                  child: defaultButton(
-                      text: 'تأكيد الحجز',
-                      onPressed: () {
-                        Navigator.pushNamed(context, Routes.qrCoderScreen);
-                      }),
-                ),
+                provBooking.isLoadingConf
+                    ? const Center(child: CircularProgressIndicator())
+                    : Center(
+                        child: defaultButton(
+                            text: 'تأكيد الحجز',
+                            onPressed: () {
+                              print(widget.data['time']);
+                              print(widget.data['date']);
+                              print(widget.data['drModel'].id);
+
+                              provBooking.confirmAppointment(
+                                  phoneNumber: phoneNumberController.text,
+                                  name: userNameController.text,
+                                  time: widget.data['time'],
+                                  date: widget.data['date'],
+                                  drId: widget.data['drModel'].id,
+                                  userId: SharedHelper.getData(key: 'userId'),
+                                  context: context,
+                                  drModel: widget.data['drModel']);
+                            }),
+                      ),
                 SizedBox(
                   height: 5.h,
                 ),
@@ -243,7 +261,7 @@ class DoctorCard extends StatelessWidget {
                                 bottomLeft: Radius.circular(20.r))),
                         child: Center(
                           child: Text(
-                            'الساعة ${data['time']}',
+                            'الساعة ${context.read<BookingProvider>().convertTime(time: data['time'])}',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontSize: 15.sp,
