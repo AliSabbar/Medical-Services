@@ -31,7 +31,8 @@ class Routes {
   static const String signInScreen = "/signInScreen";
   static const String signUpScreen = "/signUpScreen";
   static const String otpScreen = "/otpScreen";
-  static const String confirmForgetPasswordScreen = "/confirmForgetPasswordScreen";
+  static const String confirmForgetPasswordScreen =
+      "/confirmForgetPasswordScreen";
   static const String specialtyScreen = "/specialtyScreen";
   static const String doctorsScreen = "/doctorsScreen";
   static const String choiceAccount = "/ChoiceAccount";
@@ -44,11 +45,13 @@ class Routes {
   static const String doctorProfileScreen = "/doctorProfileScreen";
   static const String confirmAppointmentScreen = "/confirmAppointmentScreen";
   static const String qrCoderScreen = "/qrCodeScreen";
-  static const String settingsScreen = "/settingsScreen"; 
-  static const String guestScreen = "/guestScreen"; 
-  //! SERVICES ROUTES 
-  static const String doctorProfileServiceScreen = "/doctorProfileServiceScreen";
-  static const String editDoctorProfileServiceScreen = "/editDoctorProfileServiceScreen";
+  static const String settingsScreen = "/settingsScreen";
+  static const String guestScreen = "/guestScreen";
+  //! SERVICES ROUTES
+  static const String doctorProfileServiceScreen =
+      "/doctorProfileServiceScreen";
+  static const String editDoctorProfileServiceScreen =
+      "/editDoctorProfileServiceScreen";
 }
 
 class RouteGenerator {
@@ -73,11 +76,18 @@ class RouteGenerator {
       case Routes.confirmForgetPasswordScreen:
         Object? obj = settings.arguments;
 
-        return MaterialPageRoute(builder: (context) =>  ConfirmForgetPasswordScreen(phoneNumber: obj,));
+        return MaterialPageRoute(
+            builder: (context) => ConfirmForgetPasswordScreen(
+                  phoneNumber: obj,
+                ));
       case Routes.specialtyScreen:
         return MaterialPageRoute(builder: (context) => const SpecialtyScreen());
       case Routes.doctorsScreen:
-        return MaterialPageRoute(builder: (context) => const DoctorsScreen());
+        Object? obj = settings.arguments;
+        return MaterialPageRoute(
+            builder: (context) => DoctorsScreen(
+                  specialtyName: obj,
+                ));
       case Routes.choiceAccount:
         return MaterialPageRoute(builder: (context) => const ChoiceAccount());
       case Routes.providingService:
@@ -90,19 +100,32 @@ class RouteGenerator {
       case Routes.clinicsTopRated:
         return MaterialPageRoute(builder: (context) => const ClinicsTopRated());
       case Routes.profileScreen:
-        return MaterialPageRoute(builder: (context) => const ProfileScreen());
+        Object? obj = settings.arguments;
+        return MaterialPageRoute(
+            builder: (context) => ProfileScreen(
+                  userProfile: obj,
+                ));
       case Routes.clinicProfileScreen:
+        Object? obj = settings.arguments;
         return MaterialPageRoute(
-            builder: (context) => const ClinicProfileScreen());
+            builder: (context) => ClinicProfileScreen(
+                  clinicModel: obj,
+                ));
       case Routes.doctorProfileScreen:
+        Object? obj = settings.arguments;
         return MaterialPageRoute(
-            builder: (context) => const DoctorProfile());
+            builder: (context) => DoctorProfile(
+                  doctorModel: obj,
+                ));
       case Routes.confirmAppointmentScreen:
+        Object? obj = settings.arguments;
         return MaterialPageRoute(
-            builder: (context) => const ConfirmAppointment());
+            builder: (context) => ConfirmAppointment(
+                  data: obj,
+                ));
       case Routes.qrCoderScreen:
-        return MaterialPageRoute(
-            builder: (context) => const QrCodeScreen());
+        Object? obj = settings.arguments;
+        return MaterialPageRoute(builder: (context) =>  QrCodeScreen(data:obj));
       case Routes.settingsScreen:
         return MaterialPageRoute(builder: (context) => const SettingsScreen());
       case Routes.guestScreen:

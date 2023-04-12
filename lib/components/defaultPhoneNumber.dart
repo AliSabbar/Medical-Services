@@ -8,9 +8,11 @@ class DefaultPhoneNumber extends StatelessWidget {
   const DefaultPhoneNumber({
     super.key,
     required this.phoneNumberController,
+    this.isEnabled = true,
   });
 
   final TextEditingController phoneNumberController;
+  final bool isEnabled;
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +26,7 @@ class DefaultPhoneNumber extends StatelessWidget {
         textDirection: TextDirection.ltr,
         child: InternationalPhoneNumberInput(
           onInputChanged: (v) {},
+          isEnabled: isEnabled,
           maxLength: 12,
           errorMessage: "ادخل رقم هاتف صحيح",
           textAlign: TextAlign.left,

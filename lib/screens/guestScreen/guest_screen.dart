@@ -11,7 +11,6 @@ class GuestScreen extends StatelessWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        appBar: AppBar(),
         body: Center(
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

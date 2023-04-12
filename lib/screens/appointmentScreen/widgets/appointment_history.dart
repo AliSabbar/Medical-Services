@@ -22,7 +22,7 @@ class AppointmentHistory extends StatelessWidget {
                 itemCount: 4,
                 separatorBuilder: (BuildContext context, int index) {
                   return SizedBox(
-                    height: 30.h,
+                    height: 20.h,
                   );
                 },
                 itemBuilder: (BuildContext context, int index) {

@@ -8,6 +8,7 @@ import 'package:medical_services/components/authTitleWidget.dart';
 import 'package:medical_services/components/defaultToast.dart';
 import 'package:medical_services/models/signIn_user_model.dart';
 import 'package:medical_services/models/signUp_user_model.dart';
+import 'package:medical_services/network/end_points.dart';
 import 'package:medical_services/providers/auth_provider.dart';
 import 'package:medical_services/settings/colors.dart';
 import 'package:provider/provider.dart';
@@ -154,13 +155,12 @@ class _SignInScreenState extends State<SignInScreen> {
                                               ),
                                               TextButton(
                                                 onPressed: () {
-                                                  context 
+                                                  context
                                                       .read<AuthProvider>()
                                                       .forgotPassword(
                                                           forgotPasswordController:
                                                               forgotPasswordController,
                                                           context: context);
-                                                
 
                                                   FocusScope.of(context)
                                                       .unfocus();
@@ -272,6 +272,9 @@ class _SignInScreenState extends State<SignInScreen> {
                         ),
                         GestureDetector(
                           onTap: () {
+                            EndPoints.token = null;
+                            provRead.doctorModel = null;
+                            provRead.userModel = null;
                             Navigator.pushNamedAndRemoveUntil(context,
                                 Routes.homeLayoutRoute, (route) => false);
                           },

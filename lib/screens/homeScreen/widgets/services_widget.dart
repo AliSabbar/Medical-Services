@@ -17,7 +17,8 @@ class ServicesWidget extends StatelessWidget {
         ServicesItem(
             assetName: 'assets/icons/test.svg',
             color: AppColors.ambColor,
-            onTap: () {}),
+            onTap: () {
+            }),
         ServicesItem(
             assetName: 'assets/icons/hospital.svg',
             color: AppColors.hospitalColor,

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:medical_services/components/defaultPhoneNumber.dart';
+import 'package:medical_services/providers/auth_provider.dart';
 import 'package:medical_services/providers/sr_edit_profileDoctor_provider.dart';
 import 'package:provider/provider.dart';
 import 'dart:ui' as ui;
@@ -27,6 +29,7 @@ class _SrEditDoctorProfileState extends State<SrEditDoctorProfile> {
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController ageController = TextEditingController();
   final TextEditingController cityController = TextEditingController();
+  final TextEditingController townController = TextEditingController();
   final TextEditingController descController = TextEditingController();
   final TextEditingController timeToCloseController = TextEditingController();
   final TextEditingController timeToOpenController = TextEditingController();
@@ -39,6 +42,7 @@ class _SrEditDoctorProfileState extends State<SrEditDoctorProfile> {
     passwordController.dispose();
     phoneController.dispose();
     cityController.dispose();
+    townController.dispose();
     descController.dispose();
     timeToCloseController.dispose();
     timeToOpenController.dispose();
@@ -50,6 +54,36 @@ class _SrEditDoctorProfileState extends State<SrEditDoctorProfile> {
   @override
   void initState() {
     context.read<UploadImageProvider>().file = null;
+    usernameController.text =
+        context.read<AuthProvider>().doctorModel!.data.user.name;
+    townController.text =
+        context.read<AuthProvider>().doctorModel!.data.user.address.town;
+    descController.text =
+        context.read<AuthProvider>().doctorModel!.data.user.setting.bio;
+    timeToOpenController.text =
+        context.read<AuthProvider>().doctorModel!.data.openAt.toString();
+    timeToCloseController.text =
+        context.read<AuthProvider>().doctorModel!.data.closeAt.toString();
+    moneyController.text =
+        context.read<AuthProvider>().doctorModel!.data.cost.toString();
+    expController.text =
+        context.read<AuthProvider>().doctorModel!.data.xp.toString();
+    phoneController.text = context
+        .read<AuthProvider>()
+        .doctorModel!
+        .data
+        .user
+        .phoneNumber
+        .substring(4);
+    ageController.text = context
+        .read<AuthProvider>()
+        .doctorModel!
+        .data
+        .user
+        .setting
+        .dob
+        .toString()
+        .substring(0, 10);
     super.initState();
   }
 
@@ -81,7 +115,7 @@ class _SrEditDoctorProfileState extends State<SrEditDoctorProfile> {
                 details,
               ) =>
                   Container(
-                margin: const EdgeInsets.only(top: 10),
+                margin: const EdgeInsets.only(top: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -102,13 +136,12 @@ class _SrEditDoctorProfileState extends State<SrEditDoctorProfile> {
                     Flexible(
                       child: MaterialButton(
                         minWidth: 200,
-                        height: 40,
+                        height: 50,
                         onPressed: () {
                           if (provWatch.currentStep <= 1) {
                             details.onStepContinue!();
                           } else {
                             //! here send data
-
                           }
                         },
                         color: AppColors.primaryColor,
@@ -146,6 +179,7 @@ class _SrEditDoctorProfileState extends State<SrEditDoctorProfile> {
                           children: [
                             const AuthTitleWidget(title: "ادخل اسمك الرباعي"),
                             defaultTextField(
+                              enabled: false,
                               hintText: "ادخل اسمك الرباعي ",
                               controller: usernameController,
                               validator: (s) {
@@ -153,25 +187,20 @@ class _SrEditDoctorProfileState extends State<SrEditDoctorProfile> {
                               },
                             ),
                             const AuthTitleWidget(title: 'رقم الهاتف'),
-                            defaultTextField(
-                              hintText: ' رقم الهاتف',
-                              controller: phoneController,
-                              keyboardType:
-                                  const TextInputType.numberWithOptions(),
-                              validator: (s) {
-                                return null;
-                              },
-                            ),
-                            const AuthTitleWidget(title: 'كلمة المرور'),
-                            defaultTextField(
-                              hintText: 'ادخل كلمة المرور',
-                              controller: passwordController,
-                              validator: (s) {
-                                return null;
-                              },
-                            ),
+                            DefaultPhoneNumber(
+                                isEnabled: false,
+                                phoneNumberController: phoneController),
+                            // const AuthTitleWidget(title: 'كلمة المرور'),
+                            // defaultTextField(
+                            //   hintText: 'ادخل كلمة المرور',
+                            //   controller: passwordController,
+                            //   validator: (s) {
+                            //     return null;
+                            //   },
+                            // ),
                             const AuthTitleWidget(title: 'تاريخ الميلاد'),
                             defaultTextField(
+                              enabled: false,
                               readOnly: true,
                               hintText: 'ادخل تاريخ الميلاد',
                               controller: ageController,
@@ -184,7 +213,7 @@ class _SrEditDoctorProfileState extends State<SrEditDoctorProfile> {
                                 ).then((value) {
                                   if (value != null) {
                                     ageController.text =
-                                        DateFormat.yMd().format(value);
+                                        DateFormat('yyy-MM-dd').format(value);
                                   }
                                 });
                               },
@@ -234,8 +263,9 @@ class _SrEditDoctorProfileState extends State<SrEditDoctorProfile> {
                           Expanded(
                             flex: 5,
                             child: defaultTextField(
+                              enabled: false,
                               hintText: 'ادخل المدينة',
-                              controller: cityController,
+                              controller: townController,
                               validator: (s) {
                                 return null;
                               },
@@ -276,6 +306,7 @@ class _SrEditDoctorProfileState extends State<SrEditDoctorProfile> {
                     children: [
                       const AuthTitleWidget(title: 'الوصف'),
                       defaultTextField(
+                        enabled: false,
                         minLines: 1,
                         maxLines: 10,
                         hintText: 'ادخل وصف عن الدكتور',
@@ -308,6 +339,7 @@ class _SrEditDoctorProfileState extends State<SrEditDoctorProfile> {
                         height: 10.h,
                       ),
                       rowTextField(
+                          enabled: false,
                           context: context,
                           oneText: "بداية الاستشارة",
                           secondText: "نهاية الاستشارة",
@@ -337,6 +369,7 @@ class _SrEditDoctorProfileState extends State<SrEditDoctorProfile> {
                         height: 20.h,
                       ),
                       rowTextField(
+                          enabled: false,
                           context: context,
                           oneText: "الخبرات",
                           secondText: "الكشفية",
@@ -396,6 +429,7 @@ Widget addSpecialty({
 
 Widget rowTextField({
   required context,
+  bool? enabled,
   VoidCallback? onTap,
   VoidCallback? secondOnTap,
   required String oneText,
@@ -422,6 +456,7 @@ Widget rowTextField({
               height: heightMQ * 0.01,
             ),
             defaultTextField(
+              enabled: enabled,
               onTap: onTap,
               width: widthMQ * 0.65,
               hintText: oneText,
@@ -446,6 +481,7 @@ Widget rowTextField({
               height: heightMQ * 0.01,
             ),
             defaultTextField(
+              enabled: enabled,
               onTap: secondOnTap,
               width: widthMQ * 0.65,
               hintText: secondText,

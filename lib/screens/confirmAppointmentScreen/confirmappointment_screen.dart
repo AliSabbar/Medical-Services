@@ -6,7 +6,9 @@ import 'package:medical_services/components/authTitleWidget.dart';
 import 'package:medical_services/components/defaultButton.dart';
 import 'package:medical_services/components/defaultTextField.dart';
 import 'package:medical_services/components/doctorCard.dart';
+import 'package:medical_services/network/local/shared_helper.dart';
 import 'package:medical_services/providers/auth_provider.dart';
+import 'package:medical_services/providers/booking_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../components/defaultDropDownButton.dart';
@@ -15,8 +17,8 @@ import '../../settings/colors.dart';
 import '../../settings/routes_manger.dart';
 
 class ConfirmAppointment extends StatefulWidget {
-  const ConfirmAppointment({super.key});
-
+  ConfirmAppointment({super.key, required this.data});
+  var data;
   @override
   State<ConfirmAppointment> createState() => _ConfirmAppointmentState();
 }
@@ -38,6 +40,12 @@ class _ConfirmAppointmentState extends State<ConfirmAppointment> {
 
   @override
   Widget build(BuildContext context) {
+    var user = context.read<AuthProvider>().userModel?.data;
+    var provBooking = context.read<BookingProvider>();
+    print("Auth = ${context.read<AuthProvider>().userModel?.data.phoneNumber}");
+    phoneNumberController.text = user!.phoneNumber.substring(4);
+    userNameController.text = user.name;
+    ageController.text = user.setting.dob.toString().substring(0, 10);
     return Directionality(
       textDirection: ui.TextDirection.rtl,
       child: Scaffold(
@@ -62,14 +70,15 @@ class _ConfirmAppointmentState extends State<ConfirmAppointment> {
                   height: 5.h,
                 ),
                 const AuthTitleWidget(title: 'رقم الهاتف'),
-                DefaultPhoneNumber(phoneNumberController:phoneNumberController),
+                DefaultPhoneNumber(
+                    phoneNumberController: phoneNumberController),
                 SizedBox(
                   height: 5.h,
                 ),
                 const AuthTitleWidget(title: 'ادخل عمر المريض'),
                 defaultTextField(
                     readOnly: true,
-                    hintText: '07746140233',
+                    hintText: ageController.text,
                     controller: ageController,
                     onTap: () {
                       showDatePicker(
@@ -109,17 +118,31 @@ class _ConfirmAppointmentState extends State<ConfirmAppointment> {
                   height: 7.h,
                 ),
                 //! Doctor Card
-               const DoctorCard(),
+                DoctorCard(data: widget.data),
                 SizedBox(
                   height: 15.h,
                 ),
-                Center(
-                  child: defaultButton(
-                      text: 'تأكيد الحجز',
-                      onPressed: () {
-                        Navigator.pushNamed(context, Routes.qrCoderScreen);
-                      }),
-                ),
+                provBooking.isLoadingConf
+                    ? const Center(child: CircularProgressIndicator())
+                    : Center(
+                        child: defaultButton(
+                            text: 'تأكيد الحجز',
+                            onPressed: () {
+                              print(widget.data['time']);
+                              print(widget.data['date']);
+                              print(widget.data['drModel'].id);
+
+                              provBooking.confirmAppointment(
+                                  phoneNumber: phoneNumberController.text,
+                                  name: userNameController.text,
+                                  time: widget.data['time'],
+                                  date: widget.data['date'],
+                                  drId: widget.data['drModel'].id,
+                                  userId: SharedHelper.getData(key: 'userId'),
+                                  context: context,
+                                  drModel: widget.data['drModel']);
+                            }),
+                      ),
                 SizedBox(
                   height: 5.h,
                 ),
@@ -133,12 +156,14 @@ class _ConfirmAppointmentState extends State<ConfirmAppointment> {
 }
 
 class DoctorCard extends StatelessWidget {
-  const DoctorCard({
-    super.key,
-  });
-
+  DoctorCard({super.key, required this.data});
+  var data;
   @override
   Widget build(BuildContext context) {
+    var mounth = data['date'].substring(5).split('-').first;
+    var day = data['date'].substring(5).split('-').last;
+    print("MOUNTH = $mounth");
+    print("DAY = $day");
     return Container(
       width: 333.w,
       height: 150.h,
@@ -171,11 +196,10 @@ class DoctorCard extends StatelessWidget {
                     height: 7.h,
                   ),
                   Row(
-                    mainAxisAlignment:
-                        MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "دكتورة سميرة  علي",
+                        data['drModel'].user.name,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
@@ -191,7 +215,7 @@ class DoctorCard extends StatelessWidget {
                           borderRadius: BorderRadius.circular(20.r),
                         ),
                         child: Text(
-                          "20 الف",
+                          '${data['drModel'].cost} الف',
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: 15.sp,
@@ -202,10 +226,9 @@ class DoctorCard extends StatelessWidget {
                       )
                     ],
                   ),
-                  Text("اخصائية تغذية",
+                  Text(data['drModel'].magerSpecialties.toString(),
                       style: TextStyle(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w600)),
+                          fontSize: 14.sp, fontWeight: FontWeight.w600)),
                   SizedBox(
                     height: 10.h,
                   ),
@@ -218,15 +241,13 @@ class DoctorCard extends StatelessWidget {
                             color: AppColors.secondaryColor,
                             borderRadius: BorderRadius.only(
                                 topRight: Radius.circular(20.r),
-                                bottomRight:
-                                    Radius.circular(20.r))),
+                                bottomRight: Radius.circular(20.r))),
                         child: Center(
                           child: Text(
-                            '2-14',
+                            "$day - $mounth",
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                                fontSize: 15.sp,
-                                fontWeight: FontWeight.w600),
+                                fontSize: 15.sp, fontWeight: FontWeight.w600),
                           ),
                         ),
                       ),
@@ -234,14 +255,13 @@ class DoctorCard extends StatelessWidget {
                         height: 38.h,
                         width: 120.w,
                         decoration: BoxDecoration(
-                            color: AppColors.primaryColor
-                                .withOpacity(0.8),
+                            color: AppColors.primaryColor.withOpacity(0.8),
                             borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(20.r),
                                 bottomLeft: Radius.circular(20.r))),
                         child: Center(
                           child: Text(
-                            'الساعة 12:36 ص',
+                            'الساعة ${context.read<BookingProvider>().convertTime(time: data['time'])}',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                                 fontSize: 15.sp,

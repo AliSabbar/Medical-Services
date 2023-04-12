@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medical_services/components/searchWidget.dart';
 import 'package:medical_services/components/specialtyContainer.dart';
+import 'package:medical_services/providers/doctor_provider.dart';
 import 'package:medical_services/providers/home_provider.dart';
 import 'package:medical_services/settings/routes_manger.dart';
 import 'package:provider/provider.dart';
@@ -20,15 +21,15 @@ class _SpecialtyScreenState extends State<SpecialtyScreen> {
   @override
   void initState() {
     Future.delayed(const Duration(milliseconds: 0), () {
-      context.read<HomeProvider>().specialtyList.clear();
-      context.read<HomeProvider>().getAllSpecialty(page: page);
+      var prov = context.read<HomeProvider>();
+      prov.specialtyList.clear();
+      prov.getAllSpecialty(page: page);
       scrollController.addListener(() async {
-        if (context.read<HomeProvider>().isLoading) return;
+        if (prov.isLoading) return;
         if (scrollController.position.pixels ==
             scrollController.position.maxScrollExtent) {
-          if (context.read<HomeProvider>().currentPage !=
-              context.read<HomeProvider>().totalPage) {
-            await context.read<HomeProvider>().getAllSpecialty(page: ++page);
+          if (prov.currentPage != prov.totalPage) {
+            await prov.getAllSpecialty(page: ++page);
           }
         }
       });
@@ -97,7 +98,9 @@ class _SpecialtyScreenState extends State<SpecialtyScreen> {
                                   'https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX32581005.jpg',
                               onTap: () {
                                 Navigator.pushNamed(
-                                    context, Routes.doctorsScreen);
+                                    context, Routes.doctorsScreen,
+                                    arguments:
+                                        provWatch.specialtyList[index].name);
                               });
                         } else {
                           return const Center(

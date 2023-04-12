@@ -2,17 +2,28 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 import 'package:medical_services/components/defaultButton.dart';
 import 'package:medical_services/components/defaultProfileContainer.dart';
 import 'package:medical_services/components/defaultProfileInfoCard.dart';
 import 'package:medical_services/components/iconProfile.dart';
 import 'package:medical_services/components/specialtyContainer.dart';
+import 'package:medical_services/components/url_lunchFunction.dart';
+import 'package:medical_services/network/local/shared_helper.dart';
+import 'package:medical_services/providers/booking_provider.dart';
+import 'package:medical_services/providers/doctor_provider.dart';
+import 'package:medical_services/providers/auth_provider.dart';
 import 'package:medical_services/settings/colors.dart';
+import 'package:provider/provider.dart';
+import 'dart:ui' as ui;
 
+import '../../components/timeDialog.dart';
+import '../../network/end_points.dart';
 import '../../settings/routes_manger.dart';
 
 class DoctorProfile extends StatefulWidget {
-  const DoctorProfile({Key? key}) : super(key: key);
+  DoctorProfile({Key? key, required this.doctorModel}) : super(key: key);
+  var doctorModel;
 
   @override
   State<DoctorProfile> createState() => DoctorProfileState();
@@ -20,25 +31,74 @@ class DoctorProfile extends StatefulWidget {
 
 class DoctorProfileState extends State<DoctorProfile> {
   bool isExpand = false;
+
+  @override
+  void initState() {
+    Future.delayed(const Duration(seconds: 0), () {
+      // ! GET FAV
+      EndPoints.token != null
+          ? context
+              .read<DoctorProvider>()
+              .getFav(userId: SharedHelper.getData(key: 'userId'))
+          : null;
+      // ! CHECK IF DOC IN FAV
+      EndPoints.token != null
+     ? context
+          .read<DoctorProvider>()
+          .checkDocInFav(doctorId: widget.doctorModel.id):
+          null;
+
+      // ! GET APPOINTMENT
+
+      context.read<BookingProvider>().getAppointment(
+          drID: widget.doctorModel.id, date: DateTime.now().toString());
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    var provRead = context.read<AuthProvider>();
+    var provWatch = context.watch<AuthProvider>();
+    var provDocRead = context.read<DoctorProvider>();
+    var provDocWatch = context.watch<DoctorProvider>();
+
+    print(provDocRead.checkDocInFav(doctorId: widget.doctorModel.id));
+
     return Directionality(
-      textDirection: TextDirection.rtl,
+      textDirection: ui.TextDirection.rtl,
       child: OrientationBuilder(
         builder: (context, orientation) => Scaffold(
             appBar: AppBar(
               backgroundColor: AppColors.secondaryColor,
               actions: [
-                GestureDetector(
-                  onTap: () {},
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.w),
-                    child: const Icon(
-                      Icons.favorite_outline_rounded,
-                      size: 30,
-                    ),
-                  ),
-                ),
+                provRead.doctorModel != null
+                    ? const SizedBox()
+                    : GestureDetector(
+                        onTap: () async {
+                          //! here you should work
+                          provDocRead.addORremoveDocFromFav(
+                              doctorID: widget.doctorModel.id,
+                              userID: SharedHelper.getData(key: 'userId'));
+                        },
+                        child: EndPoints.token == null
+                            ? const SizedBox()
+                            : Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                                child: provDocWatch.isLoading
+                                    ? const Center(
+                                        child: CircularProgressIndicator())
+                                    : Icon(
+                                        provDocWatch.isExist
+                                            ? Icons.favorite_rounded
+                                            : Icons.favorite_outline_rounded,
+                                        size: 30,
+                                        color: provDocWatch.isExist
+                                            ? Colors.red
+                                            : null,
+                                      ),
+                              ),
+                      ),
               ],
             ),
             body: SingleChildScrollView(
@@ -57,14 +117,14 @@ class DoctorProfileState extends State<DoctorProfile> {
                             height: 11.h,
                           ),
                           Text(
-                            "دكتورة سميرة علي حسين",
+                            widget.doctorModel.user.name,
                             style: Theme.of(context).textTheme.headlineMedium,
                             maxLines: 1,
                             textAlign: TextAlign.center,
                             overflow: TextOverflow.ellipsis,
                           ),
                           Text(
-                            "جراحة اطفال",
+                            widget.doctorModel.magerSpecialties,
                             style: TextStyle(fontSize: 13.sp),
                             maxLines: 1,
                             textAlign: TextAlign.center,
@@ -84,14 +144,87 @@ class DoctorProfileState extends State<DoctorProfile> {
                               ),
                               iconProfile(
                                 imgUrl: 'assets/icons/clinic_prof.svg',
-                                onTap: () {},
+                                onTap: () {
+                                  showDialog<void>(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return Directionality(
+                                        textDirection: ui.TextDirection.rtl,
+                                        child: AlertDialog(
+                                          // <-- SEE HERE
+                                          title: Text(
+                                            ' العيادة واوقات الاستشارة',
+                                            style: TextStyle(
+                                                fontSize: 17.sp,
+                                                fontWeight: FontWeight.bold),
+                                          ),
+                                          content: SingleChildScrollView(
+                                            child: ListBody(
+                                              children: <Widget>[
+                                                Row(
+                                                  children: <Widget>[
+                                                    SvgPicture.asset(
+                                                        'assets/icons/time.svg'),
+                                                    SizedBox(
+                                                      width: 10.w,
+                                                    ),
+                                                    Text("اوقات الاستشارة",
+                                                        style: TextStyle(
+                                                            fontSize: 15.sp,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w600)),
+                                                    const Spacer(),
+                                                    Text(
+                                                        "${widget.doctorModel.openAt} الى ${widget.doctorModel.closeAt}"),
+                                                  ],
+                                                ),
+                                                SizedBox(height: 15.w),
+                                                Row(
+                                                  children: <Widget>[
+                                                    SvgPicture.asset(
+                                                        'assets/icons/clinic_prof.svg'),
+                                                    SizedBox(
+                                                      width: 10.w,
+                                                    ),
+                                                    Text("العيادة",
+                                                        style: TextStyle(
+                                                            fontSize: 15.sp,
+                                                            fontWeight:
+                                                                FontWeight
+                                                                    .w600)),
+                                                    const Spacer(),
+                                                    // ! name of clinic
+                                                    Text("عيادة النهرين"),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          actions: <Widget>[
+                                            TextButton(
+                                              child: const Text('اغلاق'),
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
                               ),
                               SizedBox(
                                 width: 10.w,
                               ),
                               iconProfile(
                                 imgUrl: 'assets/icons/call.svg',
-                                onTap: () {},
+                                onTap: () async {
+                                  UrlLunch.makeCall(
+                                      phoneNumber:
+                                          widget.doctorModel.user.phoneNumber);
+                                },
                               )
                             ],
                           ),
@@ -122,8 +255,7 @@ class DoctorProfileState extends State<DoctorProfile> {
                                     fontFamily: 'Cairo'),
                                 children: [
                                   TextSpan(
-                                    text:
-                                        'دكتورة سميرة علي محمد , من افضل الجراحين في بغداد ,حائزة على شهادات عالمية في بريطانيا و امريكا',
+                                    text: widget.doctorModel.user.setting.bio,
                                   ),
                                   !isExpand
                                       ? TextSpan(
@@ -143,6 +275,8 @@ class DoctorProfileState extends State<DoctorProfile> {
                             ),
                             isExpand
                                 ? Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       SizedBox(
                                         height: 20.h,
@@ -182,12 +316,13 @@ class DoctorProfileState extends State<DoctorProfile> {
                                           physics:
                                               const BouncingScrollPhysics(),
                                           shrinkWrap: true,
-                                          itemCount: 5,
+                                          itemCount: widget
+                                              .doctorModel.specialties.length,
                                           separatorBuilder:
                                               (BuildContext context,
                                                   int index) {
                                             return SizedBox(
-                                              width: 20.w,
+                                              width: 10.w,
                                             );
                                           },
                                           itemBuilder: (BuildContext context,
@@ -197,7 +332,8 @@ class DoctorProfileState extends State<DoctorProfile> {
                                                 height: 59,
                                                 circleRadius: 15,
                                                 fontSize: 14,
-                                                title: "اذن وانف وحنجرة",
+                                                title: widget.doctorModel
+                                                    .specialties[index].name,
                                                 image:
                                                     'https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX32581005.jpg',
                                                 onTap: () {});
@@ -216,21 +352,21 @@ class DoctorProfileState extends State<DoctorProfile> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             DefaultProfileInfoCard(
-                              ContainerColor: AppColors.ratingCardProfileColor,
+                              containerColor: AppColors.ratingCardProfileColor,
                               title: 'التقييم',
-                              rating: '4.5',
+                              value: widget.doctorModel.rating.toString(),
                               iconUrl: 'assets/icons/star.svg',
                             ),
                             DefaultProfileInfoCard(
-                              ContainerColor: AppColors.secondaryColor,
+                              containerColor: AppColors.secondaryColor,
                               title: 'الخبرات',
-                              rating: '+10 سنة',
+                              value: "سنة ${widget.doctorModel.xp}",
                               iconUrl: 'assets/icons/exp.svg',
                             ),
                             DefaultProfileInfoCard(
-                              ContainerColor: AppColors.greenColor,
+                              containerColor: AppColors.greenColor,
                               title: 'الكشفية',
-                              rating: '25 الف',
+                              value: '${widget.doctorModel.cost} الف',
                               iconUrl: 'assets/icons/money_prof.svg',
                             )
                           ],
@@ -255,73 +391,57 @@ class DoctorProfileState extends State<DoctorProfile> {
                             color: const Color(0xffF2F7FF),
                             borderRadius: BorderRadius.circular(20.r),
                           ),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: ListView.separated(
-                                  physics: const BouncingScrollPhysics(),
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: 5,
-                                  shrinkWrap: true,
-                                  separatorBuilder:
-                                      (BuildContext context, int index) {
-                                    return const SizedBox(
-                                      width: 20,
-                                    );
-                                  },
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return Container(
-                                      width: 70.w,
-                                      // height: 49.h,
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(20.r)),
-                                      child: Column(
-                                        children: [
-                                          Container(
-                                            alignment: Alignment.center,
-                                            width: double.infinity,
-                                            height: 35.h,
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(20.r),
-                                                topRight: Radius.circular(20.r),
-                                              ),
-                                              color: AppColors.greyColor,
-                                            ),
-                                            child: Text(
-                                              "2-12",
-                                              style: TextStyle(
-                                                fontSize: 15.sp,
-                                                fontWeight: FontWeight.bold,
-                                                color: Colors.white,
-                                              ),
-                                            ),
+                          child: context.watch<BookingProvider>().isLoading
+                              ? const Center(child: CircularProgressIndicator())
+                              : context
+                                      .read<BookingProvider>()
+                                      .capsuleList
+                                      .isEmpty
+                                  ? Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          Icons.calendar_month_rounded,
+                                          size: 50,
+                                          color: AppColors.primaryColor,
+                                        ),
+                                        Text('لم يتم اضافة حجوزات بعد')
+                                      ],
+                                    )
+                                  : Row(
+                                      children: [
+                                        Expanded(
+                                          child: ListView.separated(
+                                            physics:
+                                                const BouncingScrollPhysics(),
+                                            scrollDirection: Axis.horizontal,
+                                            itemCount: context
+                                                .read<BookingProvider>()
+                                                .capsuleList
+                                                .length,
+                                            shrinkWrap: true,
+                                            separatorBuilder:
+                                                (BuildContext context,
+                                                    int index) {
+                                              return SizedBox(
+                                                width: 10.w,
+                                              );
+                                            },
+                                            itemBuilder: (BuildContext context,
+                                                int index) {
+                                              return capsuleWidget(
+                                                  model: context
+                                                      .read<BookingProvider>()
+                                                      .capsuleModel
+                                                      .data[index],
+                                                  doctorModel:
+                                                      widget.doctorModel);
+                                            },
                                           ),
-                                          Text(
-                                            "من 8:00",
-                                            style: TextStyle(
-                                                fontSize: 16.sp,
-                                                fontWeight: FontWeight.bold,
-                                                color: AppColors.greyColor),
-                                          ),
-                                          Text(
-                                            "الى 12:30",
-                                            style: TextStyle(
-                                                fontSize: 16.sp,
-                                                fontWeight: FontWeight.bold,
-                                                color: AppColors.greyColor),
-                                          ),
-                                        ],
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
+                                        ),
+                                      ],
+                                    ),
                         ),
                         SizedBox(
                           height: 20.h,
@@ -347,59 +467,75 @@ class DoctorProfileState extends State<DoctorProfile> {
   }
 }
 
-class DoctorsCard extends StatelessWidget {
-  const DoctorsCard({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 155.w,
-      height: 180.h,
-      decoration: BoxDecoration(
-        color: AppColors.backgroundCardColor,
-        borderRadius: BorderRadius.circular(20.r),
-      ),
-      child: Column(
-        children: [
-          Expanded(
-            flex: 4,
-            child: Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20.r),
-                  image: DecorationImage(
-                      image: NetworkImage(
-                          'https://img.freepik.com/free-photo/young-bearded-man-with-striped-shirt_273609-5677.jpg'),
-                      fit: BoxFit.cover)),
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Text(
-              "دكتور محمد علي حسين",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                  fontSize: 14.sp,
-                  overflow: TextOverflow.ellipsis,
-                  color: AppColors.primaryColor,
-                  fontWeight: FontWeight.bold),
-            ),
-          ),
-          Expanded(
-            child: Text(
-              "جلدية",
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 14.sp,
-                overflow: TextOverflow.ellipsis,
-                color: AppColors.blackColor,
+Widget capsuleWidget({required model, required doctorModel}) {
+  return Builder(builder: (context) {
+    return GestureDetector(
+      onTap: () {
+        showDialog(
+            context: context,
+            builder: (context) => ListTimeDialog(
+                  drID: model.dr.id,
+                  date: model.date.toString(),
+                  doctorModel: doctorModel,
+                )
+            //! end
+            );
+      },
+      child: Container(
+        width: 75.w,
+        // height: 49.h,
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(20.r)),
+        child: Column(
+          children: [
+            Expanded(
+              child: Container(
+                alignment: Alignment.center,
+                width: double.infinity,
+                // height: 35.h,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20.r),
+                    topRight: Radius.circular(20.r),
+                  ),
+                  color: AppColors.greyColor,
+                ),
+                child: Text(
+                  "${model.date.day.toString()} - ${model.date.month.toString()} - ${model.date.year.toString()} ",
+                  style: TextStyle(
+                    fontSize: 13.sp,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
-          ),
-        ],
+            Expanded(
+              flex: 2,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "من ${context.read<BookingProvider>().convertTime(time: model.openAt)}",
+                    style: TextStyle(
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.greyColor),
+                  ),
+                  Text(
+                    "الى ${context.read<BookingProvider>().convertTime(time: model.closeAt)}",
+                    style: TextStyle(
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.greyColor),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
-  }
+  });
 }

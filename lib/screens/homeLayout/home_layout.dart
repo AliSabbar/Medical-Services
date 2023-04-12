@@ -5,6 +5,7 @@ import 'package:medical_services/models/user_model.dart';
 import 'package:medical_services/network/end_points.dart';
 import 'package:medical_services/network/local/shared_helper.dart';
 import 'package:medical_services/providers/auth_provider.dart';
+import 'package:medical_services/providers/doctor_provider.dart';
 import 'package:medical_services/providers/home_provider.dart';
 import 'package:medical_services/settings/colors.dart';
 import 'package:medical_services/settings/routes_manger.dart';
@@ -31,7 +32,7 @@ class _HomeLayOutState extends State<HomeLayOut> {
   void initState() {
     EndPoints.token == null
         ? () {}
-        : Future.delayed(const Duration(seconds: 1), () {
+        : Future.delayed(const Duration(seconds: 0), () {
             print("object");
             context
                     .read<AuthProvider>()
@@ -41,8 +42,7 @@ class _HomeLayOutState extends State<HomeLayOut> {
     super.initState();
   }
 
-
-    int currentIndex = 0;
+  int currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -53,10 +53,9 @@ class _HomeLayOutState extends State<HomeLayOut> {
     List appbarTitle = [
       'مرحبا ,',
       'حجوزاتي',
-      EndPoints.token == null ||
-              provAuthWatch.userModel?.data.role.name == "user"
-          ? 'المفضلة'
-          : 'اضافة حجز',
+      EndPoints.token != null && provAuthWatch.userModel?.data.role.name == "dr"
+          ? 'اضافة حجز'
+          : 'المفضلة',
       'الاشعارات'
     ];
 
@@ -65,7 +64,7 @@ class _HomeLayOutState extends State<HomeLayOut> {
       EndPoints.token == null ? const GuestScreen() : const AppointmentScreen(),
       EndPoints.token == null
           ? const GuestScreen()
-          : false
+          : provAuthWatch.userModel?.data.role.name == "dr"
               ? AddAppointmentScreen()
               : const FavoriteScreen(),
       EndPoints.token == null
@@ -77,6 +76,9 @@ class _HomeLayOutState extends State<HomeLayOut> {
         child: provAuthWatch.isLoading
             ? const Scaffold(body: Center(child: CircularProgressIndicator()))
             : Scaffold(
+                // floatingActionButton: FloatingActionButton(onPressed: () {
+                //   context.read<DoctorProvider>().getFav(context);
+                // }),
                 appBar: PreferredSize(
                   preferredSize: Size.fromHeight(72.h),
                   child: AppBar(
@@ -103,9 +105,11 @@ class _HomeLayOutState extends State<HomeLayOut> {
                               context,
                               EndPoints.token == null
                                   ? Routes.guestScreen
-                                  : false
+                                  : provAuthWatch.userModel?.data.role.name ==
+                                          "dr"
                                       ? Routes.doctorProfileServiceScreen
-                                      : Routes.profileScreen);
+                                      : Routes.profileScreen,
+                              arguments: provAuthWatch.userModel?.data);
                         },
                         child: Container(
                           margin: EdgeInsets.only(left: 15.w, top: 12.h),
@@ -145,14 +149,16 @@ class _HomeLayOutState extends State<HomeLayOut> {
                         label: 'حجوزاتي'),
                     BottomNavigationBarItem(
                         icon: SvgPicture.asset(
-                          false
+                          provAuthWatch.userModel?.data.role.name == "dr"
                               ? 'assets/icons/add_nav.svg'
                               : 'assets/icons/heart_nav.svg',
                           color: currentIndex == 2
                               ? AppColors.primaryColor
                               : AppColors.greyColor,
                         ),
-                        label: false ? 'اضافة حجز' : 'المفضلة'),
+                        label: provAuthWatch.userModel?.data.role.name == "dr"
+                            ? "اضافة حجز"
+                            : "المفضلة"),
                     BottomNavigationBarItem(
                         icon: SvgPicture.asset(
                           'assets/icons/notification_nav.svg',

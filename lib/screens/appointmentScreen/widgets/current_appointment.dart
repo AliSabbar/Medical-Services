@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:medical_services/providers/auth_provider.dart';
+import 'package:provider/provider.dart';
 
 import '../../../components/appointmentCard.dart';
 import '../../../components/appointmentMessage.dart';
@@ -27,7 +29,15 @@ class CurrentAppointment extends StatelessWidget {
                 },
                 itemBuilder: (BuildContext context, int index) {
                   // ! Doctor Services
-                  return true ? patientCard() : appointmentCard();
+                  return context
+                              .watch<AuthProvider>()
+                              .userModel
+                              ?.data
+                              .role
+                              .name ==
+                          "user"
+                      ? appointmentCard()
+                      : patientCard();
                 },
               ),
             ),

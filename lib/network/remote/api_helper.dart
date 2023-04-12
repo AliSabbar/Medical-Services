@@ -7,7 +7,8 @@ import '../../components/constant.dart';
 import '../end_points.dart';
 
 class ApiHelper {
-// GET DATA
+
+//! GET DATA
 
   static Future getData({required String url}) async {
     try {
@@ -27,7 +28,7 @@ class ApiHelper {
     }
   }
 
-// POST DATA
+//! POST DATA
 
   static Future postData({
     required String url,
@@ -35,6 +36,30 @@ class ApiHelper {
   }) async {
     try {
       http.Response response = await http.post(
+          Uri.parse(EndPoints.baseUrl + url),
+          body: jsonEncode(body),
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'bearer ${EndPoints.token}'
+          });
+      // .timeout(const Duration(seconds: 10),
+      //         onTimeout: () => throw 'Check Your Internet connection');
+
+      return jsonResponse(response);
+    } on SocketException {
+      throw 'check your internet in your device';
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+//! UPDATE DATA
+
+  static Future updateData({
+    required String url,
+    required Map<String, dynamic> body,
+  }) async {
+    try {
+      http.Response response = await http.put(
           Uri.parse(EndPoints.baseUrl + url),
           body: jsonEncode(body),
           headers: {

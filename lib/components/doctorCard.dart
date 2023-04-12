@@ -1,20 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:medical_services/components/defaultButton.dart';
+import 'package:medical_services/components/starsTest/stars.dart';
 import 'package:medical_services/settings/routes_manger.dart';
 
 import '../settings/colors.dart';
 
 class DoctorCard extends StatelessWidget {
-  const DoctorCard({
+  DoctorCard({
     super.key,
+    required this.doctorModel,
   });
-
+  var doctorModel;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, Routes.doctorProfileScreen);
+        Navigator.pushNamed(context, Routes.doctorProfileScreen,
+            arguments: doctorModel);
       },
       child: Container(
         width: 333.w,
@@ -24,19 +27,21 @@ class DoctorCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(20.r)),
         child: Row(
           children: [
-            Container(
-              width: 85.w,
-              height: 180.h,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(20.r),
-                    bottomRight: Radius.circular(20.r),
-                  ),
-                  image: DecorationImage(
-                    image: NetworkImage(
-                        'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8ZG9jdG9yfGVufDB8fDB8fA%3D%3D&w=1000&q=80'),
-                    fit: BoxFit.cover,
-                  )),
+            Expanded(
+              child: Container(
+                width: 85.w,
+                height: 180.h,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(20.r),
+                      bottomRight: Radius.circular(20.r),
+                    ),
+                    image: const DecorationImage(
+                      image: NetworkImage(
+                          'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8ZG9jdG9yfGVufDB8fDB8fA%3D%3D&w=1000&q=80'),
+                      fit: BoxFit.cover,
+                    )),
+              ),
             ),
             Expanded(
               flex: 2,
@@ -46,7 +51,7 @@ class DoctorCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "دكتورة سميرة سمور علي",
+                      doctorModel.user.name,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
@@ -54,33 +59,15 @@ class DoctorCard extends StatelessWidget {
                           color: AppColors.primaryColor,
                           fontWeight: FontWeight.bold),
                     ),
-                    Text("اخصائية تغذية",
+                    Text(doctorModel.magerSpecialties,
                         style: TextStyle(
                             fontSize: 14.sp, fontWeight: FontWeight.w600)),
                     SizedBox(
                       height: 10.h,
                     ),
+                    Stars(countStar: doctorModel.rating.toInt()),
                     SizedBox(
-                      width: 100.w,
-                      height: 11.h,
-                      child: ListView.separated(
-                        physics: const NeverScrollableScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 5,
-                        separatorBuilder: (BuildContext context, int index) {
-                          return const SizedBox(width: 3);
-                        },
-                        itemBuilder: (BuildContext context, int index) {
-                          return Icon(
-                            Icons.star,
-                            color: AppColors.yellowColor,
-                            size: 11,
-                          );
-                        },
-                      ),
-                    ),
-                    SizedBox(
-                      height: 15.h,
+                      height: 10.h,
                     ),
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -91,7 +78,8 @@ class DoctorCard extends StatelessWidget {
                           Icons.location_on_rounded,
                           color: AppColors.primaryColor,
                         ),
-                        Text('بغداد - المنصور',
+                        Text(
+                            '${doctorModel.user.address.city} - ${doctorModel.user.address.town}',
                             style: TextStyle(
                                 fontSize: 12.sp, fontWeight: FontWeight.w600))
                       ],
@@ -108,7 +96,7 @@ class DoctorCard extends StatelessWidget {
                           Icons.attach_money_rounded,
                           color: AppColors.primaryColor,
                         ),
-                        Text('الفحص 20 الف',
+                        Text('الفحص ${doctorModel.cost} الف',
                             style: TextStyle(
                                 fontSize: 12.sp, fontWeight: FontWeight.w600))
                       ],
@@ -130,10 +118,12 @@ class DoctorCard extends StatelessWidget {
                       height: 35.h,
                       alignment: Alignment.center,
                       decoration: BoxDecoration(
-                        color: AppColors.greenColor,
+                        color: doctorModel.isAvailable
+                            ? AppColors.greenColor
+                            : Colors.red,
                         borderRadius: BorderRadius.circular(20.r),
                       ),
-                      child: Text("متاح",
+                      child: Text(doctorModel.isAvailable ? "متاح" : "غير متاح",
                           style: TextStyle(
                               fontSize: 12.sp,
                               fontWeight: FontWeight.bold,
@@ -142,7 +132,11 @@ class DoctorCard extends StatelessWidget {
                     const Spacer(),
                     defaultButton(
                         text: 'احجز الان',
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.pushNamed(
+                              context, Routes.doctorProfileScreen,
+                              arguments: doctorModel);
+                        },
                         width: 70,
                         height: 40,
                         fontSize: 14)
