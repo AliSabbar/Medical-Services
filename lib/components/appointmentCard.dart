@@ -7,7 +7,9 @@ import '../settings/colors.dart';
 
 GestureDetector appointmentCard() {
   return GestureDetector(
-    onTap: () {},
+    onTap: () {
+      //! show qr 
+    },
     child: Container(
       // width: 208.w,
       height: 112.h,

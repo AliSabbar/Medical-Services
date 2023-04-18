@@ -61,7 +61,7 @@ class _HomeLayOutState extends State<HomeLayOut> {
 
     List<Widget> screens = [
       const HomeScreen(),
-      EndPoints.token == null ? const GuestScreen() : const AppointmentScreen(),
+      EndPoints.token == null ? const GuestScreen() : // AppointmentScreen(),
       EndPoints.token == null
           ? const GuestScreen()
           : provAuthWatch.userModel?.data.role.name == "dr"
