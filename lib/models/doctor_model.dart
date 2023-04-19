@@ -59,7 +59,7 @@ class Data {
   int cost;
   int openAt;
   int closeAt;
-  int rating;
+  num rating;
   int xp;
   String description;
   String magerSpecialties;

@@ -34,5 +34,5 @@ class EndPoints {
   static String getInsideCapsule = "admin/booking/date/dr/";
   static String confirmAppointment = "admin/booking/addbooking/";
   static String addBooking = "admin/booking/addbookingav/";
-  static String getUserBookings = "admin/booking/";
+  static String getUserAppointment = "admin/booking/user/";
 }

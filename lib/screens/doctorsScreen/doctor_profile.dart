@@ -468,7 +468,6 @@ Widget capsuleWidget({required model, required doctorModel}) {
                   date: model.date.toString(),
                   doctorModel: doctorModel,
                 )
-            //! end
             );
       },
       child: Container(

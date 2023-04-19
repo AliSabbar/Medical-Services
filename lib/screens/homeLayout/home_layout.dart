@@ -5,6 +5,7 @@ import 'package:medical_services/models/user_model.dart';
 import 'package:medical_services/network/end_points.dart';
 import 'package:medical_services/network/local/shared_helper.dart';
 import 'package:medical_services/providers/auth_provider.dart';
+import 'package:medical_services/providers/booking_provider.dart';
 import 'package:medical_services/providers/doctor_provider.dart';
 import 'package:medical_services/providers/home_provider.dart';
 import 'package:medical_services/settings/colors.dart';
@@ -38,6 +39,8 @@ class _HomeLayOutState extends State<HomeLayOut> {
                     .read<AuthProvider>()
                     .getUserDataById(id: SharedHelper.getData(key: 'userId')) ??
                 '';
+            context.read<BookingProvider>().getCurrentAppointments(
+                userId: SharedHelper.getData(key: 'userId'));
           });
     super.initState();
   }
@@ -61,7 +64,7 @@ class _HomeLayOutState extends State<HomeLayOut> {
 
     List<Widget> screens = [
       const HomeScreen(),
-      EndPoints.token == null ? const GuestScreen() : // AppointmentScreen(),
+      EndPoints.token == null ? const GuestScreen() : AppointmentScreen(),
       EndPoints.token == null
           ? const GuestScreen()
           : provAuthWatch.userModel?.data.role.name == "dr"

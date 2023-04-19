@@ -1,15 +1,15 @@
 // To parse this JSON data, do
 //
-//     final capsuleModel = capsuleModelFromJson(jsonString);
+//     final currentAppointmentModel = currentAppointmentModelFromJson(jsonString);
 
 import 'dart:convert';
 
-CapsuleModel capsuleModelFromJson(String str) => CapsuleModel.fromJson(json.decode(str));
+CurrentAppointmentModel currentAppointmentModelFromJson(String str) => CurrentAppointmentModel.fromJson(json.decode(str));
 
-String capsuleModelToJson(CapsuleModel data) => json.encode(data.toJson());
+String currentAppointmentModelToJson(CurrentAppointmentModel data) => json.encode(data.toJson());
 
-class CapsuleModel {
-    CapsuleModel({
+class CurrentAppointmentModel {
+    CurrentAppointmentModel({
         required this.code,
         required this.data,
         required this.success,
@@ -21,7 +21,7 @@ class CapsuleModel {
     bool success;
     String message;
 
-    factory CapsuleModel.fromJson(Map<String, dynamic> json) => CapsuleModel(
+    factory CurrentAppointmentModel.fromJson(Map<String, dynamic> json) => CurrentAppointmentModel(
         code: json["code"],
         data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
         success: json["success"],
@@ -39,35 +39,51 @@ class CapsuleModel {
 class Datum {
     Datum({
         required this.id,
+        required this.userId,
         required this.drId,
+        required this.phoneNumber,
+        required this.name,
+        required this.time,
         required this.date,
-        required this.openAt,
-        required this.closeAt,
+        required this.qrCode,
+        required this.user,
         required this.dr,
     });
 
     String id;
+    String userId;
     String drId;
+    String phoneNumber;
+    String name;
+    String time;
     DateTime date;
-    String openAt;
-    String closeAt;
+    String qrCode;
+    User user;
     Dr dr;
 
     factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json["id"],
+        userId: json["userId"],
         drId: json["drId"],
+        phoneNumber: json["phoneNumber"],
+        name: json["name"],
+        time: json["time"],
         date: DateTime.parse(json["date"]),
-        openAt: json["openAt"],
-        closeAt: json["closeAt"],
+        qrCode: json["qrCode"],
+        user: User.fromJson(json["user"]),
         dr: Dr.fromJson(json["dr"]),
     );
 
     Map<String, dynamic> toJson() => {
         "id": id,
+        "userId": userId,
         "drId": drId,
+        "phoneNumber": phoneNumber,
+        "name": name,
+        "time": time,
         "date": date.toIso8601String(),
-        "openAt": openAt,
-        "closeAt": closeAt,
+        "qrCode": qrCode,
+        "user": user.toJson(),
         "dr": dr.toJson(),
     };
 }
@@ -93,7 +109,7 @@ class Dr {
     int cost;
     int openAt;
     int closeAt;
-    num rating;
+    double rating;
     int xp;
     String description;
     String magerSpecialties;
@@ -107,7 +123,7 @@ class Dr {
         cost: json["cost"],
         openAt: json["openAt"],
         closeAt: json["closeAt"],
-        rating: json["rating"],
+        rating: json["rating"]?.toDouble(),
         xp: json["xp"],
         description: json["description"],
         magerSpecialties: json["magerSpecialties"],
@@ -144,9 +160,6 @@ class User {
         required this.createdAt,
         required this.updatedAt,
         this.otpId,
-        required this.setting,
-        required this.role,
-        required this.address,
     });
 
     String id;
@@ -158,10 +171,7 @@ class User {
     String settingId;
     DateTime createdAt;
     DateTime updatedAt;
-    dynamic otpId;
-    Setting setting;
-    Role role;
-    Address address;
+    int? otpId;
 
     factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["id"],
@@ -174,9 +184,6 @@ class User {
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
         otpId: json["otpId"],
-        setting: Setting.fromJson(json["setting"]),
-        role: Role.fromJson(json["role"]),
-        address: Address.fromJson(json["address"]),
     );
 
     Map<String, dynamic> toJson() => {
@@ -190,100 +197,5 @@ class User {
         "createdAt": createdAt.toIso8601String(),
         "updatedAt": updatedAt.toIso8601String(),
         "otpId": otpId,
-        "setting": setting.toJson(),
-        "role": role.toJson(),
-        "address": address.toJson(),
-    };
-}
-
-class Address {
-    Address({
-        required this.id,
-        required this.city,
-        required this.town,
-    });
-
-    String id;
-    String city;
-    String town;
-
-    factory Address.fromJson(Map<String, dynamic> json) => Address(
-        id: json["id"],
-        city: json["city"],
-        town: json["town"],
-    );
-
-    Map<String, dynamic> toJson() => {
-        "id": id,
-        "city": city,
-        "town": town,
-    };
-}
-
-class Role {
-    Role({
-        required this.id,
-        required this.name,
-        required this.isVerify,
-        required this.isActive,
-    });
-
-    String id;
-    String name;
-    bool isVerify;
-    bool isActive;
-
-    factory Role.fromJson(Map<String, dynamic> json) => Role(
-        id: json["id"],
-        name: json["name"],
-        isVerify: json["isVerify"],
-        isActive: json["isActive"],
-    );
-
-    Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "isVerify": isVerify,
-        "isActive": isActive,
-    };
-}
-
-class Setting {
-    Setting({
-        required this.id,
-        required this.avatar,
-        required this.language,
-        required this.darkmode,
-        required this.bio,
-        required this.dob,
-        required this.gender,
-    });
-
-    String id;
-    String avatar;
-    String language;
-    bool darkmode;
-    String bio;
-    DateTime dob;
-    String gender;
-
-    factory Setting.fromJson(Map<String, dynamic> json) => Setting(
-        id: json["id"],
-        avatar: json["avatar"],
-        language: json["language"],
-        darkmode: json["darkmode"],
-        bio: json["bio"],
-        dob: DateTime.parse(json["dob"]),
-        gender: json["gender"],
-    );
-
-    Map<String, dynamic> toJson() => {
-        "id": id,
-        "avatar": avatar,
-        "language": language,
-        "darkmode": darkmode,
-        "bio": bio,
-        "dob": dob.toIso8601String(),
-        "gender": gender,
     };
 }

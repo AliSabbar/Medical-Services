@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:medical_services/components/defaultToast.dart';
 import 'package:medical_services/models/inside_capsule_model.dart';
-import 'package:medical_services/models/mybooking_model.dart';
+import 'package:medical_services/models/cureent_appointment_model.dart';
 import 'package:medical_services/network/end_points.dart';
 import 'package:medical_services/network/remote/api_helper.dart';
 
@@ -14,16 +14,17 @@ import '../settings/routes_manger.dart';
 class BookingProvider extends ChangeNotifier {
   late CapsuleModel capsuleModel;
   late InsideCapsule insideCapsule;
-  late MyBookingModel mybooking;
+  late CurrentAppointmentModel userAppointments;
   bool isLoading = false;
   bool isLoadingInCap = false;
   bool isLoadingConf = false;
   bool isLoadingAddApp = false;
   List capsuleList = [];
   List timeList = [];
+  List currentAppointments = [];
   String initialWaitTime = "15 دقيقة";
   List waitTime = ['15 دقيقة', "30 دقيقة", '45 دقيقة', '60 دقيقة'];
-  List bookingDr = [];
+
 // ! CHANGE WAIT TIME INDEX
 
   changeWaitTime({required value}) {
@@ -145,6 +146,25 @@ class BookingProvider extends ChangeNotifier {
     });
   }
 
+  //! GET ALL BOOKING BY USER
+  getCurrentAppointments({required String userId}) async {
+    isLoading = true;
+    notifyListeners();
+    await ApiHelper.getData(url: "${EndPoints.getUserAppointment}$userId")
+        .then((value) {
+      userAppointments = CurrentAppointmentModel.fromJson(value);
+      currentAppointments = userAppointments.data;
+      print(currentAppointments);
+      isLoading = false;
+      notifyListeners();
+    }).catchError((e) {
+      isLoading = false;
+      notifyListeners();
+      defaultToast(message: 'لايوجد اتصال في الانترنت', color: Colors.red);
+      print("Error get bookings by user = $e");
+    });
+  }
+
 // ! GENERATE QR CODE
 
   String generateQrCode({
@@ -185,20 +205,5 @@ class BookingProvider extends ChangeNotifier {
     String time24Hour = DateFormat('HH:mm').format(dateTime);
 
     return time24Hour;
-  }
-
-  //! GET ALL BOOKING BY USER
-  getallbooking({required String userid}) async {
-    isLoading = true;
-    notifyListeners();
-    await ApiHelper.getData(url: "${EndPoints.getUserBookings}&user=$userid")
-        .then((value) {
-      mybooking = value['data'].map((e) => MyBookingModel.fromJson(e)).toList();
-      isLoading = false;
-      notifyListeners();
-    }).catchError((e) {
-      defaultToast(message: 'لايوجد اتصال في الانترنت', color: Colors.red);
-      print("Error get bookings by user = $e");
-    });
   }
 }

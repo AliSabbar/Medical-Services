@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:medical_services/components/searchWidget.dart';
 import 'package:medical_services/network/end_points.dart';
 import 'package:medical_services/providers/auth_provider.dart';
+import 'package:medical_services/providers/booking_provider.dart';
 import 'package:medical_services/providers/home_provider.dart';
 import 'package:medical_services/screens/homeScreen/widgets/miss_doctor.dart';
 import 'package:medical_services/screens/homeScreen/widgets/services_widget.dart';
@@ -32,6 +34,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     var provRead = context.read<HomeProvider>();
     var provWatch = context.watch<HomeProvider>();
+    var provBookingWatch = context.watch<BookingProvider>();
+    var provBookingRead = context.read<BookingProvider>();
+    var provAuth = context.watch<AuthProvider>();
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
@@ -97,33 +102,58 @@ class _HomeScreenState extends State<HomeScreen> {
                             ],
                           ),
                         )
-                      : SizedBox(
-                          width: double.infinity,
-                          height: 112.h,
-                          child: ListView.separated(
-                            scrollDirection: Axis.horizontal,
-                            physics: const BouncingScrollPhysics(),
-                            itemCount: 5,
-                            separatorBuilder:
-                                (BuildContext context, int index) {
-                              return const SizedBox(
-                                width: 20,
-                              );
-                            },
-                            itemBuilder: (BuildContext context, int index) {
-                              //! doctor service
-                              return context
-                                          .watch<AuthProvider>()
-                                          .userModel
-                                          ?.data
-                                          .role
-                                          .name ==
-                                      "dr"
-                                  ? patientCard()
-                                  : appointmentCard();
-                            },
-                          ),
-                        )
+                      : provBookingWatch.currentAppointments.isEmpty
+                          ? SizedBox(
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    SvgPicture.asset(
+                                      "assets/icons/empty_booking.svg",
+                                      width: 80,
+                                      color: AppColors.primaryColor,
+                                    ),
+                                    Text(
+                                      "لايوجد حجوزات بعد",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 15.sp,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            )
+                          : SizedBox(
+                              width: double.infinity,
+                              height: 112.h,
+                              child: ListView.separated(
+                                scrollDirection: Axis.horizontal,
+                                physics: const BouncingScrollPhysics(),
+                                itemCount:
+                                    provAuth.userModel?.data.role.name == "user"
+                                        ? provBookingWatch
+                                            .currentAppointments.length
+                                        : 0,
+                                separatorBuilder:
+                                    (BuildContext context, int index) {
+                                  return const SizedBox(
+                                    width: 20,
+                                  );
+                                },
+                                itemBuilder: (BuildContext context, int index) {
+                                  //! doctor service
+                                  return provAuth.userModel?.data.role.name ==
+                                          "dr"
+                                      ? patientCard()
+                                      : appointmentCard(
+                                          appointmentModel: provBookingWatch
+                                              .currentAppointments[index]);
+                                },
+                              ),
+                            )
                 ],
               ),
             ),
