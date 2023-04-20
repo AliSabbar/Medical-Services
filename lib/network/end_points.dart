@@ -23,6 +23,7 @@ class EndPoints {
   static String filleterDocByGender = "admin/dr/getAllDrByGender";
   //? DOCTOR
   static String getDoctorById = "admin/dr/";
+  static String doctorOpenOrClose = "admin/dr/changeAvailable";
   //? CLINICS
   static String getClinicsNearMe = "admin/hf/getNearMe";
   static String getClinicTopRating = "admin/hf/getAllHfByRating";

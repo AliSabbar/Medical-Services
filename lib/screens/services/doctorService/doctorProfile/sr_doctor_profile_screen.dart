@@ -35,10 +35,57 @@ class SrDoctorProfileScreenState extends State<SrDoctorProfileScreen> {
   Widget build(BuildContext context) {
     var provRead = context.read<AuthProvider>();
     var provWatch = context.watch<AuthProvider>();
+    var provDocRead = context.read<DoctorProvider>();
+    var provDocWatch = context.watch<DoctorProvider>();
     return Directionality(
       textDirection: TextDirection.rtl,
       child: OrientationBuilder(
         builder: (context, orientation) => Scaffold(
+            floatingActionButton: provDocWatch.isLoading
+                ? Container(
+                    height: 50.h,
+                    width: 150.w,
+                    alignment: Alignment.center,
+                    padding: const EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                        color: AppColors.greyColor,
+                        borderRadius: BorderRadius.circular(20.r)),
+                    child: const Text(
+                      'جاري التحميل ...',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                  )
+                : FloatingActionButton.extended(
+                    onPressed: () {
+                      provWatch.doctorModel!.data.isAvailable
+                          ? provDocRead.availableDoc(
+                              context: context,
+                              docId: provRead.doctorModel!.data.id,
+                              isAvailable: false,
+                            )
+                          : provDocRead.availableDoc(
+                              context: context,
+                              docId: provRead.doctorModel!.data.id,
+                              isAvailable: true);
+
+                      context.read<AuthProvider>().getDoctorData(
+                          doctorId: context
+                              .read<AuthProvider>()
+                              .doctorModel!
+                              .data
+                              .id);
+                    },
+                    backgroundColor: provWatch.doctorModel!.data.isAvailable
+                        ? Colors.green
+                        : Colors.red,
+                    label: Text(
+                      provWatch.doctorModel!.data.isAvailable
+                          ? 'متاح'
+                          : 'غير متاح',
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    )),
             appBar: AppBar(
               backgroundColor: AppColors.secondaryColor,
               actions: [

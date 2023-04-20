@@ -5,7 +5,9 @@ import 'package:medical_services/models/doctor_low_cost_model.dart';
 import 'package:medical_services/models/doctor_male_gender_model.dart';
 import 'package:medical_services/network/end_points.dart';
 import 'package:medical_services/network/remote/api_helper.dart';
+import 'package:medical_services/providers/auth_provider.dart';
 import 'package:medical_services/settings/colors.dart';
+import 'package:provider/provider.dart';
 import '../models/doctor_high_cost_model.dart';
 import '../models/doctor_topRating_model.dart';
 import '../models/list_doctor_model.dart';
@@ -19,10 +21,11 @@ class DoctorProvider extends ChangeNotifier {
   late AllDrByLowCost allDocByLowCost;
   late AllMaleDr allMaleDr;
   late AllFemaleDr allFemaleDr;
-  // late AllDrByLowCost allDocByLowCost;
   List doctorsListSP = [];
   List favDoctors = [];
   bool isLoading = false;
+
+  AuthProvider? authProvider;
 
 // ! SORTING AND FLITTER
 
@@ -268,5 +271,40 @@ class DoctorProvider extends ChangeNotifier {
       print("nooooooooooooooooooooooooooooo");
     }
     notifyListeners();
+  }
+
+  // ! DOCTOR OPEN OR CLOSE
+
+// * inject another Auth Provider to get doctor data
+
+  getDoctorData(context, doctorId) async {
+    authProvider = Provider.of<AuthProvider>(context, listen: false);
+    await authProvider!.getDoctorData(doctorId: doctorId);
+    print(authProvider!.doctorModel!.data.id);
+  }
+
+  availableDoc({
+    required String docId,
+    required bool isAvailable,
+    required context,
+  }) async {
+    isLoading = true;
+    notifyListeners();
+    await ApiHelper.postData(url: EndPoints.doctorOpenOrClose, body: {
+      "id": docId,
+      "available": isAvailable,
+    }).then((value) async {
+      await getDoctorData(context, docId);
+      notifyListeners();
+      isLoading = false;
+      notifyListeners();
+      print(value);
+    }).catchError((e) {
+      isLoading = false;
+      notifyListeners();
+      defaultToast(message: 'لا يوجد اتصال بالانترنت', color: Colors.red);
+      print("ERROR IN DOCTOR OPEN OR CLOSE = $e");
+      notifyListeners();
+    });
   }
 }
