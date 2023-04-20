@@ -35,4 +35,5 @@ class EndPoints {
   static String confirmAppointment = "admin/booking/addbooking/";
   static String addBooking = "admin/booking/addbookingav/";
   static String getUserAppointment = "admin/booking/user/";
+  static String getPatientsAppointments = "admin/booking/dr/";
 }

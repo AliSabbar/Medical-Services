@@ -214,11 +214,11 @@ class AuthProvider extends ChangeNotifier {
 
   //! GET USER DATA [SIGN IN]
 
-  getUserDataById({required String id}) {
-    userModel = null;
+  getUserDataById({required String id}) async {
+    // userModel = null;
     isLoading = true;
     notifyListeners();
-    ApiHelper.getData(url: EndPoints.getUserById + id).then((value) async {
+   await ApiHelper.getData(url: EndPoints.getUserById + id).then((value) async {
       userModel = UserModel.fromJson(value);
       // print("SHARED ID = ${SharedHelper.getData(key: 'userId')}");
       // print(userModel!.data.name);
@@ -235,8 +235,8 @@ class AuthProvider extends ChangeNotifier {
 
   // ! GET DOCTOR DATA [SIGN IN]
 
-  getDoctorData({required String doctorId}) {
-    ApiHelper.getData(url: EndPoints.getDoctorById + doctorId).then((value) {
+  getDoctorData({required String doctorId})async {
+   await ApiHelper.getData(url: EndPoints.getDoctorById + doctorId).then((value) {
       doctorModel = DoctorModel.fromJson(value);
     }).catchError((e) {
       print("ERROR IN GET DOCTOR DATA = $e");
@@ -303,6 +303,7 @@ class AuthProvider extends ChangeNotifier {
       userModel = null;
       doctorModel = null;
       EndPoints.token = null;
+      
       await SharedHelper.removeData(key: 'userId');
       print(SharedHelper.getData(key: 'userId'));
       Navigator.pushNamedAndRemoveUntil(

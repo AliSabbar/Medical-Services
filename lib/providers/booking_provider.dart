@@ -9,12 +9,14 @@ import 'package:medical_services/network/end_points.dart';
 import 'package:medical_services/network/remote/api_helper.dart';
 
 import '../models/capsule_model.dart';
+import '../models/patients_appointments_model.dart';
 import '../settings/routes_manger.dart';
 
 class BookingProvider extends ChangeNotifier {
   late CapsuleModel capsuleModel;
   late InsideCapsule insideCapsule;
   late CurrentAppointmentModel userAppointments;
+  late PatientsAppointmentsModel patientsAppointments;
   bool isLoading = false;
   bool isLoadingInCap = false;
   bool isLoadingConf = false;
@@ -22,6 +24,7 @@ class BookingProvider extends ChangeNotifier {
   List capsuleList = [];
   List timeList = [];
   List currentAppointments = [];
+  List currentPatientsAppointments = [];
   String initialWaitTime = "15 دقيقة";
   List waitTime = ['15 دقيقة', "30 دقيقة", '45 دقيقة', '60 دقيقة'];
 
@@ -150,6 +153,7 @@ class BookingProvider extends ChangeNotifier {
   getCurrentAppointments({required String userId}) async {
     isLoading = true;
     notifyListeners();
+    currentAppointments = [];
     await ApiHelper.getData(url: "${EndPoints.getUserAppointment}$userId")
         .then((value) {
       userAppointments = CurrentAppointmentModel.fromJson(value);
@@ -162,6 +166,27 @@ class BookingProvider extends ChangeNotifier {
       notifyListeners();
       defaultToast(message: 'لايوجد اتصال في الانترنت', color: Colors.red);
       print("Error get bookings by user = $e");
+    });
+  }
+
+  // ! GET ALL Patients Appointments [DOCTOR]
+
+  getCurrentPatientsAppointments({required String? doctorId}) {
+    isLoading = true;
+    notifyListeners();
+    currentPatientsAppointments = [];
+    ApiHelper.getData(url: "${EndPoints.getPatientsAppointments}$doctorId")
+        .then((value) {
+      isLoading = false;
+      notifyListeners();
+      patientsAppointments = PatientsAppointmentsModel.fromJson(value);
+      currentPatientsAppointments = patientsAppointments.data;
+      print(currentPatientsAppointments);
+    }).catchError((e) {
+      isLoading = false;
+      notifyListeners();
+      defaultToast(message: 'لايوجد اتصال في الانترنت', color: Colors.red);
+      print("ERROR IN GET PATIENTS APPOINTMENTS = $e");
     });
   }
 

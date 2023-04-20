@@ -7,12 +7,16 @@ import 'package:medical_services/providers/auth_provider.dart';
 import 'package:medical_services/providers/booking_provider.dart';
 import 'package:medical_services/providers/home_provider.dart';
 import 'package:medical_services/screens/homeScreen/widgets/miss_doctor.dart';
+import 'package:medical_services/screens/homeScreen/widgets/patientsCard.dart';
 import 'package:medical_services/screens/homeScreen/widgets/services_widget.dart';
+import 'package:medical_services/screens/homeScreen/widgets/userAppointments.dart';
 import 'package:medical_services/settings/colors.dart';
 import 'package:provider/provider.dart';
 
 import '../../components/appointmentCard.dart';
+import '../../components/noAppointment.dart';
 import '../../components/patientCard.dart';
+import '../../network/local/shared_helper.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -28,6 +32,31 @@ class _HomeScreenState extends State<HomeScreen> {
   void dispose() {
     searchController.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    EndPoints.token == null
+        ? () {}
+        : Future.delayed(const Duration(seconds: 0), () {
+            context
+                    .read<AuthProvider>()
+                    .getUserDataById(id: SharedHelper.getData(key: 'userId')) ??
+                '';
+            // print(
+            //     "Doctor ID = ${context.read<AuthProvider>().doctorModel?.data.id}");
+            context.read<AuthProvider>().userModel!.data.role.name == "user"
+                ? context.read<BookingProvider>().getCurrentAppointments(
+                    userId: SharedHelper.getData(key: 'userId'))
+                : context
+                    .read<BookingProvider>()
+                    .getCurrentPatientsAppointments(
+                        doctorId:
+                            context.read<AuthProvider>().doctorModel?.data.id);
+
+            // : print("helloppsaopspdadskdadkpasdokasdopasdapsdakasko");
+          });
+    super.initState();
   }
 
   @override
@@ -102,58 +131,31 @@ class _HomeScreenState extends State<HomeScreen> {
                             ],
                           ),
                         )
-                      : provBookingWatch.currentAppointments.isEmpty
-                          ? SizedBox(
-                              child: Center(
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    SvgPicture.asset(
-                                      "assets/icons/empty_booking.svg",
-                                      width: 80,
-                                      color: AppColors.primaryColor,
-                                    ),
-                                    Text(
-                                      "لايوجد حجوزات بعد",
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        fontSize: 15.sp,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ),
+                      : const SizedBox(),
+
+  // ! USER APPOINTMENTS
+
+                  provAuth.userModel?.data.role.name == "user"
+                      ? provBookingWatch.isLoading
+                          ? const Center(
+                              child: CircularProgressIndicator(),
                             )
-                          : SizedBox(
-                              width: double.infinity,
-                              height: 112.h,
-                              child: ListView.separated(
-                                scrollDirection: Axis.horizontal,
-                                physics: const BouncingScrollPhysics(),
-                                itemCount:
-                                    provAuth.userModel?.data.role.name == "user"
-                                        ? provBookingWatch
-                                            .currentAppointments.length
-                                        : 0,
-                                separatorBuilder:
-                                    (BuildContext context, int index) {
-                                  return const SizedBox(
-                                    width: 20,
-                                  );
-                                },
-                                itemBuilder: (BuildContext context, int index) {
-                                  //! doctor service
-                                  return provAuth.userModel?.data.role.name ==
-                                          "dr"
-                                      ? patientCard()
-                                      : appointmentCard(
-                                          appointmentModel: provBookingWatch
-                                              .currentAppointments[index]);
-                                },
-                              ),
+                          : provBookingWatch.currentAppointments.isEmpty
+                              ? const NoAppointments()
+                              : const AppointmentCard()
+                      : const SizedBox(),
+
+  // ! DOCTOR PATIENTS
+
+                  provAuth.userModel?.data.role.name == "dr"
+                      ? provBookingWatch.isLoading
+                          ? const Center(
+                              child: CircularProgressIndicator(),
                             )
+                          : provBookingWatch.currentPatientsAppointments.isEmpty
+                              ? const NoAppointments()
+                              : const PatientsCard()
+                      : const SizedBox(),
                 ],
               ),
             ),

@@ -22,12 +22,18 @@ class CurrentAppointment extends StatefulWidget {
 class _CurrentAppointmentState extends State<CurrentAppointment> {
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 0), () {
-      EndPoints.token == null
-          ? ""
-          : context.read<BookingProvider>().getCurrentAppointments(
-              userId: SharedHelper.getData(key: 'userId'));
-    });
+    EndPoints.token != null
+        ? Future.delayed(const Duration(seconds: 0), () {
+            context.read<AuthProvider>().userModel?.data.role.name == "user"
+                ? context.read<BookingProvider>().getCurrentAppointments(
+                    userId: SharedHelper.getData(key: 'userId'))
+                : context
+                    .read<BookingProvider>()
+                    .getCurrentPatientsAppointments(
+                        doctorId:
+                            context.read<AuthProvider>().doctorModel?.data.id);
+          })
+        : "";
     super.initState();
   }
 
@@ -38,72 +44,48 @@ class _CurrentAppointmentState extends State<CurrentAppointment> {
     var provUserRead = context.read<AuthProvider>();
     var provUserWatch = context.watch<AuthProvider>();
 
-    return provWatch.currentAppointments.isEmpty
-        ? Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SvgPicture.asset(
-                "assets/icons/empty_booking.svg",
-                color: AppColors.primaryColor,
-              ),
-              SizedBox(
-                height: 5.h,
-              ),
-              Text(
-                "لم تقم بالحجز عند اي دكتور بعد",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 20.sp,
-                  fontWeight: FontWeight.bold,
-                ),
-              )
-            ],
-          )
-        : Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 20.h),
-            child: provWatch.isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : Column(
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.only(bottom: 10.h),
-                          child: ListView.separated(
-                            physics: const BouncingScrollPhysics(),
-                            itemCount:
-                                provUserWatch.userModel?.data.role.name ==
-                                        "user"
-                                    ? provWatch.currentAppointments.length
-                                    : 0,
-                            separatorBuilder:
-                                (BuildContext context, int index) {
-                              return SizedBox(
-                                height: 20.h,
-                              );
-                            },
-                            itemBuilder: (BuildContext context, int index) {
-                              // ! Doctor Services
-                              return provUserWatch.userModel?.data.role.name ==
-                                      "user"
-                                  ? appointmentCard(
-                                      appointmentModel:
-                                          provWatch.currentAppointments[index],
-                                    )
-                                  : patientCard();
-                            },
-                          ),
-                        ),
-                      ),
-                      const AppointmentMessage(
-                        text: "اضغط على الحجز لعرض ال QR CODE الخاص بالحجز ",
-                        width: 45,
-                        right: 33,
-                        svgPicture: 'assets/images/phone_cal.svg',
-                        top: 10,
-                      ),
-                    ],
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 20.h),
+      child: provWatch.isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : Column(
+              children: [
+                Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.only(bottom: 10.h),
+                    child: ListView.separated(
+                      physics: const BouncingScrollPhysics(),
+                      itemCount:
+                          provUserWatch.userModel?.data.role.name == "user"
+                              ? provWatch.currentAppointments.length
+                              : provWatch.currentPatientsAppointments.length,
+                      separatorBuilder: (BuildContext context, int index) {
+                        return SizedBox(
+                          height: 20.h,
+                        );
+                      },
+                      itemBuilder: (BuildContext context, int index) {
+                        return provUserWatch.userModel?.data.role.name == "user"
+                            ? appointmentCard(
+                                appointmentModel:
+                                    provWatch.currentAppointments[index],
+                              )
+                            : patientCard(
+                                patientModel: provWatch
+                                    .currentPatientsAppointments[index]);
+                      },
+                    ),
                   ),
-          );
+                ),
+                const AppointmentMessage(
+                  text: "اضغط على الحجز لعرض ال QR CODE الخاص بالحجز ",
+                  width: 45,
+                  right: 33,
+                  svgPicture: 'assets/images/phone_cal.svg',
+                  top: 10,
+                ),
+              ],
+            ),
+    );
   }
 }

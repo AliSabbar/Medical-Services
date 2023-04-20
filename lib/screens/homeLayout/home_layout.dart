@@ -29,21 +29,24 @@ class HomeLayOut extends StatefulWidget {
 }
 
 class _HomeLayOutState extends State<HomeLayOut> {
-  @override
-  void initState() {
-    EndPoints.token == null
-        ? () {}
-        : Future.delayed(const Duration(seconds: 0), () {
-            print("object");
-            context
-                    .read<AuthProvider>()
-                    .getUserDataById(id: SharedHelper.getData(key: 'userId')) ??
-                '';
-            context.read<BookingProvider>().getCurrentAppointments(
-                userId: SharedHelper.getData(key: 'userId'));
-          });
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   EndPoints.token == null
+  //       ? () {}
+  //       : Future.delayed(const Duration(seconds: 0), ()  {
+  //           context
+  //                   .read<AuthProvider>()
+  //                   .getUserDataById(id: SharedHelper.getData(key: 'userId')) ??
+  //               '';
+  //           // print(
+  //           //     "Doctor ID = ${context.read<AuthProvider>().doctorModel?.data.id}");
+  //           context.read<BookingProvider>().getCurrentAppointments(
+  //               userId: SharedHelper.getData(key: 'userId'));
+  //           // context.read<BookingProvider>().getPatientsAppointments(
+  //           //     doctorId: context.read<AuthProvider>().doctorModel?.data.id);
+  //         });
+  //   super.initState();
+  // }
 
   int currentIndex = 0;
 
@@ -64,11 +67,11 @@ class _HomeLayOutState extends State<HomeLayOut> {
 
     List<Widget> screens = [
       const HomeScreen(),
-      EndPoints.token == null ? const GuestScreen() : AppointmentScreen(),
+      EndPoints.token == null ? const GuestScreen() : const AppointmentScreen(),
       EndPoints.token == null
           ? const GuestScreen()
           : provAuthWatch.userModel?.data.role.name == "dr"
-              ? AddAppointmentScreen()
+              ? const AddAppointmentScreen()
               : const FavoriteScreen(),
       EndPoints.token == null
           ? const GuestScreen()
@@ -76,12 +79,7 @@ class _HomeLayOutState extends State<HomeLayOut> {
     ];
     return Directionality(
         textDirection: TextDirection.rtl,
-        child: provAuthWatch.isLoading
-            ? const Scaffold(body: Center(child: CircularProgressIndicator()))
-            : Scaffold(
-                // floatingActionButton: FloatingActionButton(onPressed: () {
-                //   context.read<DoctorProvider>().getFav(context);
-                // }),
+        child: Scaffold(
                 appBar: PreferredSize(
                   preferredSize: Size.fromHeight(72.h),
                   child: AppBar(
@@ -96,7 +94,7 @@ class _HomeLayOutState extends State<HomeLayOut> {
                             TextSpan(
                                 text: EndPoints.token == null
                                     ? "بالزائر الكريم"
-                                    : provAuthWatch.userModel?.data.name,
+                                    :provAuthWatch.isLoading? "جار التحميل ..."  :provAuthWatch.userModel?.data.name,
                                 style: TextStyle(fontSize: 15.sp)),
                           ]))
                         : Text(appbarTitle[currentIndex]),

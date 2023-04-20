@@ -195,7 +195,7 @@ class DoctorProfileState extends State<DoctorProfile> {
                                                                     .w600)),
                                                     const Spacer(),
                                                     // ! name of clinic
-                                                    Text("عيادة النهرين"),
+                                                    Text("ليس في عيادة"),
                                                   ],
                                                 ),
                                               ],

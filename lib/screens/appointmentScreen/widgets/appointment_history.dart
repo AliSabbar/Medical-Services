@@ -27,7 +27,7 @@ class AppointmentHistory extends StatelessWidget {
                   height: 5.h,
                 ),
                 Text(
-                  "لاتوجد حجوزات سابقة",
+                  "لا توجد حجوزات سابقة",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 20.sp,
